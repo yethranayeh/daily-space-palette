@@ -15,11 +15,33 @@
 			crossorigin="anonymous"
 		/>
 
+		<!-- Bootstrap Icons -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css" />
+
+		<style>
+			.bi-chevron-down {
+				-webkit-transition: -webkit-transform 0.4s ease-in-out;
+				-ms-transition: -ms-transform 0.4s ease-in-out;
+				transition: transform 0.4s ease-in-out;
+			}
+			.rotate-180 {
+				/* display: inline-block; */
+				transform: rotate(180deg);
+				/* background-color: aqua; */
+			}
+		</style>
+
+		<!-- Alpine Collapse Plugin -->
+		<script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+
+		<!-- Alpine JS Core -->
+		<script defer src="https://unpkg.com/alpinejs@3.4.2/dist/cdn.min.js"></script>
+
 		<title>Daily Space Palette</title>
 	</head>
-	<body>
+	<body class="bg-dark text-light">
 		<div class="container py-5">
-			<div class="row text-center">
+			<div class="row text-center mb-5">
 				<h1>Daily Space Palette</h1>
 				<span class="lead"
 					>Your daily dose of color palettes generated from the colors of NASA's current
@@ -27,10 +49,44 @@
 				</span>
 			</div>
 			<div class="row mt-4">
-				<div class="col-md-12" style="height: 300px">
-					<img class="mx-auto d-block h-100 w-100" src="https://picsum.photos/600/100" alt="" />
+				<div class="col-md-12 text-center">
+					<h2 id="title">Image Title</h2>
 				</div>
-				<div class="col-12 mt-4 text-center">
+				<hr class="mx-auto border border-1 border-white rounded w-25 my-2" />
+				<div class="col-md-12 text-center mb-4">
+					<h4 id="author">Author</h4>
+					<span id="date" class="text-muted fs-6">2021-11-06</span>
+				</div>
+				<div class="col-md-12" style="height: 300px">
+					<img
+						id="picture"
+						class="mx-auto img-thumbnail d-block h-100 w-100"
+						src="https://picsum.photos/id/62/600/100"
+						alt="Astronomy Picture of the Day"
+					/>
+				</div>
+				<div class="col-md-12 mt-4" x-data="{ expanded: true }">
+					<div class="row">
+						<div class="col-3" @click="expanded = ! expanded">
+							<span class="h2 text-truncate mb-0"
+								>Description
+								<!-- Chevron Icon -->
+								<i
+									x-bind:class="expanded ? '' : ' rotate-180'"
+									class="bi bi-chevron-down text-light d-inline-block"
+								></i>
+							</span>
+						</div>
+					</div>
+
+					<p id="description" class="lead" x-show="expanded" x-collapse>
+						Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro optio officiis iusto deserunt explicabo
+						animi, recusandae magni id voluptas illo quasi minima ducimus dolore, eaque quod expedita, quam fugiat
+						accusamus.
+					</p>
+				</div>
+
+				<div class="col-12 mt-5 text-center">
 					<h2>Palettes</h2>
 					<div class="row">
 						<div class="col-6 col-md-4 mt-4">
@@ -62,5 +118,7 @@
 			integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 			crossorigin="anonymous"
 		></script>
+		<!-- <script src="js/astro.js"></script> -->
+		<!-- <script src="js/vibrant.min.js"></script> -->
 	</body>
 </html>
