@@ -40,16 +40,20 @@
 		<title>Daily Space Palette</title>
 	</head>
 	<body class="bg-dark text-light">
-		<div class="container py-5">
-			<div class="row text-center mb-5">
-				<h1>Daily Space Palette</h1>
-				<span class="lead"
+		<div class="container">
+			<!-- Start: Page title -->
+			<div class="text-center my-5 py-5">
+				<h1 class="mb-4">Daily Space Palette</h1>
+				<span class="lead mx-2"
 					>Your daily dose of color palettes generated from the colors of NASA's current
 					<a href="https://apod.nasa.gov/apod/astropix.html" target="_blank">Astronomy Picture of the Day</a>
 				</span>
 			</div>
-			<div class="row mt-4">
-				<div class="col-md-12 text-center">
+			<!-- End: Page title -->
+			<!-- Start: Image section -->
+			<section class="row">
+				<!-- Title, Author, Date -->
+				<div class="col-md-12 text-center mt-5">
 					<h2 id="title">Image Title</h2>
 				</div>
 				<hr class="mx-auto border border-1 border-white rounded w-25 my-2" />
@@ -57,14 +61,18 @@
 					<h4 id="author">Author</h4>
 					<span id="date" class="text-muted fs-6">2021-11-06</span>
 				</div>
+
+				<!-- Image -->
 				<div class="col-md-12" style="max-height: 450px">
 					<img
 						id="picture"
 						class="mx-auto img-thumbnail d-block h-100 w-100"
-						src="https://picsum.photos/id/62/600/500"
+						src="https://picsum.photos/id/62/600/100"
 						alt="Astronomy Picture of the Day"
 					/>
 				</div>
+
+				<!-- Description -->
 				<div class="col-md-12 mt-4" x-data="{ expanded: true }">
 					<div class="row">
 						<div class="col-3" @click="expanded = ! expanded">
@@ -85,31 +93,33 @@
 						accusamus.
 					</p>
 				</div>
-
-				<div class="col-12 mt-5 text-center">
-					<h2>Palettes</h2>
-					<div class="row">
-						<div class="col-12 col-sm-6 col-md-4 mt-4">
-							<h3>Palette #1</h3>
-						</div>
-						<div class="col-12 col-sm-6 col-md-4 mt-4">
-							<h3>Palette #2</h3>
-						</div>
-						<div class="col-12 col-sm-6 col-md-4 mt-4">
-							<h3>Palette #3</h3>
-						</div>
-						<div class="col-12 col-sm-6 col-md-4 mt-4">
-							<h3>Palette #4</h3>
-						</div>
-						<div class="col-12 col-sm-6 col-md-4 mt-4">
-							<h3>Palette #5</h3>
-						</div>
-						<div class="col-12 col-sm-6 col-md-4 mt-4">
-							<h3>Palette #6</h3>
-						</div>
+			</section>
+			<!-- End: Image section -->
+			<!-- Start: Palette section -->
+			<section class="col-12 mt-5 text-center py-5">
+				<h2>Palettes</h2>
+				<div class="row">
+					<div class="col-12 col-sm-6 col-md-4 mt-4">
+						<h3>Palette #1</h3>
+					</div>
+					<div class="col-12 col-sm-6 col-md-4 mt-4">
+						<h3>Palette #2</h3>
+					</div>
+					<div class="col-12 col-sm-6 col-md-4 mt-4">
+						<h3>Palette #3</h3>
+					</div>
+					<div class="col-12 col-sm-6 col-md-4 mt-4">
+						<h3>Palette #4</h3>
+					</div>
+					<div class="col-12 col-sm-6 col-md-4 mt-4">
+						<h3>Palette #5</h3>
+					</div>
+					<div class="col-12 col-sm-6 col-md-4 mt-4">
+						<h3>Palette #6</h3>
 					</div>
 				</div>
-			</div>
+			</section>
+			<!-- End: Palette section -->
 		</div>
 
 		<!-- Bootstrap Bundle with Popper -->
