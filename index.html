@@ -99,8 +99,8 @@
 			<section class="col-12 mt-5 text-center py-5">
 				<h2>Palettes</h2>
 				<div id="palettes" class="row">
-					<div id="palette_1" class="col-12 col-sm-6 mt-4 py-1 bg-danger">
-						<h3>Palette #1</h3>
+					<div id="palette_1" class="col-12 col-sm-6 mt-4 mx-auto py-3">
+						<h4>Palette #1</h4>
 					</div>
 				</div>
 			</section>
@@ -143,8 +143,9 @@
 						// Insert color to DOM
 						paletteDOM.innerHTML =
 							paletteDOM.innerHTML +
-							`<div 
-								style="background-color: ${hex};height: 4em; width: 4em;" 
+							`<div
+								class="mx-auto border-top border-bottom border-white" 
+								style="background-color: ${hex};height: 5.5em; width: 5.5em; display: inline-block;" 
 								title="${key}"
 							>
 								<p class="fs-6">${rgb_array[0]}</p>
