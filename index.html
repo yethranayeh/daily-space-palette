@@ -99,9 +99,8 @@
 			<section class="col-12 mt-5 text-center py-5">
 				<h2>Palettes</h2>
 				<div id="palettes" class="row">
-					<div class="col-12 col-sm-6 mt-4">
+					<div id="palette_1" class="col-12 col-sm-6 mt-4 py-1 bg-danger">
 						<h3>Palette #1</h3>
-						<div id="palette_1" class="row"></div>
 					</div>
 				</div>
 			</section>
@@ -129,22 +128,28 @@
 				for (const key of keys) {
 					// If the key is not null
 					if (palette[key]) {
-						// arr contains RGB values of the color
-						arr = Object.values(palette[key]);
+						// RGB Array with values of the color
+						rgb_array = Object.values(palette[key]);
+
+						// Convert RGB to HEX
+						// Code borrowed from Michal Perlakowski on Stack Overflow
+						const rgbToHex = (r, g, b) => "#" + [r, g, b].map((x) => x.toString(16).padStart(2, "0")).join("");
+
+						hex = rgbToHex(rgb_array[0][0], rgb_array[0][1], rgb_array[0][2]);
+
 						// Get palette container
 						const paletteDOM = document.getElementById(`palette_${counter}`);
+
+						// Insert color to DOM
 						paletteDOM.innerHTML =
 							paletteDOM.innerHTML +
-							`<div class="col gx-0"><span class="fs-6">${key}</span><div style="background-color: rgb(${arr[0][0]}, ${arr[0][1]}, ${arr[0][2]});height: 4em;width: 4em;display: inline-block">${arr[0]}</div></div>`;
-
-						// Loop through Red, Green, Blue values of current
-						/* for (const color of arr[0]) {
-							// For each value, create a div with bg color
-							paletteDOM.innerHTML =
-								paletteDOM.innerHTML +
-								`<div style="background-color: rgb(${color[0]}, ${arr[1]}, ${arr[2]});height: 5em;width: 5em;display: inline-block">${key}, ${color}, ${color[0]}</div>`;
-							console.log(`Adding ${key} with ${color} at Palette #${counter}`);
-						} */
+							`<div 
+								style="background-color: ${hex};height: 4em; width: 4em;" 
+								title="${key}"
+							>
+								<p class="fs-6">${rgb_array[0]}</p>
+								<p class="fs-6">${hex}</p>
+							</div>`;
 					}
 				}
 			});
