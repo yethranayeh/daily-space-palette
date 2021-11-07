@@ -67,7 +67,7 @@
 					<img
 						id="picture"
 						class="mx-auto img-thumbnail d-block h-100 w-100"
-						src="https://picsum.photos/id/62/600/100"
+						src="62-600x100.jpg"
 						alt="Astronomy Picture of the Day"
 					/>
 				</div>
@@ -98,24 +98,10 @@
 			<!-- Start: Palette section -->
 			<section class="col-12 mt-5 text-center py-5">
 				<h2>Palettes</h2>
-				<div class="row">
-					<div class="col-12 col-sm-6 col-md-4 mt-4">
+				<div id="palettes" class="row">
+					<div class="col-12 col-sm-6 mt-4">
 						<h3>Palette #1</h3>
-					</div>
-					<div class="col-12 col-sm-6 col-md-4 mt-4">
-						<h3>Palette #2</h3>
-					</div>
-					<div class="col-12 col-sm-6 col-md-4 mt-4">
-						<h3>Palette #3</h3>
-					</div>
-					<div class="col-12 col-sm-6 col-md-4 mt-4">
-						<h3>Palette #4</h3>
-					</div>
-					<div class="col-12 col-sm-6 col-md-4 mt-4">
-						<h3>Palette #5</h3>
-					</div>
-					<div class="col-12 col-sm-6 col-md-4 mt-4">
-						<h3>Palette #6</h3>
+						<div id="palette_1" class="row"></div>
 					</div>
 				</div>
 			</section>
@@ -129,6 +115,40 @@
 			crossorigin="anonymous"
 		></script>
 		<!-- <script src="js/astro.js"></script> -->
-		<!-- <script src="js/vibrant.min.js"></script> -->
+		<script src="js/vibrant.js"></script>
+		<script>
+			// Vibrant.from("https://picsum.photos/id/62/600/100")
+			Vibrant.from("sur.jpg").getPalette(function (err, palette) {
+				let { DarkMuted, DarkVibrant, LightMuted, LightVibrant, Muted, Vibrant } = palette;
+				let values = Object.values(palette);
+				let keys = Object.keys(palette);
+				console.log(keys);
+				// console.log(Object.values(values[0]));
+				counter = 1;
+				// For each key (a shade of color)
+				for (const key of keys) {
+					// If the key is not null
+					if (palette[key]) {
+						// arr contains RGB values of the color
+						arr = Object.values(palette[key]);
+						// Get palette container
+						const paletteDOM = document.getElementById(`palette_${counter}`);
+						paletteDOM.innerHTML =
+							paletteDOM.innerHTML +
+							`<div class="col gx-0"><span class="fs-6">${key}</span><div style="background-color: rgb(${arr[0][0]}, ${arr[0][1]}, ${arr[0][2]});height: 4em;width: 4em;display: inline-block">${arr[0]}</div></div>`;
+
+						// Loop through Red, Green, Blue values of current
+						/* for (const color of arr[0]) {
+							// For each value, create a div with bg color
+							paletteDOM.innerHTML =
+								paletteDOM.innerHTML +
+								`<div style="background-color: rgb(${color[0]}, ${arr[1]}, ${arr[2]});height: 5em;width: 5em;display: inline-block">${key}, ${color}, ${color[0]}</div>`;
+							console.log(`Adding ${key} with ${color} at Palette #${counter}`);
+						} */
+					}
+				}
+			});
+			// Rest
+		</script>
 	</body>
 </html>
