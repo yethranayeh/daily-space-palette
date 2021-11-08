@@ -113,6 +113,7 @@
 			integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 			crossorigin="anonymous"
 		></script>
+
 		<!-- <script src="js/astro.js"></script> -->
 		<script src="js/vibrant.js"></script>
 		<script>
@@ -144,12 +145,33 @@
 						paletteDOM.innerHTML =
 							paletteDOM.innerHTML +
 							`<div
-								class="mx-auto border-top border-bottom border-white" 
-								style="background-color: ${hex};height: 5.5em; width: 5.5em; display: inline-block;" 
+								class="mx-auto border-top border-bottom border-white fw-light" 
+								style="background-color: ${hex};height: 80px; width: 80px; display: inline-block;" 
 								title="${key}"
 							>
-								<p class="fs-6">${rgb_array[0]}</p>
-								<p class="fs-6">${hex}</p>
+								<div class="row my-1 px-2">
+									<div class="col">
+										<div class="form-check form-switch">
+											<input 
+												class="form-check-input" 
+												type="checkbox" 
+												id="HEXorRGB"
+											>
+
+											<label 
+											class="form-check-label" 
+											for="HEXorRGB"
+											>
+												HEX
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col">
+										<p>${hex}</p>
+									</div>
+								</div>						
 							</div>`;
 					}
 				}
