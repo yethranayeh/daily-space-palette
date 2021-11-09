@@ -17,9 +17,9 @@ Vibrant.from("sur.jpg").getPalette(function (err, palette) {
     <div class="col-12 col-sm-6 my-4 mx-auto">
         <article class="card text-dark bg-light">
             <div class="card-header">
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="HEXorRGB" autocomplete="off" checked />
-                    <label class="form-check-label" for="HEXorRGB"> HEX </label>
+                <div x-data="{ label: 'HEX' }" class="form-check form-switch">
+                    <input @click="label = 'RGB'" class="form-check-input" type="checkbox" id="HEXorRGB_${counter}" autocomplete="off" />
+                    <label x-text="label" class="form-check-label" for="HEXorRGB_${counter}">HEX or RGB</label>
                 </div>
             </div>
             <div id="palette_${counter}" class="card-body palette-text mx-auto">
@@ -43,13 +43,8 @@ Vibrant.from("sur.jpg").getPalette(function (err, palette) {
 
 			hex = rgbToHex(rgb_array[0][0], rgb_array[0][1], rgb_array[0][2]);
 
-			// Get palette container
-			const paletteDOM = document.getElementById(`palette_${counter}`);
-
-			// Insert color to DOM
-			paletteDOM.innerHTML =
-				paletteDOM.innerHTML +
-				`
+			// HTML blocks for each shade of color
+			color_block = `
             <div
                 class="border rounded pt-3"
                 style="background-color: ${hex}; height: 80px; width: 80px; display: inline-block"
@@ -63,43 +58,12 @@ Vibrant.from("sur.jpg").getPalette(function (err, palette) {
                 </div>
             </div>
             `;
-			/*
-			paletteDOM.innerHTML =
-				paletteDOM.innerHTML +
-				`<div
-                    class="mx-auto border-top border-bottom border-white fw-light" 
-                    style="background-color: ${hex};height: 80px; width: 80px; display: inline-block;" 
-                    title="${key}"
-                >
-                    <div class="row my-1 px-2">
-                        <div class="col">
-                            <div class="form-check form-switch">
-                                <input 
-                                    class="form-check-input" 
-                                    type="checkbox" 
-                                    id="HEXorRGB"
-                                    checked
-                                    autocomplete="off"
-                                >
 
-                                <label 
-                                class="form-check-label" 
-                                for="HEXorRGB"
-                                >
-                                    HEX
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <i class="bi bi-files"></i>
-                            <i class="bi bi-check-square"></i>
-                            <span id="HEXorRGBText">${hex}</span>
-                        </div>
-                    </div>						
-                </div>`;
-                */
+			// Get palette container
+			const paletteDOM = document.getElementById(`palette_${counter}`);
+
+			// Insert color blocks to palette
+			paletteDOM.innerHTML = paletteDOM.innerHTML + color_block;
 		}
 	}
 });
