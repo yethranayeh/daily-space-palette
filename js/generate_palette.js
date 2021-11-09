@@ -15,11 +15,11 @@ Vibrant.from("sur.jpg").getPalette(function (err, palette) {
 	// Base card section
 	card = `
     <div class="col-12 col-sm-6 my-4 mx-auto">
-        <article class="card text-dark bg-light">
+        <article x-data="{ label: 'HEX', color: '' }" class="card text-dark bg-light">
             <div class="card-header">
-                <div x-data="{ label: 'HEX' }" class="form-check form-switch">
+                <div class="form-check form-switch">
                     <input @click="label = 'RGB'" class="form-check-input" type="checkbox" id="HEXorRGB_${counter}" autocomplete="off" />
-                    <label x-text="label" class="form-check-label" for="HEXorRGB_${counter}">HEX or RGB</label>
+                    <label x-text="label + color" class="form-check-label" for="HEXorRGB_${counter}">HEX or RGB</label>
                 </div>
             </div>
             <div id="palette_${counter}" class="card-body palette-text mx-auto">
@@ -46,6 +46,8 @@ Vibrant.from("sur.jpg").getPalette(function (err, palette) {
 			// HTML blocks for each shade of color
 			color_block = `
             <div
+                @mouseover="color = ' | ' + '${key}'"
+                @mouseout="color = ''"
                 class="border rounded pt-3"
                 style="background-color: ${hex}; height: 80px; width: 80px; display: inline-block"
             >
