@@ -53,7 +53,14 @@ Vibrant.from("sur.jpg").getPalette(function (err, palette) {
             >
                 <div class="row">
                     <div class="col text-center text-wrap">
-                        <div @click="navigator.clipboard.writeText((label == 'HEX') ? '${hex}':'${rgb_array[0]}')" class="copy-color"><i class="bi bi-files me-1"></i>Copy</div>
+                        <div 
+                            x-data="{copyIcon: ' bi bi-files'}"
+                            @click="navigator.clipboard.writeText((label == 'HEX') ? '${hex}':'${rgb_array[0]}'); copyIcon = ' bi bi-check2'"
+                            @mouseout="copyIcon = ' bi bi-files'"
+                            class="copy-color">
+                                <i :class="copyIcon"></i>
+                                Copy
+                            </div>
 
                         <p x-text="(label == 'HEX') ? '${hex}':'${rgb_array[0]}'" class="mx-auto mt-1 fw-light">#</p>
                     </div>
