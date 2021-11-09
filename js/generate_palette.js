@@ -55,7 +55,7 @@ Vibrant.from("sur.jpg").getPalette(function (err, palette) {
                     <div class="col text-center">
                         <div class="fw-light copy-color"><i class="bi bi-files mx-1"></i>Copy</div>
 
-                        <p class="mx-auto mt-1">${hex}</p>
+                        <p x-text="(label == 'HEX') ? '${hex}':'${rgb_array[0]}'" class="mx-auto mt-1">#</p>
                     </div>
                 </div>
             </div>
