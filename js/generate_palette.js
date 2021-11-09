@@ -18,7 +18,7 @@ Vibrant.from("sur.jpg").getPalette(function (err, palette) {
         <article x-data="{ label: 'HEX', color: '' }" class="card text-dark bg-light">
             <div class="card-header">
                 <div class="form-check form-switch">
-                    <input @click="label = 'RGB'" class="form-check-input" type="checkbox" id="HEXorRGB_${counter}" autocomplete="off" />
+                    <input @click="label = (label == 'RGB') ? 'HEX':'RGB'" class="form-check-input" type="checkbox" id="HEXorRGB_${counter}" autocomplete="off" />
                     <label x-text="label + color" class="form-check-label" for="HEXorRGB_${counter}">HEX or RGB</label>
                 </div>
             </div>
