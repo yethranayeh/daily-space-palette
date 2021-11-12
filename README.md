@@ -8,9 +8,8 @@ This project is a proof of concept to offer the option for designers or develope
 * `node-vibrant` - to [generate](https://github.com/Vibrant-Colors/node-vibrant) the color palette
 
 ## Known Issues:
-* Currently, the data fetched using `APOD API` is used to display the content on the page without any problems. *However*, when feeding the same image URL to `node-vibrant`, a CORS policy error is received.
-  * As a *temporary* work-around, [cors-anywhere](https://cors-anywhere.herokuapp.com/) demo proxy is being used, which is not reliable, as it can stop working at times. I plan to deploy my own  proxy to fix the issue completely.
 * At this time, the project *does not* display videos nor fetch their thumbnails. This will be fixed soon.
+* If a color's RGB value consists of 3 digits for **Red**, **Green** and **Blue**, the text overflows the color block.
 
 ## Features to be added:
 * Currently, the image displayed on the page is a *lower* resolution of the original. There will be an option to view the HD version of the image.
