@@ -12,17 +12,14 @@ function check_image_load() {
 	if (imgSrc) {
 		console.log("Vibrant");
 		try {
-			Vibrant.from("https://cors-anywhere.herokuapp.com/" + imgSrc).getPalette(function (err, palette) {
+			Vibrant.from("https://aa-corsproxy.herokuapp.com/" + imgSrc).getPalette(function (err, palette) {
 				// Get keys from palette
 				if (err) {
 					console.log("Err:", err);
 					var timeleft = 15;
 					document.getElementById("palettes").innerHTML = `
 							<p id="timer" class="lead text-center">The palette could not be generated. Trying again in ${timeleft} seconds...</p>
-							<p class="lead text-center">It is usually caused by APOD API's Cross-Origin policy. The generation process currently uses a demo proxy to bypass this issue, you may need to request a demo access below to be able to generate the palette on your end:</p>
-							<div class="embed-responsive embed-responsive-16by9">
-								<iframe class="embed-responsive-item w-100 bg-light border rounded" src="https://cors-anywhere.herokuapp.com/corsdemo" allowfullscreen></iframe>
-							</div>
+							<p class="lead text-center">It is usually caused by APOD API's Cross-Origin policy. As a work-around, a proxy server with a <strong>rate-limit</strong> is used. If the issue persists, please <a href="https://github.com/yethranayeh" class="link-light">contact me.</a></p>
 							`;
 					var downloadTimer = setInterval(function () {
 						if (timeleft <= 0) {
