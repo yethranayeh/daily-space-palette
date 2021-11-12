@@ -15,7 +15,7 @@ function check_image_load() {
 			Vibrant.from("https://aa-corsproxy.herokuapp.com/" + imgSrc).getPalette(function (err, palette) {
 				// Get keys from palette
 				if (err) {
-					console.log("Err:", err);
+					// console.log("Err:", err);
 					var timeleft = 15;
 					document.getElementById("palettes").innerHTML = `
 							<p id="timer" class="lead text-center">The palette could not be generated. Trying again in ${timeleft} seconds...</p>
@@ -26,7 +26,6 @@ function check_image_load() {
 							clearInterval(downloadTimer);
 							setTimeout(check_image_load(), 1000);
 						} else {
-							// console.log("Current timeleft:", timeleft);
 							document.getElementById(
 								"timer"
 							).innerHTML = `The palette could not be generated. Trying again in ${timeleft} seconds...`;
@@ -35,7 +34,7 @@ function check_image_load() {
 					}, 1000);
 				} else {
 					let keys = Object.keys(palette);
-					console.log(keys);
+					// console.log(keys);
 
 					counter = 1;
 
