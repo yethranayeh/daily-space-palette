@@ -10,7 +10,7 @@ function check_image_load() {
 	</div>
 	`;
 	if (imgSrc) {
-		console.log("Vibrant");
+		// console.log("Vibrant");
 		try {
 			Vibrant.from("https://aa-corsproxy.herokuapp.com/" + imgSrc).getPalette(function (err, palette) {
 				// Get keys from palette
@@ -111,10 +111,10 @@ function check_image_load() {
 				"There was an error while generating the palette. Please forward this error to me at github.com/yethranayeh :",
 				error
 			);
-			console.log("Caught error:", error);
+			// console.log("Caught error:", error);
 		}
 	} else {
-		console.log("Timeout");
+		// console.log("Timeout");
 		window.setTimeout(check_image_load, 5000);
 	}
 }
