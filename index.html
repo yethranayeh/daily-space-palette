@@ -60,7 +60,7 @@
 	</head>
 	<body class="bg-dark text-light">
 		<div class="container">
-			<div x-data="{shown: (document.referrer == 'https://yethranayeh.github.io/')}" x-show="shown">
+			<div id="goBack" class="mt-3">
 				<div class="alert alert-secondary alert-dismissible d-flex align-items-center" role="alert">
 					<a class="link-dark" href="https://yethranayeh.github.io/"
 						><svg
@@ -155,5 +155,12 @@
 
 		<!-- Generate palettes from the colors extracted with vibrant.js -->
 		<script src="js/generate_palette.js"></script>
+
+		<!-- Refer users back to portfolio if they came from there -->
+		<script>
+			if (document.referrer != "https://yethranayeh.github.io/") {
+				document.getElementById("goBack").classList.add("d-none");
+			}
+		</script>
 	</body>
 </html>
