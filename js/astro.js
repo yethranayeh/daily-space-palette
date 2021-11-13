@@ -17,7 +17,7 @@ async function get_picture() {
 
 	document.getElementById("picture").src = url;
 	document.getElementById("title").innerText = title;
-	document.getElementById("author").innerText = copyright == null ? "No Copyright" : copyright;
+	document.getElementById("copyright").innerText = copyright == null ? "No Copyright" : copyright;
 	document.getElementById("date").innerText = date;
 	document.getElementById("description").innerText = explanation;
 
