@@ -19,7 +19,7 @@ function check_image_load() {
 					var timeleft = 15;
 					document.getElementById("palettes").innerHTML = `
 							<p id="timer" class="lead text-center">The palette could not be generated. Trying again in ${timeleft} seconds...</p>
-							<p class="lead text-center">It is usually caused by APOD API's Cross-Origin policy. As a work-around, a proxy server with a <strong>rate-limit</strong> is used. If the issue persists, please <a href="https://github.com/yethranayeh" class="link-light">contact me.</a></p>
+							<p class="lead text-center">It is usually caused by APOD API's Cross-Origin policy. As a work-around, a proxy server with a <strong>rate-limit</strong> is used. If the issue persists, please <a class="link-light spicy-link" href="https://github.com/yethranayeh" class="link-light">contact me.</a></p>
 							`;
 					var downloadTimer = setInterval(function () {
 						if (timeleft <= 0) {

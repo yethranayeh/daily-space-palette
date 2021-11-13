@@ -21,7 +21,7 @@
 		<!-- Google Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;700&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;300;700&display=swap" rel="stylesheet" />
 
 		<style>
 			/* Chevron animations */
@@ -51,11 +51,13 @@
 				-moz-user-select: none; /* Old versions of Firefox */
 				-ms-user-select: none; /* Internet Explorer/Edge */
 				user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
+			                               supported by Chrome, Edge, Opera and Firefox */
 			}
 
 			/* Project Title Styling */
 			.project-title {
+				font-family: "Josefin Sans", sans-serif;
+				font-weight: 700;
 				position: relative;
 				color: #fff;
 				font-weight: 700;
@@ -88,6 +90,12 @@
 				line-height: 40px;
 				font-weight: bold;
 				font-family: "Josefin Sans", sans-serif;
+			}
+
+			/* General Text Styling */
+			p {
+				font-family: 'Josefin Sans', sans-serif;
+				font-weight: 300"
 			}
 
 			/* Spicy Links */
@@ -133,6 +141,8 @@
 			<!-- Start: Page title -->
 			<div class="text-center my-5 py-5">
 				<div class="mb-4 project-title">Daily Space Palette</div>
+
+				<!-- Title Shadow Multiplier -->
 				<script>
 					let projectTitle = document.getElementsByClassName("project-title")[0];
 					let projectTitle_shadow = "";
@@ -147,7 +157,7 @@
 					}
 					projectTitle.style.textShadow = projectTitle_shadow;
 				</script>
-				<span class="fs-4 mx-2"
+				<span class="fs-4 mx-2" style="font-family: 'Josefin Sans', sans-serif; font-weight: 300"
 					>Your daily dose of palette(s) generated from the colors of NASA's current
 					<a class="link-light spicy-link" href="https://apod.nasa.gov/apod/astropix.html" target="_blank"
 						>Astronomy Picture of the Day</a
@@ -182,7 +192,7 @@
 				<div class="col-md-12 mt-4" x-data="{ expanded: true }">
 					<div class="row">
 						<div class="col-3" @click="expanded = ! expanded">
-							<span class="h2 text-truncate mb-0"
+							<span class="h2 text-truncate mb-0" style="font-family: 'Josefin Sans', sans-serif; font-weight: 300"
 								>Description
 								<!-- Chevron Icon -->
 								<i
@@ -199,7 +209,7 @@
 			<!-- End: Image section -->
 			<!-- Start: Palette section -->
 			<section class="col-12 mt-5 py-5">
-				<h2 class="text-center">Palettes</h2>
+				<h2 class="text-center" style="font-family: 'Josefin Sans', sans-serif; font-weight: 700">Palettes</h2>
 				<div id="palettes" class="row"></div>
 			</section>
 			<!-- End: Palette section -->
