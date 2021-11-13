@@ -48,6 +48,17 @@
 				user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 			}
+
+			.project-title {
+				position: relative;
+				color: #fff;
+				font-weight: 700;
+				font-size: 8em;
+				outline: none;
+				width: 100%;
+				text-align: center;
+				text-shadow: 1px 1px 0 #01ded3;
+			}
 		</style>
 
 		<!-- Alpine Collapse Plugin -->
@@ -81,10 +92,30 @@
 			</div>
 			<!-- Start: Page title -->
 			<div class="text-center my-5 py-5">
-				<h1 class="mb-4">Daily Space Palette</h1>
-				<span class="lead mx-2"
-					>Your daily dose of color palettes generated from the colors of NASA's current
-					<a class="link-light" href="https://apod.nasa.gov/apod/astropix.html" target="_blank"
+				<div class="mb-4 project-title">Daily Space Palette</div>
+				<script>
+					let projectTitle = document.getElementsByClassName("project-title")[0];
+					let projectTitle_shadow = "";
+					for (let i = 0; i < 10; i++) {
+						projectTitle_shadow +=
+							(projectTitle_shadow ? "," : "") +
+							i * 1 +
+							"px " +
+							i * 1 +
+							`px 3px rgb(${255 - i * 25}, ${55 - i * 10}, ${255 - i})`;
+						// projectTitle_shadow += (projectTitle_shadow ? "," : "") + i * 1 + "px " + i * 1 + "px 0 #01ded3";
+					}
+					projectTitle.style.textShadow = projectTitle_shadow;
+				</script>
+				<span class="fs-4 mx-2"
+					>Your daily dose of palette(s) generated from the colors of NASA's current
+					<a
+						class="link-light"
+						href="https://apod.nasa.gov/apod/astropix.html"
+						target="_blank"
+						style="
+							text-shadow: rgb(255, 55, 255) 0px 0px 3px, rgb(105, 0, 249) 1px 1px 2px, rgb(30, 0, 246) 2px 2px 1px;
+						"
 						>Astronomy Picture of the Day</a
 					>
 				</span>
@@ -148,13 +179,13 @@
 		></script>
 
 		<!-- Handle APOD API to serve image and info -->
-		<script src="js/astro.js"></script>
+		<!-- <script src="js/astro.js"></script> -->
 
 		<!-- vibrant.js to extract color info from image -->
-		<script src="js/vibrant.js"></script>
+		<!-- <script src="js/vibrant.js"></script> -->
 
 		<!-- Generate palettes from the colors extracted with vibrant.js -->
-		<script src="js/generate_palette.js"></script>
+		<!-- <script src="js/generate_palette.js"></script> -->
 
 		<!-- Refer users back to portfolio if they came from there -->
 		<script>
