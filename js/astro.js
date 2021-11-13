@@ -16,10 +16,11 @@ async function get_picture() {
 	imgSrc = url;
 
 	document.getElementById("picture").src = url;
-	document.getElementById("title").innerText = title;
-	document.getElementById("copyright").innerText = copyright == null ? "No Copyright" : copyright;
-	document.getElementById("date").innerText = date;
-	document.getElementById("description").innerText = explanation;
+	document.getElementById("title").innerText = title == null ? "Image Title" : title;
+	document.getElementById("copyright").innerText = copyright == null ? "" : copyright;
+	document.getElementById("date").innerText = date == null ? "" : date;
+	document.getElementById("description").innerText =
+		explanation == null ? "Could not retrieve image description..." : explanation;
 
 	// If media type is image:
 
