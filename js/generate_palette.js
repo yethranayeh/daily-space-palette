@@ -91,7 +91,7 @@ function check_image_load() {
 												Copy
 											</div>
 				
-										<p x-text="(label == 'HEX') ? '${hex}':'${rgb_array[0]}'" class="mx-auto mt-1 fw-light">#</p>
+										<p class="text-truncate" x-text="(label == 'HEX') ? '${hex}':'${rgb_array[0]}'" class="mx-auto mt-1 fw-light">#</p>
 									</div>
 								</div>
 							</div>

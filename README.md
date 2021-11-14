@@ -11,9 +11,8 @@ This project is a proof of concept to offer the option for designers or develope
 ## Known Issues:
 * At this time, the project *does not* display videos nor fetch their thumbnails. This will be fixed soon.
 * The project currently uses the `DEMO_KEY` for API calls, which is not realiable as it often stops working after *too many requests*.
-* If a color's RGB value consists of 3 digits for **Red**, **Green** and **Blue**, the text overflows the color block
-    * If the value is not properly rounded, it also overflows more visibly:
-    ![](https://i.ibb.co/y0VydDC/Screenshot-1.png) ![](https://i.ibb.co/9GqGJ3X/Screenshot-2.png)
+* When description collapses, paragraph flickers before disappearing.
+* ~~If a color's RGB value consists of 3 digits for **Red**, **Green** and **Blue**, the text overflows the color block~~
 
 
 ## Features to be added:
