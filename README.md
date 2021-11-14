@@ -2,11 +2,12 @@
 ![](https://i.ibb.co/rZpX39B/Screenshot-2021-11-14-at-16-20-25-Daily-Space-Palette.png)
 This is a simple web project that fetches the Astronomy Picture of the Day using [NASA's API](https://api.nasa.gov/?ref=public-apis#browseAPI), then generates a color palette from that picture.
 
-This project is a proof of concept to offer the option for designers or developers to have an automatically generated color palette that derives from the Astronomy Picture of the Day. It can be used to dynamically change space related colors on a web page or in any other feasible applications.
+The project is a proof of concept to offer the option for designers or developers to have an automatically generated color palette that derives from the Astronomy Picture of the Day. It can be used to dynamically change space related colors on a web page or in any other feasible applications.
 
 ## Technologies used:
 * `APOD API` - to fetch the [Astronomy Picture of the Day](https://apod.nasa.gov/apod/astropix.html) and its details.
-* `node-vibrant` - to [generate](https://github.com/Vibrant-Colors/node-vibrant) the color palette
+* `node-vibrant` - to [generate](https://github.com/Vibrant-Colors/node-vibrant) the color palette.
+* `simplex-noise` for the [animated background](https://github.com/jwagner/simplex-noise.js) of the page.
 
 ## Known Issues:
 * At this time, the project *does not* display videos nor fetch their thumbnails. This will be fixed soon.
