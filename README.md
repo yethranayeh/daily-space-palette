@@ -1,4 +1,5 @@
 # Daily Space Palette
+![](https://i.ibb.co/rZpX39B/Screenshot-2021-11-14-at-16-20-25-Daily-Space-Palette.png)
 This is a simple web project that fetches the Astronomy Picture of the Day using [NASA's API](https://api.nasa.gov/?ref=public-apis#browseAPI), then generates a color palette from that picture.
 
 This project is a proof of concept to offer the option for designers or developers to have an automatically generated color palette that derives from the Astronomy Picture of the Day. It can be used to dynamically change space related colors on a web page or in any other feasible applications.
@@ -9,6 +10,7 @@ This project is a proof of concept to offer the option for designers or develope
 
 ## Known Issues:
 * At this time, the project *does not* display videos nor fetch their thumbnails. This will be fixed soon.
+* The project currently uses the `DEMO_KEY` for API calls, which is not realiable as it often stops working after *too many requests*.
 * If a color's RGB value consists of 3 digits for **Red**, **Green** and **Blue**, the text overflows the color block
     * If the value is not properly rounded, it also overflows more visibly:
     ![](https://i.ibb.co/y0VydDC/Screenshot-1.png) ![](https://i.ibb.co/9GqGJ3X/Screenshot-2.png)
@@ -17,4 +19,7 @@ This project is a proof of concept to offer the option for designers or develope
 ## Features to be added:
 * Currently, the image displayed on the page is a *lower* resolution of the original. There will be an option to view the HD version of the image.
 * There is only a single palette generated from the image, which acts as the primary palette. *However*, I plan to add multiple palettes that will be a derivative of the original color palette of the image to offer alternatives to users.
-* I may or may not make the page more attractive in the future :)
+
+
+## Credits
+The background animation used in the project is integrated from [Sean Free](https://tympanus.net/codrops/author/sean/)'s open source demo at [Codrops](https://tympanus.net/codrops/).
