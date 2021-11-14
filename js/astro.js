@@ -1,12 +1,11 @@
 /** @format */
 
-const api_url = "https://api.nasa.gov/planetary/apod?thumbs=true&api_key=";
-const api_key = "DEMO_KEY";
+const api_url = "https://aa-api-proxy.herokuapp.com/nasa";
 
 let imgSrc;
 
 async function get_picture() {
-	const response = await fetch(api_url + api_key);
+	const response = await fetch(api_url);
 
 	const data = await response.json();
 

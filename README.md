@@ -7,11 +7,11 @@ The project is a proof of concept to offer the option for designers or developer
 ## Technologies used:
 * `APOD API` - to fetch the [Astronomy Picture of the Day](https://apod.nasa.gov/apod/astropix.html) and its details.
 * `node-vibrant` - to [generate](https://github.com/Vibrant-Colors/node-vibrant) the color palette.
-* `simplex-noise` for the [animated background](https://github.com/jwagner/simplex-noise.js) of the page.
+* `simplex-noise` - for the [animated background](https://github.com/jwagner/simplex-noise.js) of the page.
 
 ## Known Issues:
 * At this time, the project *does not* display videos nor fetch their thumbnails. This will be fixed soon.
-* The project currently uses the `DEMO_KEY` for API calls, which is not realiable as it often stops working after *too many requests*.
+* ~~The project currently uses the `DEMO_KEY` for API calls, which is not realiable as it often stops working after *too many requests*.~~
 * When description collapses, paragraph flickers before disappearing.
 * ~~If a color's RGB value consists of 3 digits for **Red**, **Green** and **Blue**, the text overflows the color block~~
 
