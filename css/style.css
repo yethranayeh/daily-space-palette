@@ -1,0 +1,91 @@
+/** @format */
+
+html,
+body {
+	background: hsla(260, 40%, 5%, 1);
+}
+
+body {
+	overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+span,
+.project-title {
+	pointer-events: none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+/* Chevron animations */
+.bi-chevron-down {
+	-webkit-transition: -webkit-transform 0.4s ease-in-out;
+	-ms-transition: -ms-transform 0.4s ease-in-out;
+	transition: transform 0.4s ease-in-out;
+}
+.rotate-180 {
+	/* display: inline-block; */
+	transform: rotate(180deg);
+	/* background-color: aqua; */
+}
+
+/* Text shadows for palette info */
+.palette-text {
+	color: white;
+	text-shadow: 1px 1px 2px #000000;
+}
+
+/* Copy area for HEX or RGB values */
+.copy-color {
+	cursor: pointer;
+}
+
+/* Project Title Styling */
+.project-title {
+	font-family: "Josefin Sans", sans-serif;
+	font-weight: 700;
+	position: relative;
+	color: #fff;
+	font-weight: 700;
+	font-size: 6em;
+	outline: none;
+	width: 100%;
+	text-align: center;
+	text-shadow: 1px 1px 0 rgb(105, 0, 249);
+}
+
+/* Image Title Styling */
+#title {
+	margin: 1em 0 0.5em 0;
+	font-weight: 300;
+	text-transform: uppercase;
+	color: rgb(255, 255, 255);
+	font-style: italic;
+	font-family: "Josefin Sans", sans-serif;
+	font-size: 58px;
+	line-height: 54px;
+	text-shadow: #fff 0px 0px 2px, rgb(255, 55, 255) -1px 0px 6px, rgba(105, 0, 249, 0.8) 1px -3px 10px,
+		rgba(30, 0, 246, 0.8) 2px 2px 1px, 2px 3px 1px rgba(255, 255, 255, 0.1), 3px 4px 0px rgba(255, 255, 255, 0.1);
+}
+
+/* Copyright Text Styling */
+#copyright {
+	margin: 1em 0 0.5em 0;
+	color: #fff;
+	font-size: 2.5em;
+	line-height: 40px;
+	font-weight: bold;
+	font-family: "Josefin Sans", sans-serif;
+}
+
+/* General Text Styling */
+p {
+	font-family: "Josefin Sans", sans-serif;
+	font-weight: 300;
+}
