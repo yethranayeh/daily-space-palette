@@ -94,8 +94,16 @@
 				</span>
 			</div>
 			<!-- End: Page title -->
+			<!-- Start: Fetching Data Info -->
+			<div id="fetching-info" class="text-center">
+				<div class="spinner-border" role="status">
+					<span class="sr-only invisible">Loading...</span>
+				</div>
+				<span class="ms-2 lead text-center">Fetching data...</span>
+			</div>
+			<!-- End: Fetching Data Info -->
 			<!-- Start: Image section -->
-			<section class="row">
+			<section id="image-section" class="row d-none">
 				<!-- Title, Copyright, Date -->
 				<div class="col-md-12 text-center mt-5">
 					<h2 id="title">Image Title</h2>
@@ -137,7 +145,7 @@
 			</section>
 			<!-- End: Image section -->
 			<!-- Start: Palette section -->
-			<section class="col-12 mt-5 py-5">
+			<section id="palette-section" class="col-12 mt-5 py-5 d-none">
 				<h2 class="text-center" style="font-family: 'Josefin Sans', sans-serif; font-weight: 700">Palettes</h2>
 				<div id="palettes" class="row"></div>
 			</section>
@@ -152,6 +160,11 @@
 			crossorigin="anonymous"
 		></script>
 
+		<!-- Background Animation -->
+		<script src="js/noise.min.js"></script>
+		<script src="js/util.js"></script>
+		<script src="js/swirl.js"></script>
+
 		<!-- Handle APOD API to serve image and info -->
 		<script src="js/astro.js"></script>
 
@@ -161,12 +174,7 @@
 		<!-- Generate palettes from the colors extracted with vibrant.js -->
 		<script src="js/generate_palette.js"></script>
 
-		<!-- Background Animation -->
-		<script src="js/noise.min.js"></script>
-		<script src="js/util.js"></script>
-		<script src="js/swirl.js"></script>
-
-		<!-- Refer users back to portfolio if they came from there -->
+		<!-- Refer users back to portfolio page if they came from there -->
 		<script>
 			if (document.referrer != "https://yethranayeh.github.io/") {
 				document.getElementById("goBack").classList.add("d-none");

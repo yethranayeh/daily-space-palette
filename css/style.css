@@ -9,18 +9,34 @@ body {
 	overflow-x: hidden;
 }
 
+/* No Selection Highlight */
 h1,
 h2,
 h3,
 span,
+.form-switch label,
+.copy-color,
 .project-title {
-	pointer-events: none;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+}
+
+/* No pointer events */
+h1,
+h2,
+h3,
+span,
+.form-switch label,
+.project-title {
+	pointer-events: none;
+}
+
+span a {
+	pointer-events: all;
 }
 
 /* Chevron animations */
@@ -44,6 +60,15 @@ span,
 /* Copy area for HEX or RGB values */
 .copy-color {
 	cursor: pointer;
+}
+
+/* Palette Color Boxes */
+.color-box {
+	min-height: 80px;
+	min-width: 80px;
+	height: 100%;
+	width: 100%;
+	/* display: inline-block; */
 }
 
 /* Project Title Styling */

@@ -1,6 +1,6 @@
 /** @format */
 
-function check_image_load() {
+function generate_palette() {
 	document.getElementById("palettes").innerHTML = `
 	<div class="text-center">
 		<div class="spinner-border" role="status">
@@ -19,12 +19,12 @@ function check_image_load() {
 					var timeleft = 15;
 					document.getElementById("palettes").innerHTML = `
 							<p id="timer" class="lead text-center">The palette could not be generated. Trying again in ${timeleft} seconds...</p>
-							<p class="lead text-center">It is usually caused by APOD API's Cross-Origin policy. As a work-around, a proxy server with a <strong>rate-limit</strong> is used. If the issue persists, please <a class="link-light spicy-link" href="https://github.com/yethranayeh" class="link-light">contact me.</a></p>
+							<p class="lead text-center">It is usually caused by APOD API's Cross-Origin policy. As a work-around, a proxy server with a <strong>rate-limit</strong> is used. If the issue persists, please <a class="link link-light spicy-link" href="https://github.com/yethranayeh">contact me.</a></p>
 							`;
 					var downloadTimer = setInterval(function () {
 						if (timeleft <= 0) {
 							clearInterval(downloadTimer);
-							setTimeout(check_image_load(), 1000);
+							setTimeout(generate_palette(), 1000);
 						} else {
 							document.getElementById(
 								"timer"
@@ -43,15 +43,15 @@ function check_image_load() {
 
 					// Base card section
 					card = `
-					<div class="col-12 col-sm-6 my-4 mx-auto">
+					<div class="col-12 col-md-11 col-lg-10 col-xl-9 col-xxl-8 my-4 mx-auto">
 						<article x-data="{ label: 'HEX', color: '' }" class="card text-dark bg-light">
-							<div class="card-header">
+							<div class="card-header text-truncate">
 								<div class="form-check form-switch">
 									<input @click="label = (label == 'RGB') ? 'HEX':'RGB'" class="form-check-input" type="checkbox" id="HEXorRGB_${counter}" autocomplete="off" />
 									<label x-text="label + color" class="form-check-label" for="HEXorRGB_${counter}">HEX or RGB</label>
 								</div>
 							</div>
-							<div id="palette_${counter}" class="card-body palette-text mx-auto">
+							<div id="palette_${counter}" class="card-body palette-text mx-auto row">
 							</div>
 						</article>
 					</div>
@@ -77,8 +77,8 @@ function check_image_load() {
 							<div
 								@mouseover="color = ' | ' + '${key}'"
 								@mouseout="color = ''"
-								class="border rounded pt-3"
-								style="background-color: ${hex}; height: 80px; width: 80px; display: inline-block"
+								class="border-0 rounded color-box m-1 p-0 col"
+								style="background-color: ${hex};"
 							>
 								<div class="row">
 									<div class="col text-center text-wrap">
@@ -86,7 +86,7 @@ function check_image_load() {
 											x-data="{copyIcon: ' bi bi-files'}"
 											@click="navigator.clipboard.writeText((label == 'HEX') ? '${hex}':'${rgb_array[0]}'); copyIcon = ' bi bi-check2'"
 											@mouseout="copyIcon = ' bi bi-files'"
-											class="copy-color">
+											class="copy-color my-2 pt-1">
 												<i :class="copyIcon"></i>
 												Copy
 											</div>
@@ -115,8 +115,6 @@ function check_image_load() {
 		}
 	} else {
 		// console.log("Timeout");
-		window.setTimeout(check_image_load, 5000);
+		window.setTimeout(generate_palette, 5000);
 	}
 }
-
-check_image_load();
