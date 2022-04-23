@@ -48,25 +48,6 @@
 	</head>
 	<body class="text-light">
 		<div class="container frame">
-			<div id="goBack" class="mt-3">
-				<div class="alert alert-secondary alert-dismissible d-flex align-items-center" role="alert">
-					<a class="link-dark" href="https://yethranayeh.github.io/"
-						><svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="24"
-							height="24"
-							fill="currentColor"
-							class="bi bi-arrow-left me-2"
-							viewBox="0 0 16 16"
-						>
-							<path
-								fill-rule="evenodd"
-								d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
-							/></svg
-					></a>
-					<div>Back to Portfolio page</div>
-				</div>
-			</div>
 			<!-- Start: Page title -->
 			<div class="text-center my-3 my-md-5 py-5">
 				<div class="mb-4 project-title">Daily Space Palette</div>
@@ -75,14 +56,13 @@
 				<script>
 					let projectTitle = document.getElementsByClassName("project-title")[0];
 					let projectTitle_shadow = "";
-					for (let i = 0; i < 10; i++) {
+					for (let i = 0; i < 5; i++) {
 						projectTitle_shadow +=
 							(projectTitle_shadow ? "," : "") +
 							i * 1 +
 							"px " +
 							i * 1 +
-							`px 3px rgb(${255 - i * 25}, ${55 - i * 10}, ${255 - i})`;
-						// projectTitle_shadow += (projectTitle_shadow ? "," : "") + i * 1 + "px " + i * 1 + "px 0 #01ded3";
+							`px 3px rgb(${255 - i * 45}, ${55 - i * 10}, ${255 - i})`;
 					}
 					projectTitle.style.textShadow = projectTitle_shadow;
 				</script>
@@ -160,11 +140,6 @@
 			crossorigin="anonymous"
 		></script>
 
-		<!-- Background Animation -->
-		<script src="js/noise.min.js"></script>
-		<script src="js/util.js"></script>
-		<script src="js/swirl.js"></script>
-
 		<!-- Handle APOD API to serve image and info -->
 		<script src="js/astro.js"></script>
 
@@ -173,12 +148,5 @@
 
 		<!-- Generate palettes from the colors extracted with vibrant.js -->
 		<script src="js/generate_palette.js"></script>
-
-		<!-- Refer users back to portfolio page if they came from there -->
-		<script>
-			if (document.referrer != "https://yethranayeh.github.io/") {
-				document.getElementById("goBack").classList.add("d-none");
-			}
-		</script>
 	</body>
 </html>
