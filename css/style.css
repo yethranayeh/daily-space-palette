@@ -2,10 +2,62 @@
 
 html,
 body {
-	background: hsla(260, 40%, 5%, 1);
+	background: linear-gradient(324deg, #20004b, #0c0058, #14002f);
+	background-size: 600% 600%;
+
+	-webkit-animation: gradient-shift 30s ease infinite;
+	-moz-animation: gradient-shift 30s ease infinite;
+	-o-animation: gradient-shift 30s ease infinite;
+	animation: gradient-shift 30s ease infinite;
+}
+
+@-webkit-keyframes gradient-shift {
+	0% {
+		background-position: 1% 0%;
+	}
+	50% {
+		background-position: 99% 100%;
+	}
+	100% {
+		background-position: 1% 0%;
+	}
+}
+@-moz-keyframes gradient-shift {
+	0% {
+		background-position: 1% 0%;
+	}
+	50% {
+		background-position: 99% 100%;
+	}
+	100% {
+		background-position: 1% 0%;
+	}
+}
+@-o-keyframes gradient-shift {
+	0% {
+		background-position: 1% 0%;
+	}
+	50% {
+		background-position: 99% 100%;
+	}
+	100% {
+		background-position: 1% 0%;
+	}
+}
+@keyframes gradient-shift {
+	0% {
+		background-position: 1% 0%;
+	}
+	50% {
+		background-position: 99% 100%;
+	}
+	100% {
+		background-position: 1% 0%;
+	}
 }
 
 body {
+	min-height: 100vh;
 	overflow-x: hidden;
 }
 
@@ -75,10 +127,10 @@ span a {
 .project-title {
 	font-family: "Josefin Sans", sans-serif;
 	font-weight: 700;
+	font-size: 6em;
+	line-height: 1.1em;
 	position: relative;
 	color: #fff;
-	font-weight: 700;
-	font-size: 6em;
 	outline: none;
 	width: 100%;
 	text-align: center;

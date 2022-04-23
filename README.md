@@ -16,3 +16,6 @@ The project is a proof of concept to offer the option for designers or developer
 ## Features to be added:
 * Currently, the image displayed on the page is a *lower* resolution of the original. There will be an option to view the HD version of the image.
 * There is only a single palette generated from the image, which acts as the primary palette. *However*, I plan to add multiple palettes that will be a derivative of the original color palette of the image to offer alternatives to users.
+
+## Credits
+- Background gradient generated with [Gradient Animator](https://www.gradient-animator.com/) by [Ian Forrest](https://medium.com/@jensaxena/css-tutorial-animated-geometric-galaxy-background-ad3835c36ce1)
