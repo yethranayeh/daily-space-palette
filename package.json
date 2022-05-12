@@ -10,7 +10,8 @@
 	"dependencies": {
 		"node-vibrant": "^3.2.1-alpha.1",
 		"react": "^18.0.0",
-		"react-dom": "^18.0.0"
+		"react-dom": "^18.0.0",
+		"styled-components": "^5.3.5"
 	},
 	"devDependencies": {
 		"@types/react": "^18.0.0",
