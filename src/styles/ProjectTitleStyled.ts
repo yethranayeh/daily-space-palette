@@ -11,7 +11,6 @@ function getMultipliedShadows(amount: number) {
 }
 
 export const ProjectTitleStyled = styled.h1`
-	font-family: "Josefin Sans", sans-serif;
 	font-weight: 700;
 	font-size: 6em;
 	line-height: 1.1em;

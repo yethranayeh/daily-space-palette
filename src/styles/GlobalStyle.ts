@@ -10,6 +10,7 @@ export const GlobalStyle = createGlobalStyle`
 body {
 	min-height: 100vh;
 	overflow-x: hidden;
+	font-family: "Josefin Sans", sans-serif;
 }
 
 html,

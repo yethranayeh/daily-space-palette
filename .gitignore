@@ -27,3 +27,4 @@ dist-ssr
 *.txt
 .prettierignore
 /dev
+apod.json

@@ -4,7 +4,10 @@ import { ProjectTitleStyled } from "../styles/ProjectTitleStyled";
 import { ProjectDescriptionStyled } from "../styles/ProjectDescriptionStyled";
 
 export const HeroSection = () => (
-	<>
+	<section
+		style={{
+			textAlign: "center"
+		}}>
 		<ProjectTitleStyled>Daily Space Palette</ProjectTitleStyled>
 		<ProjectDescriptionStyled>
 			Your daily dose of palette(s) generated from the colors of NASA's current{" "}
@@ -12,5 +15,5 @@ export const HeroSection = () => (
 				Astronomy Picture of the Day
 			</Link>
 		</ProjectDescriptionStyled>
-	</>
+	</section>
 );
