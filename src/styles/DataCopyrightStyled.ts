@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 export const DataCopyrightStyled = styled(Text)`
 	margin-top: 0.5em;
-	font-weight: bold;
+	font-weight: 700;
 	font-size: 2rem;
 	color: var(--light);
 	text-shadow: rgb(255, 55, 255) -1px 0px 6px, rgba(30, 0, 246, 0.8) 2px 2px 1px;
