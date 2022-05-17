@@ -21,7 +21,7 @@ function App() {
 	const [error, setError] = useState<null | string>(null);
 
 	async function fetchData() {
-		const response = await axios.get("http://localhost:9000/apod");
+		const response = await axios.get("https://aa-api-proxy.herokuapp.com/nasa");
 
 		if (response.status === 200) {
 			return response.data;
