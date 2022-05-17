@@ -20,7 +20,7 @@ export function DataSection({ data }: { data: ApodDataInterface }) {
 				</Card.Header>
 				<Card.Body>
 					<DataImgStyled
-						src={data.media_type === "image" ? data.url : data.thumbnail_url}
+						src={data.media_type === "image" ? data.url : data.thumbnail_url!}
 						alt='Astronomy Picture of the Day'
 					/>
 				</Card.Body>
