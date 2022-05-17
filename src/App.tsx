@@ -31,9 +31,11 @@ function App() {
 	}
 
 	useEffect(() => {
-		fetchData()
-			.then((data) => setData(data))
-			.catch((err) => setError(String(err)));
+		if (data === null) {
+			fetchData()
+				.then((data) => setData(data))
+				.catch((err) => setError(String(err)));
+		}
 	}, [data]);
 
 	const ErrorContent = (
