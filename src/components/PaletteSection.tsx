@@ -38,7 +38,7 @@ export function PaletteSection({ img_url = "/" }: { img_url: string | undefined 
 				css={{
 					color: "var(--light)"
 				}}>
-				Failed to generate color palette from image.
+				Failed to generate color palette from image: {error}
 			</Text>
 		</ErrorCard>
 	);
