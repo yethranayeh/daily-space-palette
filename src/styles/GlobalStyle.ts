@@ -10,7 +10,8 @@ export const GlobalStyle = createGlobalStyle`
 body {
 	min-height: 100vh;
 	overflow-x: hidden;
-	font-family: "Josefin Sans", sans-serif;
+	font-family: "Josefin Sans", sans-serif !important;
+	color: var(--light)
 }
 
 html,
@@ -22,6 +23,10 @@ body {
 	-moz-animation: gradient-shift 30s ease infinite;
 	-o-animation: gradient-shift 30s ease infinite;
 	animation: gradient-shift 30s ease infinite;
+}
+
+h1, h2, h3, p {
+	cursor: default;
 }
 
 @-webkit-keyframes gradient-shift {

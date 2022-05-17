@@ -28,3 +28,5 @@ dist-ssr
 .prettierignore
 /dev
 apod.json
+server.js
+/mock-api

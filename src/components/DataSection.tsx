@@ -1,22 +1,21 @@
 /** @format */
 
-import data from "../../apod.json";
-
 import { Card, Col, Row, Button, Text, Collapse } from "@nextui-org/react";
 import { DataTitleStyled } from "../styles/DataTitleStyled";
 import { DataCopyrightStyled } from "../styles/DataCopyrightStyled";
 import { DataDescriptionStyled } from "../styles/DataDescriptionStyled";
 import { DataDescTitleStyled } from "../styles/DataDescTitleStyled";
 import { DataImgStyled } from "../styles/DataImgStyled";
+import { ApodDataInterface } from "../interfaces/ApodDataInterface";
 
-export function DataSection() {
+export function DataSection({ data }: { data: ApodDataInterface }) {
 	return (
 		<>
 			<Card cover bordered shadow as='article' color='gradient'>
 				<Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
 					<Col>
 						<DataTitleStyled as='h2'>{data.title}</DataTitleStyled>
-						{data.copyright && <DataCopyrightStyled as='span'>{data.copyright}</DataCopyrightStyled>}
+						{data.copyright && <DataCopyrightStyled as='p'>{data.copyright}</DataCopyrightStyled>}
 					</Col>
 				</Card.Header>
 				<Card.Body>

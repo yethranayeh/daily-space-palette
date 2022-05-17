@@ -1,9 +1,10 @@
 /** @format */
 import styled from "styled-components";
 
-export const ProjectDescriptionStyled = styled.span`
-	font-size: calc(1.275rem + 0.3vw);
+export const ProjectDescriptionStyled = styled.p`
+	font-size: calc(1.3rem + 0.5vw);
 	color: var(--light);
 	font-weight: 300;
-	margin: 0 0.5rem;
+	margin-top: 1rem;
+	line-height: 1.2;
 `;
