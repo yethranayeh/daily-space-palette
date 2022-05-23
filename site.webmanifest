@@ -1,0 +1,19 @@
+{
+	"name": "Daily Space Palette",
+	"short_name": "Daily Space Palette",
+	"icons": [
+		{
+			"src": "/src/icons/android-chrome-192x192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "/src/icons/android-chrome-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+	],
+	"theme_color": "#20004b",
+	"background_color": "#14002f",
+	"display": "standalone"
+}
