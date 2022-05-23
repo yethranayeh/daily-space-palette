@@ -10,6 +10,7 @@ With this project, I hope to offer designers and developers an automatically gen
 - [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org)
 - <a href="https://reactjs.org/"><img height="32" src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" /></a>
 - <a href="https://styled-components.com/"><img height="32" src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white" /></a>
+- <a href="https://vitejs.dev/"><img height="32" src="https://vitejs.dev/logo.svg" />Vite</a>
 - `APOD API` - to fetch the [Astronomy Picture of the Day](https://apod.nasa.gov/apod/astropix.html) and its details.
 - `node-vibrant` - to [generate the color palette](https://github.com/Vibrant-Colors/node-vibrant).
 
