@@ -7,6 +7,11 @@ export const GlobalStyle = createGlobalStyle`
     --light: #fff;
 }
 
+html {
+	position: relative;
+	min-height: 100%;
+}
+
 body {
 	min-height: 100vh;
 	overflow-x: hidden;

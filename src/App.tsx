@@ -15,6 +15,7 @@ import { Loading } from "./components/Loading";
 import { ApodDataInterface } from "./interfaces/ApodDataInterface";
 import axios from "axios";
 import { ErrorCard } from "./components/ErrorCard";
+import { Footer } from "./components/Footer";
 
 function App() {
 	const [data, setData] = useState<null | ApodDataInterface>(null);
@@ -70,6 +71,7 @@ function App() {
 				{error ? ErrorContent : data ? <DataSection data={data} /> : LoadingContent}
 				{data && <PaletteSection img_url={data.media_type === "image" ? data.url : data.thumbnail_url} />}
 			</ContainerStyled>
+			<Footer />
 		</>
 	);
 }

@@ -9,7 +9,7 @@ export const ContainerStyled = styled.div`
 	justify-content: center;
 	gap: 1rem;
 	width: 100%;
-	margin: 0 auto;
+	margin: 0 auto 100px;
 	transition: padding 250ms ease-in-out;
 
 	@media (min-width: 1601px) {
