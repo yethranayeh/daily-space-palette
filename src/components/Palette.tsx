@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Grid, Card, Divider, Button, Radio } from "@nextui-org/react";
 import { ColorValue } from "../styles/ColorValue";
 import { RadioStyled } from "../styles/RadioStyled";
+import { getRoundedRGBArray } from "../utils/getRoundedRGBArray";
 
 interface Props {
 	colors: object;
@@ -19,7 +20,7 @@ export function Palette({ colors, main }: Props) {
 	});
 	const rgbColors = colorKeys.map((key) => {
 		const colorVariant: any = colors[key as keyof typeof colors];
-		return colorVariant.rgb;
+		return getRoundedRGBArray(colorVariant.rgb);
 	});
 
 	const gridBreakpoints = {
