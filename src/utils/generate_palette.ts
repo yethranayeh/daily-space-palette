@@ -1,5 +1,7 @@
 /** @format */
 
+import { getColors } from "./getColors";
+
 // Extending "window" so TypeScript can recognize Vibrant as a global variable
 declare global {
 	interface Window {
@@ -22,5 +24,6 @@ export async function generate_palette(img_url: string) {
 		}
 		return palette;
 	});
-	return palette;
+
+	return getColors(palette);
 }

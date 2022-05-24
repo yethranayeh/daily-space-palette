@@ -6,6 +6,7 @@ import { generate_palette } from "../utils/generate_palette";
 import { Grid, Text } from "@nextui-org/react";
 import { Loading } from "./Loading";
 import { ErrorCard } from "./ErrorCard";
+import { getPaletteShades } from "../utils/getPaletteShades";
 
 export function PaletteSection({ img_url = "/" }: { img_url: string | undefined }) {
 	const [palette, setPalette] = useState<null | any>(null);
@@ -47,7 +48,10 @@ export function PaletteSection({ img_url = "/" }: { img_url: string | undefined 
 	const MainContent = (
 		<Grid.Container as='main' justify='center' gap={1}>
 			<Palette colors={palette} main />
-			{/* Derivate palettes will be generated from the main palette */}
+
+			{getPaletteShades(palette.rgb).map((palette, index) => {
+				return <Palette colors={palette} key={`derivative-palette-${index}`} />;
+			})}
 		</Grid.Container>
 	);
 

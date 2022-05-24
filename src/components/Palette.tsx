@@ -3,25 +3,14 @@ import { useState } from "react";
 import { Grid, Card, Divider, Button, Radio } from "@nextui-org/react";
 import { ColorValue } from "../styles/ColorValue";
 import { RadioStyled } from "../styles/RadioStyled";
-import { getRoundedRGBArray } from "../utils/getRoundedRGBArray";
 
 interface Props {
-	colors: object;
+	colors: { hex: string[]; rgb: number[][] };
 	main?: boolean;
 }
 
 export function Palette({ colors, main }: Props) {
 	const [isHex, setIsHex] = useState(true);
-
-	const colorKeys = Object.keys(colors);
-	const hexColors = colorKeys.map((key) => {
-		const colorVariant: any = colors[key as keyof typeof colors];
-		return colorVariant.hex;
-	});
-	const rgbColors = colorKeys.map((key) => {
-		const colorVariant: any = colors[key as keyof typeof colors];
-		return getRoundedRGBArray(colorVariant.rgb);
-	});
 
 	const gridBreakpoints = {
 		md: 12,
@@ -35,7 +24,7 @@ export function Palette({ colors, main }: Props) {
 				bordered
 				as='article'
 				css={{
-					background: `linear-gradient(324deg, ${hexColors.join(",")})`,
+					background: `linear-gradient(324deg, ${colors.hex.join(",")})`,
 					backgroundSize: "300% 300%",
 					animation: "gradient-shift 30s ease infinite",
 					color: "var(--light)",
@@ -73,11 +62,11 @@ export function Palette({ colors, main }: Props) {
 						gap: "0.5rem"
 					}}>
 					{(() => {
-						return isHex ? hexColors : rgbColors;
+						return isHex ? colors.hex : colors.rgb;
 					})().map((color, index) => {
 						return (
 							<Card
-								key={color + index}
+								key={`${color}-${index}`}
 								hoverable
 								clickable
 								bordered
@@ -88,10 +77,10 @@ export function Palette({ colors, main }: Props) {
 									height: "max-content",
 									display: "flex"
 								}}
-								onClick={() => navigator.clipboard.writeText(color)}>
+								onClick={() => navigator.clipboard.writeText(color.toString())}>
 								<Card.Body
 									css={{
-										backgroundColor: hexColors[index],
+										backgroundColor: colors.hex[index],
 										width: "100%",
 										display: "flex",
 										alignItems: "center",
@@ -103,7 +92,7 @@ export function Palette({ colors, main }: Props) {
 									{isHex ? (
 										<ColorValue>{color}</ColorValue>
 									) : (
-										<ColorValue>{`${rgbColors[index][0]}, ${rgbColors[index][1]}, ${rgbColors[index][2]}`}</ColorValue>
+										<ColorValue>{`${colors.rgb[index][0]}, ${colors.rgb[index][1]}, ${colors.rgb[index][2]}`}</ColorValue>
 									)}
 								</Card.Body>
 							</Card>
