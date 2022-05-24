@@ -1,5 +1,7 @@
 /** @format */
 
+import { Palette } from "../interfaces/PaletteInterface";
+
 function convertToHex(rgbArray: number[]) {
 	const hexArray = [];
 
@@ -24,11 +26,6 @@ function generateShades(rgbArray: number[], shade: number) {
 	const shadeOfBlue = Math.round(b * step * shade);
 
 	return [shadeOfRed, shadeOfGreen, shadeOfBlue];
-}
-
-interface Palette {
-	hex: string[];
-	rgb: number[][];
 }
 
 export function getPaletteShades(rgbColorsArray: number[][]) {

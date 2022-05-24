@@ -7,9 +7,10 @@ import { Grid, Text } from "@nextui-org/react";
 import { Loading } from "./Loading";
 import { ErrorCard } from "./ErrorCard";
 import { getPaletteShades } from "../utils/getPaletteShades";
+import { Palette as PaletteInterface } from "../interfaces/PaletteInterface";
 
 export function PaletteSection({ img_url = "/" }: { img_url: string | undefined }) {
-	const [palette, setPalette] = useState<null | any>(null);
+	const [palette, setPalette] = useState<null | PaletteInterface>(null);
 	const [error, setError] = useState<null | string>(null);
 
 	async function get_palette() {
@@ -45,7 +46,7 @@ export function PaletteSection({ img_url = "/" }: { img_url: string | undefined 
 	);
 
 	const LoadingContent = <Loading type='points'>Generating palette...</Loading>;
-	const MainContent = (
+	const MainContent = palette ? (
 		<Grid.Container as='main' justify='center' gap={1}>
 			<Palette colors={palette} main />
 
@@ -53,7 +54,7 @@ export function PaletteSection({ img_url = "/" }: { img_url: string | undefined 
 				return <Palette colors={palette} key={`derivative-palette-${index}`} />;
 			})}
 		</Grid.Container>
-	);
+	) : null;
 
 	return error ? ErrorContent : palette ? MainContent : LoadingContent;
 }
