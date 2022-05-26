@@ -11,7 +11,7 @@ import { ApodDataInterface } from "../interfaces/ApodDataInterface";
 export function DataSection({ data }: { data: ApodDataInterface }) {
 	return (
 		<>
-			<Card cover bordered shadow as='article' color='gradient'>
+			<Card cover bordered as='article' color='gradient'>
 				<Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
 					<Col>
 						<DataTitleStyled as='h2'>{data.title}</DataTitleStyled>

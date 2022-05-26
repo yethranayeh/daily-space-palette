@@ -25,8 +25,8 @@ export function Palette({ colors, main }: Props) {
 				as='article'
 				css={{
 					background: `linear-gradient(324deg, ${colors.hex.join(",")})`,
-					backgroundSize: "300% 300%",
-					animation: "gradient-shift 30s ease infinite",
+					backgroundSize: main ? "300% 300%" : "150% 150%",
+					animation: main ? "gradient-shift 30s ease infinite" : "none",
 					color: "var(--light)",
 					padding: "0",
 					width: "auto"
@@ -70,7 +70,6 @@ export function Palette({ colors, main }: Props) {
 								hoverable
 								clickable
 								bordered
-								shadow
 								borderWeight='light'
 								css={{
 									width: "max-content",
