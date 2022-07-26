@@ -9,7 +9,7 @@
 	},
 	"dependencies": {
 		"@fontsource/josefin-sans": "^4.5.9",
-		"@nextui-org/react": "^1.0.0-beta.7",
+		"@nextui-org/react": "1.0.0-beta.7",
 		"axios": "^0.27.2",
 		"react": "^18.0.0",
 		"react-dom": "^18.0.0",

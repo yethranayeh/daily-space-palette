@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Grid, Card, Divider, Button, Radio } from "@nextui-org/react";
 import { ColorValue } from "../styles/ColorValue";
 import { RadioStyled } from "../styles/RadioStyled";
+import generateContrastingColor from "../utils/generateContrastingColor";
 
 interface Props {
 	colors: { hex: string[]; rgb: number[][] };
@@ -80,6 +81,7 @@ export function Palette({ colors, main }: Props) {
 								<Card.Body
 									css={{
 										backgroundColor: colors.hex[index],
+										color: generateContrastingColor(colors.hex[index]),
 										width: "100%",
 										display: "flex",
 										alignItems: "center",
