@@ -8,7 +8,7 @@ function getMultipliedShadows(amount: number) {
 
 export function Branding() {
 	return (
-		<header className='flex flex-col justify-start'>
+		<header className='flex flex-col items-start'>
 			<a href='https://www.aktasalper.com/daily-space-palette'>
 				<h1
 					className='font-bold text-5xl leading-[1.1em] text-white outline-none select-none'
