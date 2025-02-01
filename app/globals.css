@@ -19,12 +19,12 @@ body {
 	font-family: "Josefin Sans", sans-serif;
 
 	background-image: var(--background-img);
-	background-size: 600% 600%;
+	/* background-size: 600% 600%; */
 
-	-webkit-animation: gradient-shift 60s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+	/* -webkit-animation: gradient-shift 60s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 	-moz-animation: gradient-shift 60s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 	-o-animation: gradient-shift 60s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-	animation: gradient-shift 60s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+	animation: gradient-shift 60s cubic-bezier(0.45, 0, 0.55, 1) infinite; */
 }
 
 @keyframes gradient-shift {

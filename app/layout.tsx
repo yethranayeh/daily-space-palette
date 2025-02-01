@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist_Mono, Josefin_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "./components/Navbar/Navbar";
+import { getPicture } from "./components/Picture/utils/getPicture";
+import { generatePalette } from "./components/lib/generatePalette";
 
 const geistSans = Josefin_Sans({
 	variable: "--font-josefin-sans",
@@ -24,11 +26,30 @@ export const metadata: Metadata = {
 	robots: "index, follow"
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const photo = await getPicture();
+	const palette = photo ? await generatePalette(photo.url) : null;
+
+	let gradientColors = null;
+
+	// TODO: refactor
+	if (palette) {
+		const colors = [];
+		const keysForBg = Object.keys(palette).filter((k) => ["DarkVibrant", "Vibrant", "DarkMuted"].includes(k));
+		keysForBg.forEach((k) => {
+			const color = palette[k];
+
+			if (color) {
+				colors.push(`rgba(${color.rgb.join(", ")}, 0.8)`);
+			}
+			gradientColors = colors;
+		});
+	}
+
 	return (
 		<html lang='en'>
 			<head>
@@ -65,7 +86,12 @@ export default function RootLayout({
 				<link rel='shortcut icon' href='icons/favicon.ico' />
 			</head>
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased font-[family-name:var(--font-josefin-sans)] min-h-screen`}>
+				className={`${geistSans.variable} ${geistMono.variable} antialiased font-[family-name:var(--font-josefin-sans)] min-h-screen`}
+				style={{
+					backgroundImage: gradientColors
+						? `radial-gradient(circle at 5%, ${gradientColors[2]} 0%, ${gradientColors[2]} 50%, ${gradientColors[0]} 100%)`
+						: undefined
+				}}>
 				<Navbar />
 				{children}
 			</body>
