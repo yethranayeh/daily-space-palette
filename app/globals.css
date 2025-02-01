@@ -3,19 +3,38 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+	--background: linear-gradient(324deg, #20004b, #0c0058, #14002f);
+	--foreground: #fff;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+	:root {
+		--background: linear-gradient(324deg, #14002e, #070033, #0e0020);
+		--foreground: #ededed;
+	}
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+	color: var(--foreground);
+	font-family: "Josefin Sans", sans-serif;
+
+	background-image: var(--background);
+	background-size: 600% 600%;
+
+	-webkit-animation: gradient-shift 60s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+	-moz-animation: gradient-shift 60s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+	-o-animation: gradient-shift 60s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+	animation: gradient-shift 60s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+@keyframes gradient-shift {
+	0% {
+		background-position: 1% 0%;
+	}
+	50% {
+		background-position: 99% 100%;
+	}
+	100% {
+		background-position: 1% 0%;
+	}
 }

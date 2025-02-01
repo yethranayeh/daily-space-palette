@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Josefin_Sans } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-	variable: "--font-geist-sans",
+const geistSans = Josefin_Sans({
+	variable: "--font-josefin-sans",
 	subsets: ["latin"]
 });
 
@@ -40,7 +40,10 @@ export default function RootLayout({
 
 				<link rel='shortcut icon' href='icons/favicon.ico' />
 			</head>
-			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+			<body
+				className={`${geistSans.variable} ${geistMono.variable} antialiased font-[family-name:var(--font-josefin-sans)] min-h-screen`}>
+				{children}
+			</body>
 		</html>
 	);
 }
