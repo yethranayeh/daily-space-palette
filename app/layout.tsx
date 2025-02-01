@@ -15,7 +15,13 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
 	title: "Daily Space Palette",
-	description: "Auto-generated color palettes based on the Astronomy Picture of the Day"
+	description:
+		"Discover stunning color palettes auto-generated from NASA's Astronomy Picture of the Day. Daily Space Palette transforms the universe into beautiful color schemes for designers, artists, and space enthusiasts.",
+	keywords: "NASA,space,color palettes,astronomy,daily space palette,color inspiration,design,art,cosmos".split(","),
+	authors: [{ name: "Alper Aktaş", url: "https://www.aktasalper.com" }],
+	creator: "Alper Aktaş",
+	publisher: "Alper Aktaş",
+	robots: "index, follow"
 };
 
 export default function RootLayout({
@@ -27,6 +33,23 @@ export default function RootLayout({
 		<html lang='en'>
 			<head>
 				<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+
+				<meta property='og:title' content="Daily Space Palette - Color Palettes from NASA's Astronomy Pictures" />
+				<meta
+					property='og:description'
+					content="Transform the cosmos into color! Daily Space Palette creates unique color schemes inspired by NASA's Astronomy Picture of the Day."
+				/>
+				<meta property='og:image' content='https://www.aktasalper.com/daily-space-palette/social/og.jpg' />
+				<meta property='og:url' content='https://www.aktasalper.com/daily-space-palette' />
+				<meta name='twitter:card' content='summary_large_image' />
+				<meta name='twitter:title' content="Daily Space Palette - Color Palettes from NASA's Astronomy Pictures" />
+				<meta
+					name='twitter:description'
+					content="Discover stunning color palettes auto-generated from NASA's Astronomy Picture of the Day. Daily Space Palette transforms the universe into beautiful color schemes for designers, artists, and space enthusiasts."
+				/>
+				<meta name='twitter:image' content='https://www.aktasalper.com/daily-space-palette/social/twitter.jpg' />
+				<title>Daily Space Palette - Color Palettes from the Astronomy Picture of the Day</title>
+				<link rel='canonical' href='https://www.aktasalper.com/daily-space-palette'></link>
 
 				<link rel='apple-touch-icon' sizes='180x180' href='icons/apple-touch-icon.png' />
 				<link rel='icon' type='image/png' sizes='32x32' href='icons/favicon-32x32.png' />
