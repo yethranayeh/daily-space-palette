@@ -89,7 +89,8 @@ export default async function RootLayout({
 				className={`${geistSans.variable} ${geistMono.variable} antialiased font-[family-name:var(--font-josefin-sans)] min-h-screen`}
 				style={{
 					backgroundImage: gradientColors
-						? `radial-gradient(circle at 5%, ${gradientColors[2]} 0%, ${gradientColors[2]} 50%, ${gradientColors[0]} 100%)`
+						? // https://cssgradient.io/
+						  `radial-gradient(circle at 5%, ${gradientColors[2]} 0%, ${gradientColors[2]} 50%, ${gradientColors[0]} 100%)`
 						: undefined
 				}}>
 				<Navbar />

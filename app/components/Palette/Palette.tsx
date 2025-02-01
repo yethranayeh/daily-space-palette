@@ -16,20 +16,25 @@ export async function Palette() {
 	}
 
 	return (
-		<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4'>
+		<div className='flex flex-col rounded-lg shadow-lg w-full'>
 			{Object.entries(palette).map(([shade, value]) => {
 				if (value == null) {
 					return <Fragment key={shade} />;
 				}
 
 				return (
-					<div key={shade} className='flex flex-col items-center justify-center p-4 rounded-lg shadow-lg'>
-						<div className='w-24 h-24 rounded-full mb-2' style={{ backgroundColor: value.hex }}></div>
-						<span className='text-lg font-semibold'>{shade}</span>
-						<span className='text-sm text-gray-600'>
-							RGB: {value.rgb[0]}, {value.rgb[1]}, {value.rgb[2]}
+					<div
+						key={shade}
+						className='flex flex-col items-center justify-center p-4 select-none'
+						style={{
+							backgroundColor: value.hex
+						}}>
+						<span className='text-lg font-semibold' style={{ color: value.titleTextColor }}>
+							{shade}
 						</span>
-						<span className='text-sm text-gray-500'>Population: {value.population}</span>
+						<span className='text-sm' style={{ color: value.titleTextColor }}>
+							{value.hex.toUpperCase()}
+						</span>
 					</div>
 				);
 			})}
