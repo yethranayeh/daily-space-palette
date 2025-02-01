@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Josefin_Sans } from "next/font/google";
 import "./globals.css";
+import { Navbar } from "./components/Navbar/Navbar";
 
 const geistSans = Josefin_Sans({
 	variable: "--font-josefin-sans",
@@ -42,6 +43,7 @@ export default function RootLayout({
 			</head>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased font-[family-name:var(--font-josefin-sans)] min-h-screen`}>
+				<Navbar />
 				{children}
 			</body>
 		</html>
