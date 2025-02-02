@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist_Mono, Josefin_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "./components/Navbar/Navbar";
-import { getPicture } from "./components/Picture/utils/getPicture";
+import { getPicture } from "./components/lib/getPicture";
 import { generatePalette } from "./components/lib/generatePalette";
 
 const geistSans = Josefin_Sans({
@@ -31,11 +31,8 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const photo = await getPicture();
-	const palette = photo ? await generatePalette(photo.url) : null;
-
+	const palette = await generatePalette();
 	let gradientColors = null;
-
 	// TODO: refactor
 	if (palette) {
 		const colors = [];
@@ -86,7 +83,7 @@ export default async function RootLayout({
 				<link rel='shortcut icon' href='icons/favicon.ico' />
 			</head>
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased font-[family-name:var(--font-josefin-sans)] min-h-screen`}
+				className={`${geistSans.variable} ${geistMono.variable} antialiased font-[family-name:var(--font-josefin-sans)] min-h-screen py-2 px-4`}
 				style={{
 					backgroundImage: gradientColors
 						? // https://cssgradient.io/

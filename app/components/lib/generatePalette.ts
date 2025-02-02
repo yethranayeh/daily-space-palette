@@ -1,9 +1,16 @@
 import { Vibrant } from "node-vibrant/node";
+import { getPicture } from "./getPicture";
 
-export async function generatePalette(src: string) {
+// TODO: make a `withPalette` HOC
+export async function generatePalette() {
+	const picture = await getPicture();
+
+	if (picture == null) {
+		return null;
+	}
+
 	try {
-		const palette = await Vibrant.from(src).getPalette();
-		// console.log(JSON.stringify(palette, null, 2));
+		const palette = await Vibrant.from(picture.url).getPalette();
 		return palette;
 	} catch (error) {
 		console.error("::GENERATE_PALETTE -", error);
