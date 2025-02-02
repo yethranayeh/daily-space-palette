@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "./components/Navbar/Navbar";
 import { getPicture } from "./components/lib/getPicture";
 import { generatePalette } from "./components/lib/generatePalette";
+import { BACKGROUND_COLOR_SHADES } from "./config";
 
 const geistSans = Josefin_Sans({
 	variable: "--font-josefin-sans",
@@ -35,8 +36,8 @@ export default async function RootLayout({
 	let gradientColors = null;
 	// TODO: refactor
 	if (palette) {
-		const colors = [];
-		const keysForBg = Object.keys(palette).filter((k) => ["DarkVibrant", "Vibrant", "DarkMuted"].includes(k));
+		const colors: Array<string> = [];
+		const keysForBg = Object.keys(palette).filter((k) => BACKGROUND_COLOR_SHADES.includes(k));
 		keysForBg.forEach((k) => {
 			const color = palette[k];
 
@@ -83,7 +84,7 @@ export default async function RootLayout({
 				<link rel='shortcut icon' href='icons/favicon.ico' />
 			</head>
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased font-[family-name:var(--font-josefin-sans)] min-h-screen py-2 px-4`}
+				className={`${geistSans.variable} ${geistMono.variable} antialiased font-[family-name:var(--font-josefin-sans)] min-h-screen py-2 px-4 flex flex-col gap-4`}
 				style={{
 					backgroundImage: gradientColors
 						? // https://cssgradient.io/
