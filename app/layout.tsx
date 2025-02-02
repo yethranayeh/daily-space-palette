@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Josefin_Sans } from "next/font/google";
 import "./globals.css";
+import { Geist_Mono, Josefin_Sans } from "next/font/google";
+
 import { Navbar } from "./components/Navbar/Navbar";
-import { getPicture } from "./components/lib/getPicture";
 import { generatePalette } from "./components/lib/generatePalette";
 import { BACKGROUND_COLOR_SHADES } from "./config";
 
