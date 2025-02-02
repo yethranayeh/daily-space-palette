@@ -24,7 +24,7 @@ export async function Branding() {
 	const palette = await generatePalette();
 	return (
 		<header className='flex flex-col items-start'>
-			<a href='https://www.aktasalper.com/daily-space-palette'>
+			<a href='https://spacepalette.design'>
 				<h1
 					className='font-bold text-5xl leading-[1.1em] text-white outline-none select-none'
 					style={{

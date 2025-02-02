@@ -58,17 +58,17 @@ export default async function RootLayout({
 					property='og:description'
 					content="Transform the cosmos into color! Daily Space Palette creates unique color schemes inspired by NASA's Astronomy Picture of the Day."
 				/>
-				<meta property='og:image' content='https://www.aktasalper.com/daily-space-palette/social/og.jpg' />
-				<meta property='og:url' content='https://www.aktasalper.com/daily-space-palette' />
+				<meta property='og:image' content='https://spacepalette.design/social/og.jpg' />
+				<meta property='og:url' content='https://spacepalette.design' />
 				<meta name='twitter:card' content='summary_large_image' />
 				<meta name='twitter:title' content="Daily Space Palette - Color Palettes from NASA's Astronomy Pictures" />
 				<meta
 					name='twitter:description'
 					content="Discover stunning color palettes auto-generated from NASA's Astronomy Picture of the Day. Daily Space Palette transforms the universe into beautiful color schemes for designers, artists, and space enthusiasts."
 				/>
-				<meta name='twitter:image' content='https://www.aktasalper.com/daily-space-palette/social/twitter.jpg' />
+				<meta name='twitter:image' content='https://spacepalette.design/social/twitter.jpg' />
 				<title>Daily Space Palette - Color Palettes from the Astronomy Picture of the Day</title>
-				<link rel='canonical' href='https://www.aktasalper.com/daily-space-palette'></link>
+				<link rel='canonical' href='https://spacepalette.design'></link>
 
 				<link rel='apple-touch-icon' sizes='180x180' href='icons/apple-touch-icon.png' />
 				<link rel='icon' type='image/png' sizes='32x32' href='icons/favicon-32x32.png' />
