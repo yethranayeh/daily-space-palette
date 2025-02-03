@@ -10,7 +10,7 @@ export async function Palette() {
 	}
 
 	return (
-		<div className='hidden lg:flex flex-col w-full'>
+		<div className='hidden lg:flex flex-col min-w-[600px]'>
 			{Object.entries(palette).map(([shade, value]) => {
 				if (value == null) {
 					return <Fragment key={shade} />;
@@ -30,7 +30,7 @@ export async function Palette() {
 						</span>
 
 						<div className='flex justify-between min-w-[150px]'>
-							<div className='flex flex-col justify-around select-none'>
+							<div className='flex flex-col justify-around select-none' style={{ color: value.titleTextColor }}>
 								<span>HEX</span>
 								<span>RGB</span>
 								<span>HSL</span>

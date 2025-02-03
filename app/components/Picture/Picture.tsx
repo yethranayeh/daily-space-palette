@@ -6,5 +6,5 @@ export async function Picture() {
 	if (res == null) {
 		return <div>Could not get Astronomy Picture of the Day</div>;
 	}
-	return <Image src={res.url} alt={`${res.title} | © · ${res.copyright}`} width={1280} height={720} />;
+	return <Image src={res.url} alt={`${res.title} | © · ${res.copyright}`} width={576} height={250} />;
 }

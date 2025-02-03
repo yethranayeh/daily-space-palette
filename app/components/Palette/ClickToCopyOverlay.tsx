@@ -15,7 +15,7 @@ export function ClickToCopyOverlay({ value, contrastColor }: { value: string; co
 					setText("Click to copy");
 				}, 2000);
 			}}>
-			<span className={`text-[${contrastColor}]`}>{text}</span>
+			<span style={{ color: contrastColor }}>{text}</span>
 		</div>
 	);
 }
