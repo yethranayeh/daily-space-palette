@@ -1,10 +1,4 @@
 /* https://codepen.io/josetxu/pen/JoPzNGv */
-.letter {
-	width: 5vmin;
-	height: 5vmin;
-	position: relative;
-}
-
 .letter-a {
 	background: conic-gradient(from 153deg at 50% 0%, #2196f360 0 7.5%, #fff0 0 100%),
 		conic-gradient(from 153deg at 50% 0%, #2196f360 0 15%, #fff0 0 100%);

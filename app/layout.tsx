@@ -68,7 +68,7 @@ export default async function RootLayout({
 				<link rel='shortcut icon' href='icons/favicon.ico' />
 			</head>
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased font-[family-name:var(--font-josefin-sans)] min-h-screen py-2 px-4 flex flex-col gap-4`}>
+				className={`${geistSans.variable} ${geistMono.variable} antialiased font-[family-name:var(--font-josefin-sans)] min-h-screen py-4 px-4 flex flex-col gap-4`}>
 				<Stars />
 				<Navbar />
 				{children}
