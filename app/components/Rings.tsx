@@ -1,4 +1,4 @@
-import { generatePalette } from "./lib/generatePalette";
+import { generatePalette } from "../lib/generatePalette";
 
 export async function Rings() {
 	const palette = await generatePalette();

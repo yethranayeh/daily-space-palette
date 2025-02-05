@@ -1,6 +1,6 @@
 import React from "react";
-import { getPicture } from "./lib/getPicture";
-import { generatePalette } from "./lib/generatePalette";
+import { getPicture } from "../lib/getPicture";
+import { generatePalette } from "../lib/generatePalette";
 
 export async function Description() {
 	const picture = await getPicture();

@@ -1,4 +1,4 @@
-import { generatePalette } from "../../lib/generatePalette";
+import { generatePalette } from "../../../lib/generatePalette";
 import { ShapeWord } from "./Branding/ShapeWord";
 
 export async function Branding() {

@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { generatePalette } from "../lib/generatePalette";
+import { generatePalette } from "../../lib/generatePalette";
 import { ClickToCopyOverlay } from "./ClickToCopyOverlay";
 
 export async function Palette() {

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getPicture } from "../lib/getPicture";
+import { getPicture } from "../../lib/getPicture";
 
 export async function Picture() {
 	const res = await getPicture();

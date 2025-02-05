@@ -1,5 +1,5 @@
 import { Description } from "./components/Description";
-import { generatePalette } from "./components/lib/generatePalette";
+import { generatePalette } from "./lib/generatePalette";
 import { Palette } from "./components/Palette/Palette";
 import { Picture } from "./components/Picture/Picture";
 import { Rings } from "./components/Rings";
