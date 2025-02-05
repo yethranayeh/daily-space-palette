@@ -12,7 +12,7 @@ export async function Description() {
 
 	return (
 		<div
-			className='flex flex-col justify-between py-2 px-4 max-w-[576px]'
+			className='flex flex-col justify-between py-2 px-4 max-w-[1176px]'
 			style={{ color: palette?.DarkMuted?.bodyTextColor ?? "white" }}>
 			<p>{picture.explanation}</p>
 			{picture.copyright && <span>© · {picture.copyright}</span>}

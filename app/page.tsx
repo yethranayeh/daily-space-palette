@@ -8,7 +8,7 @@ export default async function Home() {
 	const palette = await generatePalette();
 
 	return (
-		<div className='flex flex-wrap items-start gap-y-4'>
+		<div className='flex flex-col items-center gap-y-4 w-full'>
 			<div className='flex rounded-lg overflow-hidden'>
 				<Picture />
 				{palette && <Palette />}
