@@ -1,16 +1,21 @@
 import { Vibrant } from "node-vibrant/node";
 import { getPicture } from "./getPicture";
 
-// TODO: make a `withPalette` HOC
 export async function generatePalette() {
-	const picture = await getPicture();
+	const data = await getPicture();
 
-	if (picture == null) {
+	if (data == null) {
 		return null;
 	}
 
+	// TODO: refactor
+	const src =
+		data.media_type === "video"
+			? data.thumbnail_url ?? `https://i1.ytimg.com/vi/${data?.url.split("/").at(-1)}/maxresdefault.jpg`
+			: data.url;
+
 	try {
-		const palette = await Vibrant.from(picture.url).getPalette();
+		const palette = await Vibrant.from(src).getPalette();
 		return palette;
 	} catch (error) {
 		console.error("::GENERATE_PALETTE -", error);
