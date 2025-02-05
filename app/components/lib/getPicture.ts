@@ -1,4 +1,5 @@
 import { APOD_URL } from "@/app/config";
+import { getFormattedDate } from "@/app/utils/getFormattedDate";
 
 export interface Apod {
 	title: string;
@@ -18,7 +19,7 @@ export interface Apod {
 
 export async function getPicture() {
 	try {
-		const res = await fetch(`${APOD_URL}?api_key=${process.env.NASA_API}`);
+		const res = await fetch(`${APOD_URL}?api_key=${process.env.NASA_API}&date=${getFormattedDate()}`);
 		const json = (await res.json()) as Apod;
 
 		return json;
