@@ -1,0 +1,103 @@
+/* https://codepen.io/josetxu/pen/JoPzNGv */
+.letter {
+	width: 5vmin;
+	height: 5vmin;
+	position: relative;
+}
+
+.letter-a {
+	background: conic-gradient(from 153deg at 50% 0%, #2196f360 0 7.5%, #fff0 0 100%),
+		conic-gradient(from 153deg at 50% 0%, #2196f360 0 15%, #fff0 0 100%);
+}
+
+.letter-c {
+	background: linear-gradient(45deg, #1900ff60 0 50%, #fff0 calc(50% + 1px) 100%),
+		linear-gradient(135deg, #1900ff60 0 50%, #fff0 calc(50% + 1px) 100%);
+	border-radius: 100%;
+}
+
+.letter-d {
+	background: radial-gradient(circle at 50% 50%, #ff00dd60 0 70%, #fff0 calc(70% + 1px) 100%),
+		linear-gradient(90deg, #ff00dd60 0 50%, #fff0 0 100%);
+}
+
+.letter-e {
+	background: linear-gradient(90deg, #00a09860 0 75%, #fff0 0 100%),
+		linear-gradient(90deg, #00a09860 0 75%, #fff0 0 100%), linear-gradient(90deg, #00a09860 0 50%, #fff0 0 100%),
+		linear-gradient(0deg, #00a09860 0 33%, #fff0 0 67%, #00a09860 0 100%);
+	background-size: 100% 34%, 100% 34%, 100% 100%, 100% 100%;
+	background-repeat: no-repeat;
+	background-position: 0 50%, 0 50%, 0 0, 0 0;
+}
+
+.letter-i {
+	background: linear-gradient(90deg, #fff0 0 30%, #fdf900cc 0 70%, #fff0 0 100%);
+}
+
+.letter-l {
+	background: linear-gradient(0deg, #00a09860 0 30%, #fff0 0 100%),
+		linear-gradient(90deg, #00a09860 0 45%, #fff0 0 100%);
+}
+
+.letter-p {
+	background: radial-gradient(circle at 25% 50%, #c600d860 0 71%, #fff0 calc(71% + 1px) 100%),
+		linear-gradient(-90deg, #ffffff00 0 50%, #c600d860 0 100%),
+		conic-gradient(from 270deg at 50% 70%, #c600d860 0 25%, #fff0 0 100%);
+	background-repeat: no-repeat;
+	background-size: 50% 70%, 100% 100%, 100% 100%;
+	background-position: 100% 0%, 0 0, 0 0;
+}
+
+.letter-s::before,
+.letter-s::after {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 67.5%;
+	border-radius: 0 5vmin 5vmin 0;
+	background: #d8000b60;
+	bottom: 0;
+}
+
+.letter-s::after {
+	border-radius: 5vmin 0 0 5vmin;
+	top: 0;
+}
+
+.letter-t {
+	background: linear-gradient(180deg, #00a03560 0 33%, #fff0 0 100%),
+		linear-gradient(90deg, #fff0 0 30%, #00a03560 0 70%, #fff0 0 100%);
+}
+
+.letter-y {
+	background: linear-gradient(90deg, #fff0 0 30%, #00a09860 0 70%, #fff0 0 100%),
+		conic-gradient(from -26deg at 50% 100%, #00a09860 0 14.5%, #fff0 0 100%);
+}
+
+.letter-dot {
+	background: radial-gradient(circle at 80% 80%, #d8680060 0 15%, #fff0 calc(15% + 1px) 100%);
+}
+
+.letter-com {
+	background: radial-gradient(circle at 80% 70%, #3dd80060 0 15%, #fff0 calc(15% + 1px) 100%),
+		conic-gradient(from -45deg at 100% 100%, #3dd80060 0 12.5%, #fff0 0 100%);
+	background-repeat: no-repeat;
+	background-size: 100% 100%, 38% 32%;
+	background-position: 0 0, 95% 100%;
+}
+
+.letter-qu {
+	background: radial-gradient(circle at 10% 50%, #fff0 0 25%, #005ed860 calc(25% + 1px) 71%, #fff0 calc(71% + 1px) 100%),
+		radial-gradient(circle at 50% 84%, #005ed860 0 15%, #fff0 calc(15% + 1px) 100%);
+	background-size: 50% 82%, 100% 100%;
+	background-repeat: no-repeat;
+	background-position: 70% 0, 0 0;
+}
+
+.letter-ex {
+	background: radial-gradient(circle at 50% 84%, #abcc1d60 0 15%, #fff0 calc(15% + 1px) 100%),
+		linear-gradient(90deg, #fff0 0 33%, #abcc1d60 0 67%, #fff0 0 100%);
+	background-size: 100% 100%, 100% 82%;
+	background-repeat: no-repeat;
+	background-position: 0 0, 0 0;
+}
