@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 import { Geist_Mono, Josefin_Sans } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 
 import { Navbar } from "./components/Navbar/Navbar";
 import { Stars } from "./components/Stars";
@@ -72,6 +73,8 @@ export default async function RootLayout({
 				<Stars />
 				<Navbar />
 				{children}
+
+				<Analytics />
 			</body>
 		</html>
 	);
