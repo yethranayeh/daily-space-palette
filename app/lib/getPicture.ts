@@ -18,6 +18,7 @@ export interface Apod {
 }
 
 export async function getPicture() {
+	console.debug("::FETCH_APOD for date:", getFormattedDate());
 	try {
 		const res = await fetch(`${APOD_URL}?api_key=${process.env.NASA_API}&date=${getFormattedDate()}`);
 		const json = (await res.json()) as Apod;
