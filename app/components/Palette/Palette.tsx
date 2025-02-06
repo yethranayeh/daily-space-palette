@@ -11,7 +11,7 @@ export async function Palette() {
 
 	return (
 		<div className='hidden lg:flex flex-col min-w-[600px]'>
-			{Object.entries(palette).map(([shade, value]) => {
+			{Object.entries(palette).map(([shade, value], index) => {
 				if (value == null) {
 					return <Fragment key={shade} />;
 				}
@@ -19,17 +19,22 @@ export async function Palette() {
 				return (
 					<div
 						key={shade}
-						className='relative flex justify-between items-end py-2 px-4 flex-1 cursor-pointer group hover:flex-[3] transition-all'
+						className='relative flex justify-between items-end py-2 px-4 flex-1 cursor-pointer group transition-all'
 						style={{
 							backgroundColor: value.hex
 						}}>
-						<ClickToCopyOverlay value={value.hex} contrastColor={value.titleTextColor} />
+						<ClickToCopyOverlay
+							value={value.hex}
+							contrastColor={value.titleTextColor}
+							isFirst={index === 0}
+							isLast={index === Object.keys(palette).length - 1}
+						/>
 
 						<span className='text-lg font-semibold select-none' style={{ color: value.titleTextColor }}>
 							{shade}
 						</span>
 
-						<div className='flex justify-between min-w-[150px]'>
+						<div className='flex justify-start gap-8 min-w-[150px]'>
 							<div className='flex flex-col justify-around select-none' style={{ color: value.titleTextColor }}>
 								<span>HEX</span>
 								<span>RGB</span>
