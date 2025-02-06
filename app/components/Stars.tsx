@@ -1,4 +1,5 @@
 "use client";
+// TODO: switch to server-side. add date based "seed" and aim make it statically generated.
 
 import { useEffect } from "react";
 

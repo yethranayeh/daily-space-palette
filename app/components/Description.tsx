@@ -12,10 +12,12 @@ export async function Description() {
 
 	return (
 		<div
-			className='flex flex-col justify-between py-2 px-4 max-w-[1176px]'
+			className='flex flex-col gap-4 justify-between py-2 px-4 max-w-[1176px]'
 			style={{ color: palette?.DarkMuted?.bodyTextColor ?? "white" }}>
 			<p>{picture.explanation}</p>
-			{picture.copyright && <span>© · {picture.copyright}</span>}
+			{picture.copyright && (
+				<span className='font-[family-name:var(--font-geist-mono)] text-sm'>© Copyright · {picture.copyright}</span>
+			)}
 		</div>
 	);
 }
