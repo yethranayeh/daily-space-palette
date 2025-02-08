@@ -4,6 +4,8 @@ import { Palette } from "./components/Palette/Palette";
 import { Picture } from "./components/Picture/Picture";
 import { Rings } from "./components/Rings";
 
+export const revalidate = 86400;
+
 export default async function Home() {
 	const palette = await generatePalette();
 
