@@ -1,5 +1,11 @@
 import { APOD_URL } from "@/app/config";
 import { getFormattedDate } from "@/app/utils/getFormattedDate";
+import { cache } from "react";
+import "server-only";
+
+export const preload = () => {
+	void getPicture();
+};
 
 export interface Apod {
 	title: string;
@@ -15,9 +21,12 @@ export interface Apod {
 	resource?: Record<"image_set" | "planet", string>;
 	concepts?: Record<number, string>;
 	service_version: string;
+
+	code?: number;
+	msg?: string;
 }
 
-export async function getPicture() {
+export const getPicture = cache(async () => {
 	console.debug("::FETCH_APOD for date:", getFormattedDate());
 	try {
 		const res = await fetch(`${APOD_URL}?api_key=${process.env.NASA_API}&date=${getFormattedDate()}`);
@@ -28,4 +37,4 @@ export async function getPicture() {
 		console.error("::FETCH_APOD -", error);
 		return null;
 	}
-}
+});

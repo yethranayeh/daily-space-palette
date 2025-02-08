@@ -6,6 +6,11 @@ export async function generatePalette() {
 
 	if (data == null) {
 		return null;
+	} else if (data.code) {
+		if (data.code === 400) {
+			console.error("::GENERATE_PALETTE - 400 -", data?.msg);
+		}
+		return null;
 	}
 
 	// TODO: refactor
