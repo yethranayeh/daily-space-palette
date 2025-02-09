@@ -11,7 +11,7 @@ export default async function Home() {
 
 	return (
 		<div className='flex flex-col items-center gap-y-4 w-full'>
-			<div className='flex rounded-lg overflow-hidden'>
+			<div className='flex rounded-lg overflow-hidden relative'>
 				<Picture />
 				{palette && <Palette />}
 			</div>
