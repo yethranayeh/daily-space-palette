@@ -66,8 +66,6 @@ export default async function RootLayout({
 				<meta name='msapplication-TileColor' content='#603cba' />
 				<meta name='theme-color' content='#20004b' />
 				<link rel='manifest' href='site.webmanifest' />
-
-				<link rel='shortcut icon' href='icons/favicon.ico' />
 			</head>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased font-[family-name:var(--font-josefin-sans)] min-h-screen py-4 px-4 flex flex-col gap-4`}>
