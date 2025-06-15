@@ -5,8 +5,8 @@ import { Geist_Mono, Josefin_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-import { Navbar } from "./components/Navbar/Navbar";
-import { Stars } from "./components/Stars";
+import { Navbar } from "./components/Navbar";
+import { Toaster } from "./components/ui/toaster";
 
 const geistSans = Josefin_Sans({
 	variable: "--font-josefin-sans",
@@ -35,7 +35,7 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang='en'>
+		<html lang='en' className='dark'>
 			<head>
 				<meta name='viewport' content='width=device-width, initial-scale=1.0' />
 
@@ -68,11 +68,20 @@ export default async function RootLayout({
 				<link rel='manifest' href='site.webmanifest' />
 			</head>
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased font-[family-name:var(--font-josefin-sans)] min-h-screen py-4 px-4 flex flex-col gap-4`}>
-				<Stars />
-				<Navbar />
-				{children}
+				className={`${geistSans.variable} ${geistMono.variable} antialiased font-[family-name:var(--font-josefin-sans)]`}>
+				{/* <Stars /> */}
 
+				<main className='min-h-screen bg-space-dark text-white relative overflow-hidden'>
+					{/* Grid background */}
+					<div className='absolute inset-0 bg-[linear-gradient(rgba(99,102,241,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(99,102,241,0.03)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]' />
+
+					<div className='container mx-auto px-4 py-8 relative z-10'>
+						<Navbar />
+						{children}
+					</div>
+				</main>
+
+				<Toaster />
 				<Analytics />
 				<SpeedInsights />
 			</body>

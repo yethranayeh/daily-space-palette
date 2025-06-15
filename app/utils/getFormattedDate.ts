@@ -1,3 +1,4 @@
+// TODO: move to @/app/lib/utils.ts
 export function getFormattedDate() {
 	const today = new Date();
 	const formatter = new Intl.DateTimeFormat("en-US", {
