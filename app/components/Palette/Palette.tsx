@@ -109,7 +109,7 @@ export function Palette({ colors }: { colors: Array<PlainPalette> }) {
 
         <TabsContent value="rgb" className="space-y-2 mt-2">
           {colors.map((color, index) => {
-            const rgb = `rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b})`;
+            const rgb = `rgb(${Math.round(color.rgb.r)}, ${Math.round(color.rgb.g)}, ${Math.round(color.rgb.b)})`;
 
             return (
               <div
