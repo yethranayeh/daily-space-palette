@@ -20,7 +20,10 @@ export async function generatePalette() {
 			: data.url;
 
 	try {
-		const palette = await Vibrant.from(src).getPalette();
+		const response = await fetch(src);
+		const arrayBuffer = await response.arrayBuffer();
+		const buffer = Buffer.from(arrayBuffer);
+		const palette = await Vibrant.from(buffer).getPalette();
 		return palette;
 	} catch (error) {
 		console.error("::GENERATE_PALETTE -", error);
