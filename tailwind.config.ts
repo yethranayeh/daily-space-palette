@@ -17,9 +17,9 @@ export default {
 		extend: {
 			colors: {
 				space: {
-					dark: "#0a0a16",
-					card: "#111125",
-					border: "#1e1b4b"
+					dark: "#000000",
+					card: "#1c1c1e",
+					border: "#2c2c2e"
 				},
 				border: "hsl(var(--border))",
 				input: "hsl(var(--input))",
