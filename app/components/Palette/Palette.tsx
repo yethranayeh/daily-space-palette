@@ -118,6 +118,7 @@ export function Palette({ colors }: { colors: Array<PlainPalette> }) {
             { fmt: "css" as ExportFormat, label: "CSS" },
             { fmt: "tailwind" as ExportFormat, label: "Tailwind" },
             { fmt: "json" as ExportFormat, label: "JSON" },
+            { fmt: "figma" as ExportFormat, label: "Figma" },
           ] as const
         ).map(({ fmt, label }) => (
           <button
