@@ -103,12 +103,12 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <head>
         {/* Sync theme from localStorage before first paint to prevent flash */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light')}catch{}`,
+            __html: `try{(function(){var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){window.__themeInit=t}else{window.__themeInit=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}document.documentElement.classList.toggle('light',window.__themeInit==='light');document.documentElement.classList.toggle('dark',window.__themeInit==='dark')})()}catch{window.__themeInit='dark'}`,
           }}
         />
       </head>

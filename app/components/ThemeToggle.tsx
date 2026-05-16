@@ -5,13 +5,19 @@ import { useState } from "react";
 export function ThemeToggle() {
   const [isLight, setIsLight] = useState(() => {
     if (typeof window === "undefined") return false;
-    return localStorage.getItem("theme") === "light";
+    return window.__themeInit === "light";
   });
 
   const toggle = () => {
     setIsLight((prev) => {
       const next = !prev;
-      document.documentElement.classList.toggle("light", next);
+      if (next) {
+        document.documentElement.classList.add("light");
+        document.documentElement.classList.remove("dark");
+      } else {
+        document.documentElement.classList.add("dark");
+        document.documentElement.classList.remove("light");
+      }
       localStorage.setItem("theme", next ? "light" : "dark");
       return next;
     });

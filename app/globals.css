@@ -64,6 +64,27 @@
 		--destructive-ink: oklch(98% 0.005 0);
 	}
 
+	/* Respect OS preference before JS runs (when no class is set yet) */
+	@media (prefers-color-scheme: light) {
+		:root:not(.dark, .light) {
+			--surface: oklch(97% 0.006 90);
+			--surface-raised: oklch(99% 0.005 90);
+			--surface-card: oklch(100% 0 0);
+			--surface-inset: oklch(95% 0.008 90);
+			--border: oklch(88% 0.008 90);
+			--border-strong: oklch(78% 0.012 90);
+			--ink: oklch(22% 0.012 258);
+			--ink-muted: oklch(42% 0.012 258);
+			--ink-subtle: oklch(50% 0.01 258);
+			--accent: oklch(52% 0.15 58);
+			--accent-soft: oklch(52% 0.15 58 / 0.1);
+			--accent-ink: oklch(98% 0.008 60);
+			--shadow: 0 1px 0 oklch(0% 0 0 / 0.03) inset, 0 6px 24px -8px oklch(0% 0 0 / 0.12);
+			--destructive: oklch(56% 0.22 25);
+			--destructive-ink: oklch(98% 0.005 0);
+		}
+	}
+
 	* {
 		@apply border-line;
 	}
@@ -137,6 +158,13 @@
 	.light .starfield {
 		mix-blend-mode: multiply;
 		opacity: 0.35;
+	}
+
+	@media (prefers-color-scheme: light) {
+		:root:not(.dark, .light) .starfield {
+			mix-blend-mode: multiply;
+			opacity: 0.35;
+		}
 	}
 
 }
