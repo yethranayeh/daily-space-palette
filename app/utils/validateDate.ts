@@ -1,4 +1,4 @@
-const MIN_DATE = "1995-06-16";
+export const MIN_DATE = "1995-06-16";
 
 export function isValidDate(date: string): boolean {
   const regex = /^\d{4}-\d{2}-\d{2}$/;

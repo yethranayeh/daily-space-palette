@@ -77,5 +77,5 @@ export default async function DatePage({ params }: DatePageProps) {
     notFound();
   }
 
-  return <SpacePaletteLayout apod={apod} palette={palette} />;
+  return <SpacePaletteLayout apod={apod} palette={palette} date={date} />;
 }
