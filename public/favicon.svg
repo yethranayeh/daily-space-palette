@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <radialGradient id="planet-body" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1a1d2e"/>
+      <stop offset="100%" stop-color="#0d0f18"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="65%" cy="35%" r="50%">
+      <stop offset="0%" stop-color="#d4a83a" stop-opacity="1"/>
+      <stop offset="28%" stop-color="#d4a83a" stop-opacity="1"/>
+      <stop offset="29%" stop-color="#d4a83a" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="planet-clip">
+      <circle cx="16" cy="16" r="12"/>
+    </clipPath>
+  </defs>
+
+  <!-- Outer dashed orbit ring -->
+  <circle cx="16" cy="16" r="15" stroke="#2e3148" stroke-width="0.8" stroke-dasharray="2.5 2" fill="none" opacity="0.7"/>
+
+  <!-- Planet body -->
+  <circle cx="16" cy="16" r="12" fill="url(#planet-body)" stroke="#3a3d52" stroke-width="0.6"/>
+
+  <!-- Golden highlight (the signal dot at ~65% 35%) -->
+  <circle cx="19.6" cy="11.6" r="3.5" fill="#d4a83a" opacity="0.95"/>
+  <!-- Soft halo around highlight -->
+  <circle cx="19.6" cy="11.6" r="5.5" fill="#d4a83a" opacity="0.15"/>
+
+  <!-- Star dots -->
+  <circle cx="5"  cy="6"  r="0.6" fill="#8a8fa8" opacity="0.8"/>
+  <circle cx="27" cy="9"  r="0.5" fill="#8a8fa8" opacity="0.6"/>
+  <circle cx="25" cy="26" r="0.6" fill="#8a8fa8" opacity="0.7"/>
+  <circle cx="4"  cy="24" r="0.5" fill="#8a8fa8" opacity="0.5"/>
+</svg>
