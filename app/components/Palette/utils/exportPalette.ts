@@ -1,13 +1,18 @@
 import { PlainPalette } from "./convertPaletteToPlainObjectArray";
 
 const baseUrl = "https://spacepalette.design/";
-const attributionText = `
-/*
+
+const attributionComment = `/*
  * Generated with Shades of Space — ${baseUrl}
  * Use freely in your project.
  * Attribution not required but would be appreciated.
- */
-`;
+ */\n`;
+
+const attributionMeta = {
+	_generated: "Shades of Space",
+	_url: baseUrl,
+	_license: "Use freely in your project. Attribution not required but would be appreciated.",
+};
 
 export type ExportFormat = "css" | "tailwind" | "json" | "figma";
 
@@ -58,7 +63,16 @@ function generateFigmaTokens(colors: Array<PlainPalette>) {
       $description: `${color.name} swatch extracted from NASA APOD via Shades of Space`,
     };
   }
-  return JSON.stringify({ "Space Palette": tokens }, null, 2);
+  return JSON.stringify(
+    {
+      "Space Palette": {
+        $description: `Generated with Shades of Space — ${baseUrl}`,
+        ...tokens,
+      },
+    },
+    null,
+    2,
+  );
 }
 
 export function exportPalette(
@@ -66,25 +80,24 @@ export function exportPalette(
   colors: Array<PlainPalette>,
   onSuccess: (exportedFileName: string) => void,
 ) {
-  let content = attributionText + "\n";
+  let content = "";
   let filename = "";
 
   switch (format) {
     case "css":
-      content += generateCssContent(colors);
+      content = attributionComment + "\n" + generateCssContent(colors);
       filename = "space-palette.css";
       break;
     case "tailwind":
-      content += generateTailwindConfig(colors);
+      content = attributionComment + "\n" + generateTailwindConfig(colors);
       filename = "tailwind.config.js";
       break;
     case "json":
       content = JSON.stringify(
         {
+          ...attributionMeta,
           name: "Space Palette",
           description: "Color palette extracted from NASA's Astronomy Picture of the Day",
-          url: baseUrl,
-          _comment: attributionText.replaceAll("*", "").replaceAll("\n", ""),
           colors,
         },
         null,
