@@ -1,9 +1,9 @@
-import { generatePalette } from "@/app/lib/generatePalette";
+import type { Palette as VibrantPalette } from "@vibrant/color";
+
 import { Palette } from "./Palette";
 import { convertPaletteToPlainObjectArray } from "./utils/convertPaletteToPlainObjectArray";
 
-export async function PaletteContainer() {
-  const palette = await generatePalette();
+export async function PaletteContainer({ palette }: { palette: VibrantPalette }) {
   if (palette == null) {
     return <div className="font-mono text-ink-muted p-10">Could not generate palette</div>;
   }
