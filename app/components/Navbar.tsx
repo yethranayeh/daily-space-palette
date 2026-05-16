@@ -11,9 +11,14 @@ export function Navbar() {
             Shades of Space
           </span>
         </div>
-        <span className="font-mono text-xs tracking-widest uppercase text-ink-subtle pl-4 border-l border-line">
+        <a
+          href="https://apod.nasa.gov/apod/astropix.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-mono text-xs tracking-widest uppercase text-ink-subtle pl-4 border-l border-line hover:text-ink transition-colors"
+        >
           NASA APOD · Daily Palette
-        </span>
+        </a>
       </div>
 
       <div className="hero-divider" aria-hidden="true" />
