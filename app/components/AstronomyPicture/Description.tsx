@@ -1,5 +1,7 @@
 import type { Apod } from "@/app/lib/getPicture";
 
+import { ShareButton } from "./ShareButton";
+
 type DescriptionProps = Apod & { dateLabel?: string };
 
 export const Description = ({
@@ -20,9 +22,12 @@ export const Description = ({
         >
           {title}
         </h2>
-        <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-ink-muted px-[9px] py-1 border border-line-strong rounded-full whitespace-nowrap shrink-0">
-          {media_type === "video" ? "Video" : "Image"}
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-ink-muted px-[9px] py-1 border border-line-strong rounded-full whitespace-nowrap shrink-0">
+            {media_type === "video" ? "Video" : "Image"}
+          </span>
+          <ShareButton date={date} />
+        </div>
       </div>
 
       {/* Date */}
