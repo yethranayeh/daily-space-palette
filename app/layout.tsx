@@ -1,35 +1,80 @@
 import type { Metadata } from "next";
 
 import "./globals.css";
-import { Geist_Mono, Josefin_Sans } from "next/font/google";
+import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import { Navbar } from "./components/Navbar";
 import { Toaster } from "./components/ui/toaster";
+import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from "./lib/site";
 
-const geistSans = Josefin_Sans({
-  variable: "--font-josefin-sans",
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
+  style: ["normal", "italic"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Shades of Space",
-  description:
-    "A daily color palette extracted from NASA's Astronomy Picture of the Day. Discover the hues generated from daily space palettes.",
-  keywords:
-    "NASA,space,color palettes,astronomy,shades of space,daily space palette,color inspiration,design,art,cosmos".split(
-      ",",
-    ),
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_NAME,
+    template: `%s · ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  keywords: [
+    "NASA",
+    "space",
+    "color palettes",
+    "astronomy",
+    "shades of space",
+    "daily space palette",
+    "color inspiration",
+    "design",
+    "art",
+    "cosmos",
+  ],
   authors: [{ name: "Alper Halil", url: "https://www.aktasalper.com" }],
   creator: "Alper Halil",
   publisher: "Alper Halil",
   robots: "index, follow",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: SITE_URL,
+    title: `${SITE_NAME} | Color Palettes from NASA's Astronomy Pictures`,
+    description:
+      "A daily color palette extracted from NASA's Astronomy Picture of the Day. Discover the hues the universe chose for today.",
+    siteName: SITE_NAME,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE_NAME} | Color Palettes from NASA's Astronomy Pictures`,
+    description:
+      "A daily color palette extracted from NASA's Astronomy Picture of the Day. Discover the hues the universe chose for today.",
+    images: [`${SITE_URL}/social/twitter.jpg`],
+  },
+  other: {
+    "apple-mobile-web-app-title": SITE_NAME,
+    "application-name": SITE_NAME,
+  },
 };
 
 export default async function RootLayout({
@@ -37,60 +82,46 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: SITE_NAME,
+    url: SITE_URL,
+    description: SITE_DESCRIPTION,
+    applicationCategory: "DesignApplication",
+    operatingSystem: "Web",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    creator: {
+      "@type": "Person",
+      name: "Alper Halil",
+      url: "https://www.aktasalper.com",
+    },
+  };
+
   return (
     <html lang="en" className="dark">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-        <meta
-          property="og:title"
-          content="Shades of Space - Color Palettes from NASA's Astronomy Pictures"
+        {/* Sync theme from localStorage before first paint to prevent flash */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light')}catch{}`,
+          }}
         />
-        <meta
-          property="og:description"
-          content="A daily color palette extracted from NASA's Astronomy Picture of the Day. Discover the hues the universe chose for today."
-        />
-        <meta property="og:image" content="https://shadesof.space/social/og.jpg" />
-        <meta property="og:url" content="https://shadesof.space" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta
-          name="twitter:title"
-          content="Shades of Space - Color Palettes from NASA's Astronomy Pictures"
-        />
-        <meta
-          name="twitter:description"
-          content="A daily color palette extracted from NASA's Astronomy Picture of the Day. Discover the hues the universe chose for today."
-        />
-        <meta name="twitter:image" content="https://shadesof.space/social/twitter.jpg" />
-        <title>Shades of Space - Color Palettes from the Astronomy Picture of the Day</title>
-        <link rel="canonical" href="https://shadesof.space"></link>
-
-        <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png" />
-        <link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#5bbad5" />
-        <meta name="apple-mobile-web-app-title" content="Shades of Space" />
-        <meta name="application-name" content="Shades of Space" />
-        <meta name="msapplication-config" content="icons/browserconfig.xml" />
-        <meta name="msapplication-TileColor" content="#000000" />
-        <meta name="theme-color" content="#000000" />
-        <link rel="manifest" href="site.webmanifest" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased font-[family-name:var(--font-josefin-sans)]`}
+        className={`${fraunces.variable} ${inter.variable} ${jetbrainsMono.variable} font-sans`}
       >
-        {/* <Stars /> */}
-
-        <main className="min-h-screen bg-black text-white relative overflow-hidden">
-          {/* Grid background */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
-
-          <div className="container mx-auto px-6 py-12 relative z-10">
-            <Navbar />
-            {children}
-          </div>
-        </main>
-
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <div className="starfield" aria-hidden="true" />
+        <Navbar />
+        <div className="relative z-[2]">{children}</div>
         <Toaster />
         <Analytics />
         <SpeedInsights />

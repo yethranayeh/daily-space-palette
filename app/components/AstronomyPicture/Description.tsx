@@ -1,32 +1,44 @@
 import type { Apod } from "@/app/lib/getPicture";
 
-const MediaTypeBadge = ({ type }: { type: Apod["media_type"] }) => (
-  <span
-    className="text-xs capitalize select-none px-2 py-1 rounded-full bg-white/10 text-white/60 border border-white/10"
-    title="The APOD data received from NASA can be either in 'image' or 'video' format"
-  >
-    {type}
-  </span>
-);
+type DescriptionProps = Apod & { dateLabel?: string };
 
-export const Description = (props: Apod) => (
-  <div className="p-4 md:p-6">
-    <div className="mb-4">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl md:text-2xl font-bold">{props.title}</h2>
-        <MediaTypeBadge type={props.media_type} />
+export const Description = ({
+  title,
+  date,
+  explanation,
+  copyright,
+  media_type,
+  dateLabel,
+}: DescriptionProps) => (
+  <div className="p-6 border-t border-line space-y-4">
+    {/* Title row */}
+    <div className="space-y-1">
+      <div className="flex items-baseline justify-between gap-6 mb-2">
+        <h2
+          className="font-display font-medium leading-[1.05] tracking-tight m-0 text-ink"
+          style={{ fontSize: "clamp(22px, 2.5vw, 30px)" }}
+        >
+          {title}
+        </h2>
+        <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-ink-muted px-[9px] py-1 border border-line-strong rounded-full whitespace-nowrap shrink-0">
+          {media_type === "video" ? "Video" : "Image"}
+        </span>
       </div>
-      <p className="text-white/50 text-sm">{props.date}</p>
+
+      {/* Date */}
+      <div className="font-mono text-xs tracking-widest uppercase text-ink-subtle">
+        {dateLabel || date}
+      </div>
     </div>
 
-    <div className="text-white/70 text-sm md:text-base leading-relaxed">
-      <p>{props.explanation}</p>
-    </div>
+    {/* Explanation */}
+    <p className="text-sm leading-6 text-ink-muted">{explanation}</p>
 
-    {props.copyright && (
-      <span className="font-[family-name:var(--font-geist-mono)] text-white/40 text-xs">
-        © Copyright · {props.copyright}
-      </span>
+    {/* Copyright */}
+    {copyright && (
+      <div className="font-mono text-xs uppercase text-ink-subtle">
+        © Copyright · <span className="text-ink-muted font-medium">{copyright}</span>
+      </div>
     )}
   </div>
 );

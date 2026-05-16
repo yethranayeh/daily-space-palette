@@ -1,33 +1,50 @@
 import { getPicture } from "../../lib/getPicture";
 import { ExternalLink } from "lucide-react";
-import { Button } from "../ui/button";
 import { Picture } from "./Picture";
 import { Description } from "./Description";
 
 export async function AstronomyPicture() {
-	const res = await getPicture();
-	if (res == null) {
-		return <div>Could not get Astronomy Picture of the Day</div>;
-	}
+  const res = await getPicture();
+  if (res == null) {
+    return (
+      <div className="font-mono text-ink-muted p-10">
+        Could not get Astronomy Picture of the Day
+      </div>
+    );
+  }
 
-	return (
-		<div className='bg-space-card/80 backdrop-blur-sm rounded-xl overflow-hidden border border-space-border/30'>
-			<div className='relative aspect-video md:aspect-auto md:h-[500px] overflow-hidden group'>
-				<Picture {...res} />
+  const dateLabel = res.date
+    ? new Date(res.date + "T00:00:00").toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : "";
 
-				{res.hdurl && (
-					<div className='absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200'>
-						<Button asChild size='sm' className='bg-black/50 hover:bg-black/70 text-white border-white/20'>
-							<a href={res.hdurl} target='_blank' rel='noopener noreferrer' className='flex items-center gap-2'>
-								<ExternalLink className='h-4 w-4' />
-								View HD
-							</a>
-						</Button>
-					</div>
-				)}
-			</div>
+  return (
+    <section
+      aria-label="Astronomy picture of the day"
+      className="bg-surface-card border border-line rounded-ui-lg overflow-hidden shadow-ui"
+    >
+      {/* Image */}
+      <div className="relative aspect-[16/10] overflow-hidden bg-[#0a0a14]">
+        <Picture {...res} />
 
-			<Description {...res} />
-		</div>
-	);
+        {res.hdurl && (
+          <a
+            href={res.hdurl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute top-4 right-4 flex items-center gap-1.5 font-mono text-[10px] tracking-[0.12em] uppercase text-ink-muted bg-[oklch(0%_0_0_/_0.5)] border border-line rounded-ui-sm px-[10px] py-[6px] no-underline transition-all duration-150"
+          >
+            <ExternalLink size={10} />
+            HD
+          </a>
+        )}
+      </div>
+
+      {/* Plate foot */}
+      <Description {...res} dateLabel={dateLabel} />
+    </section>
+  );
 }

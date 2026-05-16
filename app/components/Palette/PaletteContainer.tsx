@@ -1,20 +1,31 @@
 import { generatePalette } from "@/app/lib/generatePalette";
 import { Palette } from "./Palette";
 import { convertPaletteToPlainObjectArray } from "./utils/convertPaletteToPlainObjectArray";
-import { SwatchBook } from "lucide-react";
 
 export async function PaletteContainer() {
   const palette = await generatePalette();
   if (palette == null) {
-    return <div>Could not generate palette</div>;
+    return <div className="font-mono text-ink-muted p-10">Could not generate palette</div>;
   }
 
+  const colors = convertPaletteToPlainObjectArray(palette);
+  const count = colors.length.toString().padStart(2, "0");
+
   return (
-    <div className="bg-space-card/80 backdrop-blur-sm rounded-xl p-6 border border-space-border/30">
-      <h2 className="text-lg text-white/80 font-medium mb-4 flex items-start tracking-tight">
-        <SwatchBook className="mr-2 h-5 w-5" /> Color Palette
-      </h2>
-      <Palette colors={convertPaletteToPlainObjectArray(palette)} />
-    </div>
+    <aside
+      aria-label="Extracted palette"
+      className="flex flex-col gap-4 p-4 bg-surface-card border border-line rounded-ui-lg shadow-ui sticky top-5"
+    >
+      <div className="flex items-center justify-between border-b pb-2 border-line">
+        <span className="font-mono text-xs tracking-widest uppercase text-ink-muted">
+          Extracted Palette
+        </span>
+        <div className="font-mono text-[10.5px] tracking-[0.1em] text-ink-subtle">
+          <span className="text-accent font-medium">{count}</span> swatches
+        </div>
+      </div>
+
+      <Palette colors={colors} />
+    </aside>
   );
 }

@@ -15,51 +15,44 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				mono:    ["var(--font-jetbrains-mono)", "ui-monospace", "monospace"],
+				display: ["var(--font-fraunces)", "'Iowan Old Style'", "Georgia", "serif"],
+				sans:    ["var(--font-inter)", "system-ui", "sans-serif"],
+			},
 			colors: {
-				space: {
-					dark: "#000000",
-					card: "#1c1c1e",
-					border: "#2c2c2e"
-				},
-				border: "hsl(var(--border))",
-				input: "hsl(var(--input))",
-				ring: "hsl(var(--ring))",
-				background: "hsl(var(--background))",
-				foreground: "hsl(var(--foreground))",
-				primary: {
-					DEFAULT: "hsl(var(--primary))",
-					foreground: "hsl(var(--primary-foreground))"
-				},
-				secondary: {
-					DEFAULT: "hsl(var(--secondary))",
-					foreground: "hsl(var(--secondary-foreground))"
-				},
-				destructive: {
-					DEFAULT: "hsl(var(--destructive))",
-					foreground: "hsl(var(--destructive-foreground))"
-				},
-				muted: {
-					DEFAULT: "hsl(var(--muted))",
-					foreground: "hsl(var(--muted-foreground))"
-				},
-				accent: {
-					DEFAULT: "hsl(var(--accent))",
-					foreground: "hsl(var(--accent-foreground))"
-				},
-				popover: {
-					DEFAULT: "hsl(var(--popover))",
-					foreground: "hsl(var(--popover-foreground))"
-				},
-				card: {
-					DEFAULT: "hsl(var(--card))",
-					foreground: "hsl(var(--card-foreground))"
-				}
+				/* ── Surfaces ────────────────────────────────────────────── */
+				surface:          "var(--surface)",
+				"surface-raised": "var(--surface-raised)",
+				"surface-card":   "var(--surface-card)",
+				"surface-inset":  "var(--surface-inset)",
+
+				/* ── Borders (named "line" to avoid bg-border / border-border verbosity) */
+				line:             "var(--border)",
+				"line-strong":    "var(--border-strong)",
+
+				/* ── Text ────────────────────────────────────────────────── */
+				ink:              "var(--ink)",
+				"ink-muted":      "var(--ink-muted)",
+				"ink-subtle":     "var(--ink-subtle)",
+
+				/* ── Accent ──────────────────────────────────────────────── */
+				accent:           "var(--accent)",
+				"accent-soft":    "var(--accent-soft)",
+				"accent-ink":     "var(--accent-ink)",
+
+				/* ── Destructive (toast error states) ────────────────────── */
+				destructive:      "var(--destructive)",
+				"destructive-ink":"var(--destructive-ink)",
 			},
 			borderRadius: {
-				lg: "var(--radius)",
-				md: "calc(var(--radius) - 2px)",
-				sm: "calc(var(--radius) - 4px)"
-			}
+				"ui-lg": "var(--radius-lg)",
+				"ui-md": "var(--radius-md)",
+				"ui-sm": "var(--radius-sm)",
+			},
+			boxShadow: {
+				ui: "var(--shadow)",
+			},
 		}
 	},
 	plugins: []

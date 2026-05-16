@@ -1,8 +1,24 @@
-export const Navbar = () => (
-  <header className="mb-10 text-center">
-    <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white">
-      Shades of Space
-    </h1>
-    <p className="mt-2 text-white/50 text-sm tracking-wide">Color inspirations from the universe</p>
-  </header>
-);
+import Image from "next/image";
+import { ThemeToggle } from "./ThemeToggle";
+
+export function Navbar() {
+  return (
+    <header className="relative z-2 flex items-center gap-4 justify-between px-10 py-3 border-b border-line bg-surface-raised">
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
+          <Image aria-hidden alt="page logo" width={30} height={30} src="/favicon.svg" />
+          <span className="font-display font-medium text-xl tracking-tighter text-ink">
+            Shades of Space
+          </span>
+        </div>
+        <span className="font-mono text-xs tracking-widest uppercase text-ink-subtle pl-4 border-l border-line">
+          NASA APOD · Daily Palette
+        </span>
+      </div>
+
+      <div className="hero-divider" aria-hidden="true" />
+
+      <ThemeToggle />
+    </header>
+  );
+}

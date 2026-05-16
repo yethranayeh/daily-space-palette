@@ -4,57 +4,139 @@
 
 @layer base {
 	:root {
-		--background: 0 0% 0%;
-		--foreground: 0 0% 100%;
-		--card: 0 0% 11%;
-		--card-foreground: 0 0% 100%;
-		--popover: 0 0% 11%;
-		--popover-foreground: 0 0% 100%;
-		--primary: 211 100% 50%;
-		--primary-foreground: 0 0% 100%;
-		--secondary: 0 0% 15%;
-		--secondary-foreground: 0 0% 100%;
-		--muted: 0 0% 15%;
-		--muted-foreground: 0 0% 56%;
-		--accent: 0 0% 15%;
-		--accent-foreground: 0 0% 100%;
-		--destructive: 0 84% 60%;
-		--destructive-foreground: 0 0% 100%;
-		--border: 0 0% 18%;
-		--input: 0 0% 18%;
-		--ring: 211 100% 50%;
-		--radius: 0.5rem;
+		/* ── Surface backgrounds ───────────────────────────────────────── */
+		--surface: oklch(12% 0.012 255);
+		--surface-raised: oklch(16% 0.014 256);
+		--surface-card: oklch(18% 0.016 258);
+		--surface-inset: oklch(14% 0.013 256);
+
+		/* ── Borders ───────────────────────────────────────────────────── */
+		--border: oklch(26% 0.013 258);
+		--border-strong: oklch(34% 0.014 258);
+
+		/* ── Text ──────────────────────────────────────────────────────── */
+		--ink: oklch(96% 0.008 90);
+		--ink-muted: oklch(72% 0.01 258);
+		--ink-subtle: oklch(60% 0.014 258); /* raised from 50% for WCAG AA */
+
+		/* ── Accent ────────────────────────────────────────────────────── */
+		--accent: oklch(80% 0.14 72);
+		--accent-soft: oklch(80% 0.14 72 / 0.14);
+		--accent-ink: oklch(18% 0.05 72);
+
+		/* ── Effects ───────────────────────────────────────────────────── */
+		--shadow: 0 1px 0 oklch(100% 0 0 / 0.03) inset, 0 20px 50px -30px oklch(0% 0 0 / 0.7);
+		--radius-lg: 14px;
+		--radius-md: 10px;
+		--radius-sm: 6px;
+
+		/* ── Destructive (toast error) ─────────────────────────────────── */
+		--destructive: oklch(60% 0.22 25);
+		--destructive-ink: oklch(98% 0.005 0);
 	}
 
 	.light {
-		--background: 0 0% 100%;
-		--foreground: 0 0% 0%;
-		--card: 0 0% 100%;
-		--card-foreground: 0 0% 0%;
-		--popover: 0 0% 100%;
-		--popover-foreground: 0 0% 0%;
-		--primary: 211 100% 50%;
-		--primary-foreground: 0 0% 100%;
-		--secondary: 0 0% 96%;
-		--secondary-foreground: 0 0% 0%;
-		--muted: 0 0% 96%;
-		--muted-foreground: 0 0% 45%;
-		--accent: 0 0% 96%;
-		--accent-foreground: 0 0% 0%;
-		--destructive: 0 84% 60%;
-		--destructive-foreground: 0 0% 100%;
-		--border: 0 0% 90%;
-		--input: 0 0% 90%;
-		--ring: 211 100% 50%;
-		--radius: 0.5rem;
-	}
-}
+		/* ── Surface backgrounds ───────────────────────────────────────── */
+		--surface: oklch(97% 0.006 90);
+		--surface-raised: oklch(99% 0.005 90);
+		--surface-card: oklch(100% 0 0);
+		--surface-inset: oklch(95% 0.008 90);
 
-@layer base {
+		/* ── Borders ───────────────────────────────────────────────────── */
+		--border: oklch(88% 0.008 90);
+		--border-strong: oklch(78% 0.012 90);
+
+		/* ── Text ──────────────────────────────────────────────────────── */
+		--ink: oklch(22% 0.012 258);
+		--ink-muted: oklch(42% 0.012 258);
+		--ink-subtle: oklch(50% 0.01 258); /* lowered from 58% for WCAG AA */
+
+		/* ── Accent ────────────────────────────────────────────────────── */
+		--accent: oklch(52% 0.15 58); /* darkened from 56% for WCAG AA */
+		--accent-soft: oklch(52% 0.15 58 / 0.1);
+		--accent-ink: oklch(98% 0.008 60);
+
+		/* ── Effects ───────────────────────────────────────────────────── */
+		--shadow: 0 1px 0 oklch(0% 0 0 / 0.03) inset, 0 6px 24px -8px oklch(0% 0 0 / 0.12);
+
+		/* ── Destructive (toast error) ─────────────────────────────────── */
+		--destructive: oklch(56% 0.22 25);
+		--destructive-ink: oklch(98% 0.005 0);
+	}
+
 	* {
-		@apply border-border;
+		@apply border-line;
 	}
+
 	body {
-		@apply bg-background text-foreground;
+		background-color: var(--surface);
+		color: var(--ink);
+		-webkit-font-smoothing: antialiased;
+		transition:
+			background-color 0.35s ease,
+			color 0.35s ease;
 	}
+
+	/* ── Decorative elements ─────────────────────────────────────────────── */
+	.hero-divider {
+		height: 1px;
+		background: var(--border);
+		position: relative;
+		flex: 1;
+		min-width: 1px;
+		align-self: center;
+	}
+	.hero-divider::before,
+	.hero-divider::after {
+		content: "";
+		position: absolute;
+		width: 5px;
+		height: 5px;
+		border: 1px solid var(--border-strong);
+		border-radius: 50%;
+		top: -2px;
+		background: var(--surface);
+	}
+	.hero-divider::before {
+		left: 0;
+	}
+	.hero-divider::after {
+		right: 0;
+	}
+
+	.starfield {
+		position: fixed;
+		inset: 0;
+		pointer-events: none;
+		z-index: 0;
+		opacity: 0.65;
+		background-image:
+			radial-gradient(1px 1px at 12% 18%, currentColor 50%, transparent 51%),
+			radial-gradient(1px 1px at 83% 42%, currentColor 50%, transparent 51%),
+			radial-gradient(1px 1px at 45% 78%, currentColor 50%, transparent 51%),
+			radial-gradient(1px 1px at 67% 12%, currentColor 50%, transparent 51%),
+			radial-gradient(1px 1px at 28% 55%, currentColor 50%, transparent 51%),
+			radial-gradient(1px 1px at 92% 88%, currentColor 50%, transparent 51%),
+			radial-gradient(1px 1px at 7% 88%, currentColor 50%, transparent 51%),
+			radial-gradient(1px 1px at 55% 35%, currentColor 50%, transparent 51%),
+			radial-gradient(1px 1px at 72% 65%, currentColor 50%, transparent 51%),
+			radial-gradient(1.5px 1.5px at 38% 22%, currentColor 50%, transparent 51%),
+			radial-gradient(1px 1px at 19% 63%, currentColor 50%, transparent 51%),
+			radial-gradient(1px 1px at 61% 91%, currentColor 50%, transparent 51%),
+			radial-gradient(1px 1px at 34% 8%, currentColor 50%, transparent 51%),
+			radial-gradient(1px 1px at 78% 29%, currentColor 50%, transparent 51%),
+			radial-gradient(1.5px 1.5px at 5% 44%, currentColor 50%, transparent 51%),
+			radial-gradient(1px 1px at 50% 52%, currentColor 50%, transparent 51%),
+			radial-gradient(1px 1px at 88% 71%, currentColor 50%, transparent 51%),
+			radial-gradient(1px 1px at 23% 36%, currentColor 50%, transparent 51%),
+			radial-gradient(1.5px 1.5px at 95% 15%, currentColor 50%, transparent 51%),
+			radial-gradient(1px 1px at 42% 47%, currentColor 50%, transparent 51%);
+		color: var(--ink-subtle);
+		mix-blend-mode: screen;
+	}
+	.light .starfield {
+		mix-blend-mode: multiply;
+		opacity: 0.35;
+	}
+
 }

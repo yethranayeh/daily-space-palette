@@ -1,192 +1,126 @@
 "use client";
 
+import type { PlainPalette } from "./utils/convertPaletteToPlainObjectArray";
+
 import { useState } from "react";
 import { Check, Copy, Download } from "lucide-react";
-import { Button } from "@/app/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/app/components/ui/tooltip";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs";
+
 import { toast } from "@/app/hooks/use-toast";
-import type { PlainPalette } from "./utils/convertPaletteToPlainObjectArray";
 import { ExportFormat, exportPalette } from "./utils/exportPalette";
 
-// TODO: refactor
+type ColorFormat = "hex" | "rgb" | "hsl";
+
+function getColorValue(color: PlainPalette, format: ColorFormat): string {
+  if (format === "hex") {
+    return color.hex;
+  }
+
+  if (format === "rgb") {
+    return `rgb(${Math.round(color.rgb.r)}, ${Math.round(color.rgb.g)}, ${Math.round(color.rgb.b)})`;
+  }
+
+  return `hsl(${Math.round(color.hsl.h * 360)}, ${Math.round(color.hsl.s * 100)}%, ${Math.round(color.hsl.l * 100)}%)`;
+}
+
 export function Palette({ colors }: { colors: Array<PlainPalette> }) {
+  const [format, setFormat] = useState<ColorFormat>("hex");
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
-  const copyToClipboard = (text: string, index: number) => {
+  const copy = (text: string, index: number) => {
     navigator.clipboard.writeText(text);
     setCopiedIndex(index);
-
-    toast({
-      title: "Color copied!",
-      description: `${text} has been copied to clipboard.`,
-      duration: 2000,
-    });
-
-    setTimeout(() => {
-      setCopiedIndex(null);
-    }, 2000);
+    toast({ title: "Color copied!", description: `${text} copied to clipboard.`, duration: 2000 });
+    setTimeout(() => setCopiedIndex(null), 2000);
   };
 
-  const getExportHandlerFor = (format: ExportFormat) => () =>
-    exportPalette(format, colors, (filename) =>
+  const exportHandler = (fmt: ExportFormat) => () =>
+    exportPalette(fmt, colors, (filename) =>
       toast({
         title: "Palette exported!",
-        description: `Your space palette has been exported as "${filename}".`,
+        description: `Exported as "${filename}".`,
         duration: 3000,
       }),
     );
 
   return (
-    <div className="space-y-4">
-      {/* Color Swatches Grid */}
-      <div className="grid grid-cols-3 gap-3">
-        {colors.map((color, index) => (
-          <TooltipProvider key={color.name}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  className="relative h-20 rounded-md transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white/20"
-                  style={{ backgroundColor: color.hex }}
-                  onClick={() => copyToClipboard(color.hex, index)}
-                >
-                  {copiedIndex === index && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-md">
-                      <Check className="h-6 w-6 text-white" />
-                    </div>
-                  )}
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <div className="text-xs">
-                  <p className="font-semibold">{color.name}</p>
-                  <p>{color.hex}</p>
-                  <p className="text-white/40">Click to copy</p>
-                </div>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+    <div>
+      <div className="flex flex-col gap-px bg-line border border-line rounded-ui-md overflow-hidden mb-[18px]">
+        {colors.map((color, i) => {
+          const value = getColorValue(color, format);
+          const isCopied = copiedIndex === i;
+          return (
+            <button
+              key={color.name}
+              type="button"
+              onClick={() => copy(value, i)}
+              className="grid grid-cols-[44px_1fr_auto_auto] items-center gap-3 px-3 py-3 bg-surface-card border-none text-left text-inherit w-full cursor-pointer transition-all duration-150 hover:bg-surface-inset"
+            >
+              {/* Color chip */}
+              <div
+                className="w-11 h-8 rounded-ui-sm shrink-0 border border-black/25 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]"
+                style={{ backgroundColor: color.hex }}
+              />
+              {/* Color value */}
+              <span className="font-mono text-[12.5px] tracking-[0.06em] text-ink overflow-hidden text-ellipsis whitespace-nowrap">
+                {value}
+              </span>
+              {/* Swatch name */}
+              <span className="font-mono text-[10.5px] tracking-[0.08em] text-ink-subtle uppercase whitespace-nowrap">
+                {color.name}
+              </span>
+              {/* Copy indicator */}
+              <div
+                className="w-7 h-7 grid place-items-center rounded-ui-sm transition-all duration-150 shrink-0"
+                style={{ color: isCopied ? "var(--accent)" : "var(--ink-subtle)" }}
+              >
+                {isCopied ? <Check size={13} /> : <Copy size={13} />}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      <div
+        role="tablist"
+        aria-label="Color format"
+        className="grid grid-cols-3 bg-surface-inset border border-line rounded-ui-md p-[3px] mb-4"
+      >
+        {(["hex", "rgb", "hsl"] as ColorFormat[]).map((f) => (
+          <button
+            key={f}
+            role="tab"
+            aria-selected={format === f}
+            type="button"
+            onClick={() => setFormat(f)}
+            className={`font-mono text-[11px] tracking-[0.14em] uppercase cursor-pointer transition-all duration-150 px-[10px] py-2 rounded-[7px] border-0 ${
+              format === f
+                ? "bg-surface-card text-accent shadow-[0_1px_0_rgba(255,255,255,0.04)_inset,_0_1px_2px_rgba(0,0,0,0.2)]"
+                : "bg-transparent text-ink-muted"
+            }`}
+          >
+            {f.toUpperCase()}
+          </button>
         ))}
       </div>
 
-      {/* Format Tabs */}
-      <Tabs defaultValue="hex" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="hex">HEX</TabsTrigger>
-          <TabsTrigger value="rgb">RGB</TabsTrigger>
-          <TabsTrigger value="hsl">HSL</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="hex" className="space-y-2 mt-2">
-          {colors.map((color, index) => (
-            <div
-              key={color.name}
-              className="flex items-center justify-between bg-black/20 p-2 rounded-md"
-            >
-              <div className="flex items-center">
-                <div
-                  className="w-4 h-4 rounded-full mr-2"
-                  style={{ backgroundColor: color.hex }}
-                ></div>
-                <span className="text-sm">{color.hex}</span>
-              </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-7 w-7 p-0"
-                onClick={() => copyToClipboard(color.hex, index + 100)}
-              >
-                <Copy className="h-3 w-3" />
-              </Button>
-            </div>
-          ))}
-        </TabsContent>
-
-        <TabsContent value="rgb" className="space-y-2 mt-2">
-          {colors.map((color, index) => {
-            const rgb = `rgb(${Math.round(color.rgb.r)}, ${Math.round(color.rgb.g)}, ${Math.round(color.rgb.b)})`;
-
-            return (
-              <div
-                key={color.name}
-                className="flex items-center justify-between bg-black/20 p-2 rounded-md"
-              >
-                <div className="flex items-center">
-                  <div
-                    className="w-4 h-4 rounded-full mr-2"
-                    style={{ backgroundColor: color.hex }}
-                  ></div>
-                  <span className="text-sm">{rgb}</span>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-7 w-7 p-0"
-                  onClick={() => copyToClipboard(rgb, index + 200)}
-                >
-                  <Copy className="h-3 w-3" />
-                </Button>
-              </div>
-            );
-          })}
-        </TabsContent>
-
-        <TabsContent value="hsl" className="space-y-2 mt-2">
-          {colors.map((color, index) => {
-            const hsl = `hsl(${Math.round(color.hsl.h * 360)}, ${Math.round(color.hsl.s * 100)}%, ${Math.round(
-              color.hsl.l * 100,
-            )}%)`;
-
-            return (
-              <div
-                key={color.name}
-                className="flex items-center justify-between bg-black/20 p-2 rounded-md"
-              >
-                <div className="flex items-center">
-                  <div
-                    className="w-4 h-4 rounded-full mr-2"
-                    style={{ backgroundColor: color.hex }}
-                  ></div>
-                  <span className="text-sm">{hsl}</span>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-7 w-7 p-0"
-                  onClick={() => copyToClipboard(hsl, index + 300)}
-                >
-                  <Copy className="h-3 w-3" />
-                </Button>
-              </div>
-            );
-          })}
-        </TabsContent>
-      </Tabs>
-
-      {/* Export Buttons */}
-      <div className="flex justify-end gap-2 pt-4 border-t border-space-border/30">
-        <Button variant="ghost" size="sm" className="text-xs" onClick={getExportHandlerFor("css")}>
-          <Download className="h-3 w-3 mr-1" />
-          CSS Variables
-        </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="text-xs"
-          onClick={getExportHandlerFor("tailwind")}
-        >
-          <Download className="h-3 w-3 mr-1" />
-          Tailwind
-        </Button>
-        <Button variant="ghost" size="sm" className="text-xs" onClick={getExportHandlerFor("json")}>
-          <Download className="h-3 w-3 mr-1" />
-          JSON
-        </Button>
+      <div className="pt-[14px] border-t border-line flex gap-1.5">
+        {(
+          [
+            { fmt: "css" as ExportFormat, label: "CSS" },
+            { fmt: "tailwind" as ExportFormat, label: "Tailwind" },
+            { fmt: "json" as ExportFormat, label: "JSON" },
+          ] as const
+        ).map(({ fmt, label }) => (
+          <button
+            key={fmt}
+            type="button"
+            onClick={exportHandler(fmt)}
+            className="flex-1 bg-transparent border border-line text-ink-muted font-mono text-[11px] tracking-[0.1em] uppercase px-[10px] py-[9px] rounded-ui-sm cursor-pointer flex items-center justify-center gap-[7px] transition-all duration-150 hover:text-accent hover:border-accent hover:bg-accent-soft"
+          >
+            <Download size={11} />
+            {label}
+          </button>
+        ))}
       </div>
     </div>
   );
