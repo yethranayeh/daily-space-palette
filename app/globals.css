@@ -1,6 +1,35 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme inline {
+	/* Fonts */
+	--font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+	--font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+	--font-sans: var(--font-inter), system-ui, sans-serif;
+
+	/* Colors */
+	--color-surface: var(--surface);
+	--color-surface-raised: var(--surface-raised);
+	--color-surface-card: var(--surface-card);
+	--color-surface-inset: var(--surface-inset);
+	--color-line: var(--border);
+	--color-line-strong: var(--border-strong);
+	--color-ink: var(--ink);
+	--color-ink-muted: var(--ink-muted);
+	--color-ink-subtle: var(--ink-subtle);
+	--color-accent: var(--accent);
+	--color-accent-soft: var(--accent-soft);
+	--color-accent-ink: var(--accent-ink);
+	--color-destructive: var(--destructive);
+	--color-destructive-ink: var(--destructive-ink);
+
+	/* Border radius */
+	--radius-ui-lg: var(--radius-lg);
+	--radius-ui-md: var(--radius-md);
+	--radius-ui-sm: var(--radius-sm);
+
+	/* Shadows */
+	--shadow-ui: var(--shadow);
+}
 
 @layer base {
 	:root {
@@ -166,5 +195,4 @@
 			opacity: 0.35;
 		}
 	}
-
 }
