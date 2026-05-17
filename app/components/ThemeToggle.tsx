@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useLayoutEffect } from "react";
 
 export function ThemeToggle() {
-  const [isLight, setIsLight] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.__themeInit === "light";
-  });
+  const [isLight, setIsLight] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useLayoutEffect(() => {
+    setIsLight(document.documentElement.classList.contains("light"));
+    setMounted(true);
+  }, []);
 
   const toggle = () => {
     setIsLight((prev) => {
@@ -27,13 +30,13 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      className="font-mono text-xs uppercase text-ink-muted bg-transparent border border-line rounded-ui-sm px-4 py-2 w-[120px] cursor-pointer transition-all duration-150 hover:text-ink hover:border-line-strong"
+      className="font-mono text-xs uppercase text-ink-muted bg-transparent border border-line rounded-ui-sm px-4 py-2 w-30 cursor-pointer transition-all duration-150 hover:text-ink hover:border-line-strong"
     >
       <span
         aria-hidden="true"
         className="inline-block w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_8px_var(--accent)] mr-2 align-middle"
       />
-      {isLight ? "Nightfall" : "Daylight"}
+      {mounted ? (isLight ? "Nightfall" : "Daylight") : null}
     </button>
   );
 }

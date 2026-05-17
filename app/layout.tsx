@@ -103,7 +103,7 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         {/* Sync theme from localStorage before first paint to prevent flash */}
         <script
