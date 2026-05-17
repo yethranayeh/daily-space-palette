@@ -1,6 +1,6 @@
 import { APOD_URL } from "@/app/config";
 import { getFormattedDate } from "@/app/utils/getFormattedDate";
-import { cache } from "react";
+import { cacheLife } from "next/cache";
 import "server-only";
 
 export const preload = (date?: string) => {
@@ -26,7 +26,14 @@ export interface Apod {
   msg?: string;
 }
 
-export const getPicture = cache(async (date?: string) => {
+export const getPicture = async (date?: string) => {
+  "use cache";
+  if (date) {
+    cacheLife("max");
+  } else {
+    cacheLife("hours");
+  }
+
   const queryDate = date ?? getFormattedDate();
   console.debug("::FETCH_APOD for date:", queryDate);
   try {
@@ -38,4 +45,4 @@ export const getPicture = cache(async (date?: string) => {
     console.error("::FETCH_APOD -", error);
     return null;
   }
-});
+};

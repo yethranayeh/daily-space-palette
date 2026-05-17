@@ -20,13 +20,6 @@ export function isValidDate(date: string): boolean {
     return false;
   }
 
-  const today = new Date();
-  const todayPST = new Date(today.toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
-  todayPST.setHours(0, 0, 0, 0);
-
-  if (parsed > todayPST) {
-    return false;
-  }
   if (parsed < new Date(MIN_DATE + "T00:00:00")) {
     return false;
   }

@@ -1,7 +1,15 @@
 import { Vibrant } from "node-vibrant/node";
+import { cacheLife } from "next/cache";
 import { getPicture } from "./getPicture";
 
 export async function generatePalette(date?: string) {
+  "use cache";
+  if (date) {
+    cacheLife("max");
+  } else {
+    cacheLife("hours");
+  }
+
   const data = await getPicture(date);
 
   if (data == null) {

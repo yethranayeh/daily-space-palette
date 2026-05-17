@@ -1,6 +1,7 @@
 import type { Apod } from "@/app/lib/getPicture";
 import type { Palette as VibrantPalette } from "@vibrant/color";
 
+import { Suspense } from "react";
 import { AstronomyPicture } from "./AstronomyPicture/AstronomyPicture";
 import { PaletteContainer } from "./Palette/PaletteContainer";
 import { DatePagination } from "./Pagination/DatePagination";
@@ -14,7 +15,7 @@ type SpacePaletteLayoutProps = {
 export function SpacePaletteLayout({ apod, palette, date }: SpacePaletteLayoutProps) {
   return (
     <main
-      className="relative z-[2] px-10 pt-5 pb-[60px] grid gap-7 max-w-[1440px] mx-auto"
+      className="relative z-2 px-10 pt-5 pb-15 grid gap-7 max-w-360 mx-auto"
       style={{ gridTemplateColumns: "minmax(0, 1.55fr) minmax(340px, 1fr)" }}
     >
       {apod ? (
@@ -23,7 +24,9 @@ export function SpacePaletteLayout({ apod, palette, date }: SpacePaletteLayoutPr
         <div className="font-mono text-ink-muted p-10">Could not get Astronomy Picture</div>
       )}
       <div className="flex flex-col gap-4">
-        <DatePagination date={date} />
+        <Suspense fallback={null}>
+          <DatePagination date={date} />
+        </Suspense>
         {palette && <PaletteContainer palette={palette} />}
       </div>
     </main>

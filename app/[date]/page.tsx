@@ -4,15 +4,13 @@ import { notFound } from "next/navigation";
 
 import { generatePalette } from "@/app/lib/generatePalette";
 import { getPicture } from "@/app/lib/getPicture";
-import { isValidDate } from "@/app/utils/validateDate";
+import { isValidDate, MIN_DATE } from "@/app/utils/validateDate";
 import { SITE_NAME, SITE_URL } from "@/app/lib/site";
 
 import { SpacePaletteLayout } from "@/app/components/SpacePaletteLayout";
 
-export const revalidate = 86400;
-
 export async function generateStaticParams() {
-  return [];
+  return [{ date: MIN_DATE }];
 }
 
 interface DatePageProps {
