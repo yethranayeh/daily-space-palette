@@ -1,6 +1,7 @@
 import { Vibrant } from "node-vibrant/node";
 import { cacheLife } from "next/cache";
 import { getPicture } from "./getPicture";
+import { convertPaletteToPlainObjectArray } from "@/app/components/Palette/utils/convertPaletteToPlainObjectArray";
 
 export async function generatePalette(date?: string) {
   "use cache";
@@ -32,7 +33,7 @@ export async function generatePalette(date?: string) {
     const arrayBuffer = await response.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
     const palette = await Vibrant.from(buffer).getPalette();
-    return palette;
+    return convertPaletteToPlainObjectArray(palette);
   } catch (error) {
     console.error("::GENERATE_PALETTE -", error);
     return null;

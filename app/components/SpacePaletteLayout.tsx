@@ -1,5 +1,5 @@
 import type { Apod } from "@/app/lib/getPicture";
-import type { Palette as VibrantPalette } from "@vibrant/color";
+import type { PlainPalette } from "./Palette/utils/convertPaletteToPlainObjectArray";
 
 import { Suspense } from "react";
 import { AstronomyPicture } from "./AstronomyPicture/AstronomyPicture";
@@ -8,7 +8,7 @@ import { DatePagination } from "./Pagination/DatePagination";
 
 type SpacePaletteLayoutProps = {
   apod: Apod | null;
-  palette: VibrantPalette | null;
+  palette: PlainPalette[] | null;
   date: string;
 };
 

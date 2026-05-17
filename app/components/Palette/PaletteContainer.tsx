@@ -1,14 +1,13 @@
-import type { Palette as VibrantPalette } from "@vibrant/color";
+import type { PlainPalette } from "./utils/convertPaletteToPlainObjectArray";
 
 import { Palette } from "./Palette";
-import { convertPaletteToPlainObjectArray } from "./utils/convertPaletteToPlainObjectArray";
 
-export async function PaletteContainer({ palette }: { palette: VibrantPalette }) {
-  if (palette == null) {
+export function PaletteContainer({ palette }: { palette: PlainPalette[] }) {
+  if (palette == null || palette.length === 0) {
     return <div className="font-mono text-ink-muted p-10">Could not generate palette</div>;
   }
 
-  const colors = convertPaletteToPlainObjectArray(palette);
+  const colors = palette;
   const count = colors.length.toString().padStart(2, "0");
 
   return (
