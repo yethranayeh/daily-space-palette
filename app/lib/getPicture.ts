@@ -3,10 +3,6 @@ import { getFormattedDate } from "@/app/utils/getFormattedDate";
 import { cacheLife } from "next/cache";
 import "server-only";
 
-export const preload = (date?: string) => {
-  void getPicture(date);
-};
-
 export interface Apod {
   title: string;
   explanation: string;
