@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { generatePalette } from "@/app/lib/generatePalette";
 import { getPicture } from "@/app/lib/getPicture";
 import { isValidDate, MIN_DATE } from "@/app/utils/validateDate";
-import { SITE_NAME, SITE_URL } from "@/app/lib/site";
+import { SITE_NAME } from "@/app/lib/site";
 
 import { SpacePaletteLayout } from "@/app/components/SpacePaletteLayout";
 
@@ -46,9 +46,6 @@ export async function generateMetadata({ params }: DatePageProps): Promise<Metad
       description: apod?.explanation
         ? apod.explanation.slice(0, 155) + "..."
         : `Color palette from NASA's Astronomy Picture of the Day on ${dateLabel}.`,
-      images: apod?.url
-        ? [{ url: apod.url, alt: apod.title }]
-        : [{ url: `${SITE_URL}/og-default.jpg` }],
       type: "article",
       publishedTime: apod?.date,
     },
