@@ -22,11 +22,21 @@ export async function generatePalette(date?: string) {
     return null;
   }
 
-  const src =
-    data.media_type === "video"
-      ? (data.thumbnail_url ??
-        `https://i1.ytimg.com/vi/${data?.url.split("/").at(-1)}/maxresdefault.jpg`)
-      : data.url;
+  const isYouTubeUrl = (url: string) => url.includes("youtube.com") || url.includes("youtu.be");
+
+  let src = "";
+
+  if (data.media_type !== "video") {
+    src = data.url;
+  }
+
+  if (data.thumbnail_url) {
+    src = data.thumbnail_url;
+  }
+
+  if (isYouTubeUrl(data.url)) {
+    src = `https://i1.ytimg.com/vi/${data.url.split("/").at(-1)}/maxresdefault.jpg`;
+  }
 
   try {
     const response = await fetch(src);

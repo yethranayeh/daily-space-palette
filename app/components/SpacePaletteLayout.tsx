@@ -2,7 +2,7 @@ import type { Apod } from "@/app/lib/getPicture";
 import type { PlainPalette } from "./Palette/utils/convertPaletteToPlainObjectArray";
 
 import { Suspense } from "react";
-import { AstronomyPicture } from "./AstronomyPicture/AstronomyPicture";
+import { APODCard } from "./AstronomyPicture/APODCard";
 import { PaletteContainer } from "./Palette/PaletteContainer";
 import { DatePagination } from "./Pagination/DatePagination";
 
@@ -19,7 +19,7 @@ export function SpacePaletteLayout({ apod, palette, date }: SpacePaletteLayoutPr
       style={{ gridTemplateColumns: "minmax(0, 1.55fr) minmax(340px, 1fr)" }}
     >
       {apod ? (
-        <AstronomyPicture data={apod} />
+        <APODCard data={apod} />
       ) : (
         <div className="font-mono text-ink-muted p-10">Could not get Astronomy Picture</div>
       )}
