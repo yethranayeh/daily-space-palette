@@ -7,8 +7,8 @@ export const ogSize = { width: 1200, height: 630 };
 export const ogContentType = "image/png";
 
 interface ApodImageData {
-  dataUrl: string;
-  buffer: Buffer;
+  dataUrl?: string;
+  buffer?: Buffer;
   title: string;
   date: string;
 }
@@ -31,6 +31,26 @@ async function fetchImageBuffer(url: string): Promise<{ dataUrl: string; buffer:
   }
 }
 
+function resolveImageUrl(json: {
+  media_type: string;
+  url?: string;
+  thumbnail_url?: string;
+}): string | null {
+  if (json.media_type !== "video") return json.url ?? null;
+
+  // Prefer an explicit thumbnail from the API
+  if (json.thumbnail_url) return json.thumbnail_url;
+
+  // For YouTube, derive the thumbnail URL
+  const url = json.url ?? "";
+  if (url.includes("youtube.com") || url.includes("youtu.be")) {
+    return `https://i1.ytimg.com/vi/${url.split("/").at(-1)}/maxresdefault.jpg`;
+  }
+
+  // Self-hosted video with no thumbnail — nothing we can fetch
+  return null;
+}
+
 export async function fetchApodImage(date: string): Promise<ApodImageData | null> {
   try {
     const res = await fetch(`${APOD_URL}?api_key=${process.env.NASA_API}&date=${date}`);
@@ -43,22 +63,22 @@ export async function fetchApodImage(date: string): Promise<ApodImageData | null
       return null;
     }
 
-    const imageUrl =
-      json.media_type === "video"
-        ? (json.thumbnail_url ??
-          `https://i1.ytimg.com/vi/${json.url?.split("/").at(-1)}/maxresdefault.jpg`)
-        : json.url;
+    const metadata: ApodImageData = {
+      title: json.title ?? "",
+      date: json.date ?? "",
+    };
 
+    const imageUrl = resolveImageUrl(json);
     if (!imageUrl) {
-      return null;
+      return metadata; // title/date intact, no image
     }
 
     const img = await fetchImageBuffer(imageUrl);
     if (!img) {
-      return null;
+      return metadata; // same. keep metadata, drop image
     }
 
-    return { ...img, title: json.title ?? "", date: json.date ?? "" };
+    return { ...metadata, ...img };
   } catch {
     return null;
   }
@@ -101,7 +121,9 @@ export async function buildImageResponse(apod: ApodImageData | null): Promise<Im
           day: "numeric",
         })
       : "";
-    colors = await extractPalette(apod.buffer);
+    if (apod.buffer) {
+      colors = await extractPalette(apod.buffer);
+    }
   }
 
   if (colors.length === 0) {
