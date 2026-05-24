@@ -3,7 +3,8 @@ import type { PlainPalette } from "./Palette/utils/convertPaletteToPlainObjectAr
 
 import { Suspense } from "react";
 import { APODCard } from "./AstronomyPicture/APODCard";
-import { PaletteContainer } from "./Palette/PaletteContainer";
+import { PaletteShell } from "./Palette/PaletteShell";
+import { Palette } from "./Palette/Palette";
 import { DatePagination } from "./Pagination/DatePagination";
 
 type SpacePaletteLayoutProps = {
@@ -11,6 +12,32 @@ type SpacePaletteLayoutProps = {
   palette: PlainPalette[] | null;
   date: string;
 };
+
+function isSelfHostedVideo(apod: Apod) {
+  if (apod.media_type !== "video") return false;
+  const isYouTube = apod.url.includes("youtube.com") || apod.url.includes("youtu.be");
+  return !isYouTube && !apod.thumbnail_url;
+}
+
+function PaletteContent({ apod, palette }: { apod: Apod | null; palette: PlainPalette[] | null }) {
+  if (palette) return <Palette colors={palette} />;
+
+  if (apod && isSelfHostedVideo(apod)) {
+    return (
+      <div className="flex flex-col gap-2 py-3">
+        <span className="font-mono text-[11px] tracking-widest uppercase text-ink-subtle">
+          Palette unavailable
+        </span>
+        <p className="font-mono text-[11.5px] leading-relaxed text-ink-muted">
+          Palette generation currently works with images and YouTube video thumbnails. Videos hosted
+          by NASA are not currently supported.
+        </p>
+      </div>
+    );
+  }
+
+  return <p className="font-mono text-[11.5px] text-ink-muted py-3">Could not generate palette.</p>;
+}
 
 export function SpacePaletteLayout({ apod, palette, date }: SpacePaletteLayoutProps) {
   return (
@@ -27,7 +54,9 @@ export function SpacePaletteLayout({ apod, palette, date }: SpacePaletteLayoutPr
         <Suspense fallback={null}>
           <DatePagination date={date} />
         </Suspense>
-        {palette && <PaletteContainer palette={palette} />}
+        <PaletteShell count={palette?.length}>
+          <PaletteContent apod={apod} palette={palette} />
+        </PaletteShell>
       </div>
     </main>
   );
