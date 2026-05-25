@@ -5,6 +5,8 @@ import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
+import Providers from "./providers";
+
 import { Navbar } from "./components/Navbar";
 import { Toaster } from "./components/ui/toaster";
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from "./lib/site";
@@ -119,12 +121,14 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <div className="starfield" aria-hidden="true" />
-        <Navbar />
-        <div className="relative z-[2]">{children}</div>
-        <Toaster />
-        <Analytics />
-        <SpeedInsights />
+        <Providers>
+          <div className="starfield" aria-hidden="true" />
+          <Navbar />
+          <div className="relative z-[2]">{children}</div>
+          <Toaster />
+          <Analytics />
+          <SpeedInsights />
+        </Providers>
       </body>
     </html>
   );
