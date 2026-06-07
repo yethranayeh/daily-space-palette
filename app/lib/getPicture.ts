@@ -33,12 +33,33 @@ export const getPicture = async (date?: string) => {
   const queryDate = date ?? getFormattedDate();
   console.debug("::FETCH_APOD for date:", queryDate);
   try {
-    const res = await fetch(`${APOD_URL}?api_key=${process.env.NASA_API}&date=${queryDate}`);
-    const json = (await res.json()) as Apod;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
 
+    const res = await fetch(`${APOD_URL}?api_key=${process.env.NASA_API}&date=${queryDate}`, {
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+
+    if (!res.ok) {
+      console.error("::FETCH_APOD - Non-OK response:", res.status, res.statusText);
+      return null;
+    }
+
+    const contentType = res.headers.get("content-type") ?? "";
+    if (!contentType.includes("application/json")) {
+      console.error("::FETCH_APOD - Unexpected content type:", contentType);
+      return null;
+    }
+
+    const json = (await res.json()) as Apod;
     return json;
   } catch (error) {
-    console.error("::FETCH_APOD -", error);
+    if (error instanceof Error && error.name === "AbortError") {
+      console.error("::FETCH_APOD - Request timed out for date:", queryDate);
+    } else {
+      console.error("::FETCH_APOD -", error);
+    }
     return null;
   }
 };
