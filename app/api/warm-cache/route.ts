@@ -8,7 +8,7 @@ export const maxDuration = 60;
 export async function GET() {
   await connection();
   try {
-    const apod = await getPicture();
+    const { apod } = await getPicture();
     await generatePalette(apod);
     return NextResponse.json({ ok: true });
   } catch (error) {

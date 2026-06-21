@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: DatePageProps): Promise<Metad
 
   let apod: Apod | null = null;
   try {
-    apod = await getPicture(date);
+    apod = (await getPicture(date)).apod;
   } catch {
     return { title: "Date Not Found" };
   }

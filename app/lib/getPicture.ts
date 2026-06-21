@@ -24,7 +24,19 @@ export interface Apod {
 
 const FETCH_TIMEOUT_MS = 9000;
 
-async function fetchApod(queryDate: string): Promise<Apod | null> {
+// ? Distinguishes a NASA outage from a bad date so the UI can say which is which
+//   unreachable: timed out or network error
+//   upstream:    NASA answered with a server error or rate limit (5xx / 429)
+//   not-found:   NASA rejected the date itself (no picture for that day)
+//   unknown:     anything else
+export type ApodErrorReason = "unreachable" | "upstream" | "not-found" | "unknown";
+
+export interface ApodResult {
+  apod: Apod | null;
+  error: ApodErrorReason | null;
+}
+
+async function fetchApod(queryDate: string): Promise<ApodResult> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
@@ -35,41 +47,42 @@ async function fetchApod(queryDate: string): Promise<Apod | null> {
 
     if (!res.ok) {
       console.error("::FETCH_APOD - Non-OK response:", res.status, res.statusText);
-      return null;
+      const rateLimitedOrServerError = res.status === 429 || res.status >= 500;
+      return { apod: null, error: rateLimitedOrServerError ? "upstream" : "not-found" };
     }
 
     const contentType = res.headers.get("content-type") ?? "";
     if (!contentType.includes("application/json")) {
       console.error("::FETCH_APOD - Unexpected content type:", contentType);
-      return null;
+      return { apod: null, error: "upstream" };
     }
 
     const json = (await res.json()) as Apod;
     if (json.code) {
       console.error(`::FETCH_APOD - API error ${json.code}: ${json.msg}`);
-      return null;
+      return { apod: null, error: "not-found" };
     }
-    return json;
+    return { apod: json, error: null };
   } catch (error) {
     if (error instanceof Error && error.name === "AbortError") {
       console.error("::FETCH_APOD - Request timed out for date:", queryDate);
-    } else {
-      console.error("::FETCH_APOD -", error);
+      return { apod: null, error: "unreachable" };
     }
-    return null;
+    console.error("::FETCH_APOD -", error);
+    return { apod: null, error: "unreachable" };
   } finally {
     clearTimeout(timeoutId);
   }
 }
 
-export const getPicture = async (date?: string): Promise<Apod | null> => {
+export const getPicture = async (date?: string): Promise<ApodResult> => {
   "use cache";
   const queryDate = date ?? getFormattedDate();
   console.debug("::FETCH_APOD for date:", queryDate);
 
-  const apod = await fetchApod(queryDate);
+  const result = await fetchApod(queryDate);
 
-  if (!apod) {
+  if (!result.apod) {
     // ? A failed fetch should expire fast so the next request retries NASA
     cacheLife({ stale: 0, revalidate: 30, expire: 60 });
   } else if (date) {
@@ -78,5 +91,5 @@ export const getPicture = async (date?: string): Promise<Apod | null> => {
     cacheLife("hours");
   }
 
-  return apod;
+  return result;
 };
