@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 @theme inline {
+	/* Breakpoints */
+	--breakpoint-xs: 22rem;
+
 	/* Fonts */
 	--font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 	--font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;

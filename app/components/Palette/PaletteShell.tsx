@@ -11,7 +11,7 @@ export function PaletteShell({ children, count }: PaletteShellProps) {
   return (
     <aside
       aria-label="Extracted palette"
-      className="flex flex-col gap-4 p-4 bg-surface-card border border-line rounded-ui-lg shadow-ui sticky top-5"
+      className="flex flex-col gap-4 p-4 bg-surface-card border border-line rounded-ui-lg shadow-ui lg:sticky lg:top-5"
     >
       <div className="flex items-center justify-between border-b pb-2 border-line">
         <span className="font-mono text-xs tracking-widest uppercase text-ink-muted">

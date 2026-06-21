@@ -112,7 +112,7 @@ export function Palette({ colors }: { colors: Array<PlainPalette> }) {
         ))}
       </div>
 
-      <div className="pt-[14px] border-t border-line flex gap-1.5">
+      <div className="pt-[14px] border-t border-line grid grid-cols-2 sm:flex gap-1.5">
         {(
           [
             { fmt: "css" as ExportFormat, label: "CSS" },
@@ -125,10 +125,10 @@ export function Palette({ colors }: { colors: Array<PlainPalette> }) {
             key={fmt}
             type="button"
             onClick={exportHandler(fmt)}
-            className="flex-1 bg-transparent border border-line text-ink-muted font-mono text-[11px] tracking-[0.1em] uppercase px-[10px] py-[9px] rounded-ui-sm cursor-pointer flex items-center justify-center gap-[7px] transition-all duration-150 hover:text-accent hover:border-accent hover:bg-accent-soft"
+            className="flex-1 min-w-0 bg-transparent border border-line text-ink-muted font-mono text-[11px] tracking-[0.1em] uppercase px-[10px] py-[9px] rounded-ui-sm cursor-pointer flex items-center justify-center gap-[7px] transition-all duration-150 hover:text-accent hover:border-accent hover:bg-accent-soft"
           >
-            <Download size={11} />
-            {label}
+            <Download size={11} className="shrink-0 hidden xs:block" />
+            <span className="truncate">{label}</span>
           </button>
         ))}
       </div>

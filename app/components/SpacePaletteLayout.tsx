@@ -41,10 +41,7 @@ function PaletteContent({ apod, palette }: { apod: Apod | null; palette: PlainPa
 
 export function SpacePaletteLayout({ apod, palette, date }: SpacePaletteLayoutProps) {
   return (
-    <main
-      className="relative z-2 px-10 pt-5 pb-15 grid gap-7 max-w-360 mx-auto"
-      style={{ gridTemplateColumns: "minmax(0, 1.55fr) minmax(340px, 1fr)" }}
-    >
+    <main className="relative z-2 px-5 sm:px-8 lg:px-10 pt-5 pb-15 grid grid-cols-1 lg:grid-cols-[minmax(0,1.55fr)_minmax(340px,1fr)] gap-6 lg:gap-7 max-w-360 mx-auto">
       {apod ? (
         <APODCard data={apod} />
       ) : (
