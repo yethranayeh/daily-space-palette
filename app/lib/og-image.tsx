@@ -57,7 +57,7 @@ function resolveImageUrl(json: {
     return `https://i1.ytimg.com/vi/${url.split("/").at(-1)}/maxresdefault.jpg`;
   }
 
-  // Self-hosted video with no thumbnail — nothing we can fetch
+  // Self-hosted video with no thumbnail - nothing we can fetch
   return null;
 }
 

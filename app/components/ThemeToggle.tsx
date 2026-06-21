@@ -34,9 +34,7 @@ export function ThemeToggle() {
       aria-label={mounted ? (isLight ? "Switch to dark theme" : "Switch to light theme") : "Toggle theme"}
       className="font-mono text-xs uppercase text-ink-muted bg-transparent border border-line rounded-ui-sm cursor-pointer transition-all duration-150 hover:text-ink hover:border-line-strong flex items-center justify-center size-9 sm:size-auto sm:px-4 sm:w-30"
     >
-      {/* Mobile: icon only */}
       {mounted && (isLight ? <Moon size={15} className="sm:hidden" /> : <Sun size={15} className="sm:hidden" />)}
-      {/* Desktop: dot + text label */}
       <span className="hidden sm:inline-flex items-center">
         <span
           aria-hidden="true"

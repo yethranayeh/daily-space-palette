@@ -1,17 +1,12 @@
-import { generatePalette } from "./lib/generatePalette";
-import { getPicture } from "./lib/getPicture";
-import { SpacePaletteLayout } from "./components/SpacePaletteLayout";
-import type { PlainPalette } from "./components/Palette/utils/convertPaletteToPlainObjectArray";
+import { Suspense } from "react";
 
-export default async function Home() {
-  const apod = await getPicture();
+import { PaletteView } from "./components/PaletteView";
+import Loading from "./loading";
 
-  let palette: PlainPalette[] | null = null;
-  try {
-    palette = await generatePalette(apod);
-  } catch {
-    // palette generation failed — show APOD without colors
-  }
-
-  return <SpacePaletteLayout apod={apod} palette={palette} date={apod.date} />;
+export default function Home() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <PaletteView />
+    </Suspense>
+  );
 }
