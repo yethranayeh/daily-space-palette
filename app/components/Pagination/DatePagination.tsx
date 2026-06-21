@@ -33,6 +33,10 @@ function formatTodayLabel(date: Date): string {
 
 export function DatePagination({ date }: { date: string }) {
   const currentDate = parseDate(date);
+  if (isNaN(currentDate.getTime())) {
+    return null;
+  }
+
   const minDate = parseDate(MIN_DATE);
   const today = new Date();
   today.setHours(0, 0, 0, 0);

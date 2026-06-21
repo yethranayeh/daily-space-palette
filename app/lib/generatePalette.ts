@@ -1,23 +1,24 @@
 import { Vibrant } from "node-vibrant/node";
 import { cacheLife } from "next/cache";
-import { getPicture } from "./getPicture";
+import type { Apod } from "./getPicture";
+import { getFormattedDate } from "@/app/utils/getFormattedDate";
 import { convertPaletteToPlainObjectArray } from "@/app/components/Palette/utils/convertPaletteToPlainObjectArray";
 
-export async function generatePalette(date?: string) {
+export async function generatePalette(apod: Apod | null) {
   "use cache";
-  if (date) {
+  if (apod != null && apod.date !== getFormattedDate()) {
     cacheLife("max");
   } else {
     cacheLife("hours");
   }
 
-  const data = await getPicture(date);
-
-  if (data == null) {
+  if (apod == null) {
     return null;
-  } else if (data.code) {
-    if (data.code === 400) {
-      console.error("::GENERATE_PALETTE - 400 -", data?.msg);
+  }
+
+  if (apod.code) {
+    if (apod.code === 400) {
+      console.error("::GENERATE_PALETTE - 400 -", apod.msg);
     }
     return null;
   }
@@ -26,23 +27,23 @@ export async function generatePalette(date?: string) {
 
   let src = "";
 
-  if (data.media_type !== "video") {
-    src = data.url;
+  if (apod.media_type !== "video") {
+    src = apod.url;
   }
 
-  if (data.thumbnail_url) {
-    src = data.thumbnail_url;
+  if (apod.thumbnail_url) {
+    src = apod.thumbnail_url;
   }
 
-  if (isYouTubeUrl(data.url)) {
-    src = `https://i1.ytimg.com/vi/${data.url.split("/").at(-1)}/maxresdefault.jpg`;
+  if (isYouTubeUrl(apod.url)) {
+    src = `https://i1.ytimg.com/vi/${apod.url.split("/").at(-1)}/maxresdefault.jpg`;
   }
 
   try {
     const response = await fetch(src);
     const arrayBuffer = await response.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
-    const palette = await Vibrant.from(buffer).getPalette();
+    const palette = await Vibrant.from(buffer).maxDimension(400).getPalette();
     return convertPaletteToPlainObjectArray(palette);
   } catch (error) {
     console.error("::GENERATE_PALETTE -", error);

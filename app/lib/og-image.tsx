@@ -13,9 +13,19 @@ interface ApodImageData {
   date: string;
 }
 
+async function fetchWithTimeout(url: string, ms: number): Promise<Response> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), ms);
+  try {
+    return await fetch(url, { signal: controller.signal });
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
 async function fetchImageBuffer(url: string): Promise<{ dataUrl: string; buffer: Buffer } | null> {
   try {
-    const imgRes = await fetch(url);
+    const imgRes = await fetchWithTimeout(url, 8000);
     if (!imgRes.ok) {
       return null;
     }
@@ -53,7 +63,7 @@ function resolveImageUrl(json: {
 
 export async function fetchApodImage(date: string): Promise<ApodImageData | null> {
   try {
-    const res = await fetch(`${APOD_URL}?api_key=${process.env.NASA_API}&date=${date}`);
+    const res = await fetchWithTimeout(`${APOD_URL}?api_key=${process.env.NASA_API}&date=${date}`, 8000);
     if (!res.ok) {
       return null;
     }
@@ -86,7 +96,7 @@ export async function fetchApodImage(date: string): Promise<ApodImageData | null
 
 export async function extractPalette(buffer: Buffer): Promise<string[]> {
   try {
-    const palette = await Vibrant.from(buffer).getPalette();
+    const palette = await Vibrant.from(buffer).maxDimension(400).getPalette();
     const swatches = [
       palette.Vibrant,
       palette.Muted,

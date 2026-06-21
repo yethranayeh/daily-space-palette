@@ -66,11 +66,13 @@ export default async function DatePage({ params }: DatePageProps) {
     notFound();
   }
 
-  const [apod, palette] = await Promise.all([getPicture(date), generatePalette(date)]);
+  const apod = await getPicture(date);
 
   if (apod == null || "code" in apod) {
     notFound();
   }
+
+  const palette = await generatePalette(apod);
 
   return <SpacePaletteLayout apod={apod} palette={palette} date={date} />;
 }

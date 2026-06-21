@@ -4,6 +4,7 @@ import { getFormattedDate } from "@/app/utils/getFormattedDate";
 
 export const runtime = "nodejs";
 export const revalidate = 86400;
+export const maxDuration = 30;
 export const alt = `${SITE_NAME} generated palette from NASA's APOD`;
 export const size = ogSize;
 export const contentType = ogContentType;

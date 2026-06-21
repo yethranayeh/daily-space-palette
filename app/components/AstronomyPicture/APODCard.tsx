@@ -25,7 +25,7 @@ export async function APODCard({ data }: { data: Apod }) {
       aria-label="Astronomy picture of the day"
       className="bg-surface-card border border-line rounded-ui-lg overflow-hidden shadow-ui"
     >
-      <div className="relative aspect-16/10 overflow-hidden bg-[#0a0a14]">
+      <div className="relative aspect-16/10 min-h-[220px] overflow-hidden bg-[#0a0a14]">
         <Media {...data} />
 
         {data.hdurl && (
