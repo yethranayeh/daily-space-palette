@@ -36,8 +36,10 @@ export async function generatePalette(apod: Apod | null) {
     src = `https://i1.ytimg.com/vi/${apod.url.split("/").at(-1)}/maxresdefault.jpg`;
   }
 
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 9000);
   try {
-    const response = await fetch(src);
+    const response = await fetch(src, { signal: controller.signal });
     const arrayBuffer = await response.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
     const palette = await Vibrant.from(buffer).maxDimension(400).getPalette();
@@ -45,5 +47,7 @@ export async function generatePalette(apod: Apod | null) {
   } catch (error) {
     console.error("::GENERATE_PALETTE -", error);
     throw error;
+  } finally {
+    clearTimeout(timeoutId);
   }
 }

@@ -22,43 +22,61 @@ export interface Apod {
   msg?: string;
 }
 
-export const getPicture = async (date?: string) => {
+const FETCH_TIMEOUT_MS = 9000;
+
+async function fetchApod(queryDate: string): Promise<Apod | null> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+
+  try {
+    const res = await fetch(`${APOD_URL}?api_key=${process.env.NASA_API}&date=${queryDate}`, {
+      signal: controller.signal,
+    });
+
+    if (!res.ok) {
+      console.error("::FETCH_APOD - Non-OK response:", res.status, res.statusText);
+      return null;
+    }
+
+    const contentType = res.headers.get("content-type") ?? "";
+    if (!contentType.includes("application/json")) {
+      console.error("::FETCH_APOD - Unexpected content type:", contentType);
+      return null;
+    }
+
+    const json = (await res.json()) as Apod;
+    if (json.code) {
+      console.error(`::FETCH_APOD - API error ${json.code}: ${json.msg}`);
+      return null;
+    }
+    return json;
+  } catch (error) {
+    if (error instanceof Error && error.name === "AbortError") {
+      console.error("::FETCH_APOD - Request timed out for date:", queryDate);
+    } else {
+      console.error("::FETCH_APOD -", error);
+    }
+    return null;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+export const getPicture = async (date?: string): Promise<Apod | null> => {
   "use cache";
-  if (date) {
+  const queryDate = date ?? getFormattedDate();
+  console.debug("::FETCH_APOD for date:", queryDate);
+
+  const apod = await fetchApod(queryDate);
+
+  if (!apod) {
+    // ? A failed fetch should expire fast so the next request retries NASA
+    cacheLife({ stale: 0, revalidate: 30, expire: 60 });
+  } else if (date) {
     cacheLife("max");
   } else {
     cacheLife("hours");
   }
 
-  const queryDate = date ?? getFormattedDate();
-  console.debug("::FETCH_APOD for date:", queryDate);
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000);
-
-    const res = await fetch(`${APOD_URL}?api_key=${process.env.NASA_API}&date=${queryDate}`, {
-      signal: controller.signal,
-    });
-    clearTimeout(timeoutId);
-
-    if (!res.ok) {
-      throw new Error(`::FETCH_APOD - Non-OK response: ${res.status} ${res.statusText}`);
-    }
-
-    const contentType = res.headers.get("content-type") ?? "";
-    if (!contentType.includes("application/json")) {
-      throw new Error(`::FETCH_APOD - Unexpected content type: ${contentType}`);
-    }
-
-    const json = (await res.json()) as Apod;
-    if (json.code) {
-      throw new Error(`::FETCH_APOD - API error ${json.code}: ${json.msg}`);
-    }
-    return json;
-  } catch (error) {
-    if (error instanceof Error && error.name === "AbortError") {
-      throw new Error(`::FETCH_APOD - Request timed out for date: ${queryDate}`);
-    }
-    throw error;
-  }
+  return apod;
 };
