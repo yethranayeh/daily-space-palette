@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import type { Apod } from "@/app/lib/getPicture";
+import type { PlainPalette } from "@/app/components/Palette/utils/convertPaletteToPlainObjectArray";
 
 import { notFound } from "next/navigation";
 
@@ -26,7 +28,12 @@ export async function generateMetadata({ params }: DatePageProps): Promise<Metad
     };
   }
 
-  const apod = await getPicture(date);
+  let apod: Apod | null = null;
+  try {
+    apod = await getPicture(date);
+  } catch {
+    return { title: "Date Not Found" };
+  }
 
   const dateLabel = apod?.date
     ? new Date(apod.date + "T00:00:00").toLocaleDateString("en-US", {
@@ -66,13 +73,19 @@ export default async function DatePage({ params }: DatePageProps) {
     notFound();
   }
 
-  const apod = await getPicture(date);
-
-  if (apod == null || "code" in apod) {
+  let apod: Apod;
+  try {
+    apod = await getPicture(date);
+  } catch {
     notFound();
   }
 
-  const palette = await generatePalette(apod);
+  let palette: PlainPalette[] | null = null;
+  try {
+    palette = await generatePalette(apod);
+  } catch {
+    // palette generation failed — show APOD without colors
+  }
 
   return <SpacePaletteLayout apod={apod} palette={palette} date={date} />;
 }

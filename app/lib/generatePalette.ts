@@ -13,14 +13,11 @@ export async function generatePalette(apod: Apod | null) {
   }
 
   if (apod == null) {
-    return null;
+    throw new Error("::GENERATE_PALETTE - apod is null");
   }
 
   if (apod.code) {
-    if (apod.code === 400) {
-      console.error("::GENERATE_PALETTE - 400 -", apod.msg);
-    }
-    return null;
+    throw new Error(`::GENERATE_PALETTE - API error ${apod.code}: ${apod.msg}`);
   }
 
   const isYouTubeUrl = (url: string) => url.includes("youtube.com") || url.includes("youtu.be");
@@ -47,6 +44,6 @@ export async function generatePalette(apod: Apod | null) {
     return convertPaletteToPlainObjectArray(palette);
   } catch (error) {
     console.error("::GENERATE_PALETTE -", error);
-    return null;
+    throw error;
   }
 }

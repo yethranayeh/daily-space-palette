@@ -42,24 +42,23 @@ export const getPicture = async (date?: string) => {
     clearTimeout(timeoutId);
 
     if (!res.ok) {
-      console.error("::FETCH_APOD - Non-OK response:", res.status, res.statusText);
-      return null;
+      throw new Error(`::FETCH_APOD - Non-OK response: ${res.status} ${res.statusText}`);
     }
 
     const contentType = res.headers.get("content-type") ?? "";
     if (!contentType.includes("application/json")) {
-      console.error("::FETCH_APOD - Unexpected content type:", contentType);
-      return null;
+      throw new Error(`::FETCH_APOD - Unexpected content type: ${contentType}`);
     }
 
     const json = (await res.json()) as Apod;
+    if (json.code) {
+      throw new Error(`::FETCH_APOD - API error ${json.code}: ${json.msg}`);
+    }
     return json;
   } catch (error) {
     if (error instanceof Error && error.name === "AbortError") {
-      console.error("::FETCH_APOD - Request timed out for date:", queryDate);
-    } else {
-      console.error("::FETCH_APOD -", error);
+      throw new Error(`::FETCH_APOD - Request timed out for date: ${queryDate}`);
     }
-    return null;
+    throw error;
   }
 };
