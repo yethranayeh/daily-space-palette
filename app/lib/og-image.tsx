@@ -107,6 +107,7 @@ export async function buildImageResponse(apod: ApodImageData | null): Promise<Im
       }}
     >
       {bgImage && (
+        // eslint-disable-next-line @next/next/no-img-element -- this tree is rendered by Satori, next/image cannot run there
         <img
           src={bgImage}
           alt=""

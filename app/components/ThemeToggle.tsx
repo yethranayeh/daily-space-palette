@@ -1,30 +1,41 @@
 "use client";
 
-import { useState, useLayoutEffect } from "react";
+import { useSyncExternalStore } from "react";
 import { Moon, Sun } from "lucide-react";
 
-export function ThemeToggle() {
-  const [isLight, setIsLight] = useState(false);
-  const [mounted, setMounted] = useState(false);
+const THEME_EVENT = "themechange";
 
-  useLayoutEffect(() => {
-    setIsLight(document.documentElement.classList.contains("light"));
-    setMounted(true);
-  }, []);
+function subscribe(onChange: () => void) {
+  window.addEventListener(THEME_EVENT, onChange);
+  return () => window.removeEventListener(THEME_EVENT, onChange);
+}
+
+function getSnapshot() {
+  return document.documentElement.classList.contains("light");
+}
+
+// ? The server cannot read localStorage or the html class, so it hands back null
+//   and the toggle renders no theme state until hydration resolves the real value
+function getServerSnapshot() {
+  return null;
+}
+
+export function ThemeToggle() {
+  const isLight = useSyncExternalStore<boolean | null>(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot,
+  );
+  const mounted = isLight !== null;
 
   const toggle = () => {
-    setIsLight((prev) => {
-      const next = !prev;
-      if (next) {
-        document.documentElement.classList.add("light");
-        document.documentElement.classList.remove("dark");
-      } else {
-        document.documentElement.classList.add("dark");
-        document.documentElement.classList.remove("light");
-      }
-      localStorage.setItem("theme", next ? "light" : "dark");
-      return next;
-    });
+    const root = document.documentElement;
+    const next = !root.classList.contains("light");
+
+    root.classList.toggle("light", next);
+    root.classList.toggle("dark", !next);
+    localStorage.setItem("theme", next ? "light" : "dark");
+    window.dispatchEvent(new Event(THEME_EVENT));
   };
 
   return (
