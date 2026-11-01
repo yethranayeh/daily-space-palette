@@ -4,6 +4,7 @@ import { cacheLife } from "next/cache";
 import { Vibrant } from "node-vibrant/node";
 
 import { APOD_API_URL, APOD_IMAGE_MAX_WIDTH } from "@/app/config";
+import { capImageWidth, toApiDate } from "@/app/lib/apod";
 import { splitExplanation } from "@/app/lib/nasaHtml";
 import { getFormattedDate } from "@/app/utils/getFormattedDate";
 import { convertPaletteToPlainObjectArray } from "@/app/components/Palette/utils/convertPaletteToPlainObjectArray";
@@ -62,34 +63,6 @@ interface PictureResult {
   error: PictureErrorReason | null;
 }
 
-// ? The WordPress route takes YYMMDD, while the rest of the app speaks YYYY-MM-DD
-function toApiDate(date: string) {
-  return date.replace(/-/g, "").slice(2);
-}
-
-function capImageWidth(url: string) {
-  if (!url) {
-    return url;
-  }
-
-  try {
-    const parsed = new URL(url);
-    if (!parsed.pathname.startsWith("/dynamicimage/")) {
-      return url;
-    }
-
-    const requested = Number(parsed.searchParams.get("w"));
-    if (!Number.isFinite(requested) || requested <= APOD_IMAGE_MAX_WIDTH) {
-      return url;
-    }
-
-    parsed.search = `?w=${APOD_IMAGE_MAX_WIDTH}&fit=clip`;
-    return parsed.toString();
-  } catch {
-    return url;
-  }
-}
-
 // ? The real video URL only exists inside basic_html; hdurl is just the poster
 function parseVideo(basicHtml: string): { videoUrl: string | null; embedUrl: string | null } {
   const source = basicHtml.match(/<source[^>]+src="([^"]+)"/i);
@@ -119,7 +92,7 @@ function toPicture(entry: ApodEntry): Picture {
     alt: entry.alt || entry.title,
     credit: entry.credit || entry.copyright || "",
     mediaType,
-    imageUrl: capImageWidth(entry.hdurl),
+    imageUrl: capImageWidth(entry.hdurl, APOD_IMAGE_MAX_WIDTH),
     downloadUrl: entry.hdurl,
     permalink: entry.permalink,
     videoUrl: media.videoUrl,
