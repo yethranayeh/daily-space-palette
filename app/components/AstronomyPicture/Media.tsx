@@ -1,4 +1,4 @@
-import type { Picture } from "@/app/lib/getPicture";
+import type { Picture } from "@/app/lib/getDailyRecord";
 
 import Image from "next/image";
 

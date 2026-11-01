@@ -1,20 +1,8 @@
-import type { PlainPalette } from "@/app/components/Palette/utils/convertPaletteToPlainObjectArray";
-
-import { generatePalette } from "@/app/lib/generatePalette";
-import { getPicture } from "@/app/lib/getPicture";
-import { getFormattedDate } from "@/app/utils/getFormattedDate";
+import { getDailyRecord } from "@/app/lib/getDailyRecord";
 import { SpacePaletteLayout } from "@/app/components/SpacePaletteLayout";
 
-export async function PaletteView({ date }: { date?: string }) {
-  const { picture, error } = await getPicture(date);
-  const today = getFormattedDate();
-
-  let palette: PlainPalette[] | null = null;
-  if (picture) {
-    try {
-      palette = await generatePalette(picture);
-    } catch {}
-  }
+export async function PaletteView({ date }: { date: string }) {
+  const { picture, error, palette, isLatest } = await getDailyRecord(date);
 
   // ? Fall back to the requested date so navigation survives a failed fetch.
   return (
@@ -22,8 +10,8 @@ export async function PaletteView({ date }: { date?: string }) {
       picture={picture}
       pictureError={error}
       palette={palette}
-      date={picture?.date ?? date ?? today}
-      today={today}
+      date={picture?.date ?? date}
+      isLatest={isLatest}
     />
   );
 }

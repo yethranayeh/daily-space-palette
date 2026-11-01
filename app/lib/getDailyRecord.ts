@@ -1,7 +1,12 @@
+import type { PlainPalette } from "@/app/components/Palette/utils/convertPaletteToPlainObjectArray";
+
+import { cacheLife } from "next/cache";
+import { Vibrant } from "node-vibrant/node";
+
 import { APOD_API_URL, APOD_IMAGE_MAX_WIDTH } from "@/app/config";
 import { splitExplanation } from "@/app/lib/nasaHtml";
 import { getFormattedDate } from "@/app/utils/getFormattedDate";
-import { cacheLife } from "next/cache";
+import { convertPaletteToPlainObjectArray } from "@/app/components/Palette/utils/convertPaletteToPlainObjectArray";
 import "server-only";
 
 // ? Raw shape of a science.nasa.gov WordPress "apod-basic" post. It stays local
@@ -35,6 +40,14 @@ export interface Picture {
   nextPicture: { text: string; href: string | null } | null;
 }
 
+export interface DailyRecord {
+  picture: Picture | null;
+  error: PictureErrorReason | null;
+  palette: PlainPalette[] | null;
+  paletteFailed: boolean;
+  isLatest: boolean;
+}
+
 const FETCH_TIMEOUT_MS = 9000;
 
 // ? Distinguishes a NASA outage from a bad date so the UI can say which is which
@@ -44,7 +57,7 @@ const FETCH_TIMEOUT_MS = 9000;
 //   unknown:     anything else
 export type PictureErrorReason = "unreachable" | "upstream" | "not-found" | "unknown";
 
-export interface PictureResult {
+interface PictureResult {
   picture: Picture | null;
   error: PictureErrorReason | null;
 }
@@ -115,12 +128,12 @@ function toPicture(entry: ApodEntry): Picture {
   };
 }
 
-async function fetchApod(queryDate: string): Promise<PictureResult> {
+async function fetchApod(date: string): Promise<PictureResult> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
   try {
-    const res = await fetch(`${APOD_API_URL}/${toApiDate(queryDate)}`, {
+    const res = await fetch(`${APOD_API_URL}/${toApiDate(date)}`, {
       signal: controller.signal,
     });
 
@@ -149,7 +162,7 @@ async function fetchApod(queryDate: string): Promise<PictureResult> {
     return { picture: toPicture(entry), error: null };
   } catch (error) {
     if (error instanceof Error && error.name === "AbortError") {
-      console.error("::FETCH_APOD - Request timed out for date:", queryDate);
+      console.error("::FETCH_APOD - Request timed out for date:", date);
       return { picture: null, error: "unreachable" };
     }
     console.error("::FETCH_APOD -", error);
@@ -159,21 +172,57 @@ async function fetchApod(queryDate: string): Promise<PictureResult> {
   }
 }
 
-export const getPicture = async (date?: string): Promise<PictureResult> => {
-  "use cache";
-  const queryDate = date ?? getFormattedDate();
-  console.debug("::FETCH_APOD for date:", queryDate);
-
-  const result = await fetchApod(queryDate);
-
-  if (!result.picture) {
-    // ? A failed fetch should expire fast so the next request retries NASA
-    cacheLife({ stale: 0, revalidate: 30, expire: 60 });
-  } else if (date) {
-    cacheLife("max");
-  } else {
-    cacheLife("hours");
+// ? Returns null instead of throwing so a failed extraction is cached with the
+//   record; rethrowing would re-download the image on every request
+async function extractPalette(picture: Picture): Promise<PlainPalette[] | null> {
+  if (!picture.imageUrl) {
+    return null;
   }
 
-  return result;
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+
+  try {
+    const res = await fetch(picture.imageUrl, { signal: controller.signal });
+    if (!res.ok) {
+      return null;
+    }
+
+    const buffer = Buffer.from(await res.arrayBuffer());
+    const palette = await Vibrant.from(buffer).maxDimension(400).getPalette();
+    return convertPaletteToPlainObjectArray(palette);
+  } catch (error) {
+    console.error("::EXTRACT_PALETTE -", error);
+    return null;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+export const getDailyRecord = async (date: string): Promise<DailyRecord> => {
+  "use cache";
+  console.debug("::GET_DAILY_RECORD for date:", date);
+
+  // ? The clock is read here because a "use cache" body may, while a prerendered
+  //   component may not. ISO strings compare chronologically
+  const today = getFormattedDate();
+  const isLatest = date >= today;
+
+  const { picture, error } = await fetchApod(date);
+  const palette = picture ? await extractPalette(picture) : null;
+  const paletteFailed = picture != null && palette == null;
+
+  if (!picture) {
+    // ? A failed fetch should expire fast so the next request retries NASA
+    cacheLife({ stale: 0, revalidate: 30, expire: 60 });
+  } else if (paletteFailed) {
+    // ? Short enough to recover from a bad image, long enough not to retry every request
+    cacheLife({ stale: 0, revalidate: 3600, expire: 86400 });
+  } else if (isLatest) {
+    cacheLife("hours");
+  } else {
+    cacheLife("max");
+  }
+
+  return { picture, error, palette, paletteFailed, isLatest };
 };

@@ -31,20 +31,18 @@ function formatDateLabel(date: Date): string {
   return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
-export function DatePagination({ date, today }: { date: string; today: string }) {
+export function DatePagination({ date, isLatest }: { date: string; isLatest: boolean }) {
   const currentDate = parseDate(date);
   if (isNaN(currentDate.getTime())) {
     return null;
   }
 
   const minDate = parseDate(MIN_DATE);
-  const todayDate = parseDate(today);
 
   const prevDate = formatDate(addDays(currentDate, -1));
   const nextDate = formatDate(addDays(currentDate, 1));
 
   const isAtMinDate = currentDate <= minDate;
-  const isAtToday = currentDate >= todayDate;
 
   return (
     <Pagination>
@@ -61,7 +59,7 @@ export function DatePagination({ date, today }: { date: string; today: string })
           </PaginationLink>
         </PaginationItem>
 
-        {!isAtToday && (
+        {!isLatest && (
           <PaginationItem>
             <PaginationNext href={`/${nextDate}`} />
           </PaginationItem>

@@ -1,14 +1,13 @@
 import { ImageResponse } from "next/og";
-import { getPicture } from "@/app/lib/getPicture";
+import { getDailyRecord } from "@/app/lib/getDailyRecord";
 import { SITE_NAME } from "@/app/lib/site";
-import { Vibrant } from "node-vibrant/node";
 
 export const ogSize = { width: 1200, height: 630 };
 export const ogContentType = "image/png";
 
 interface ApodImageData {
   dataUrl?: string;
-  buffer?: Buffer;
+  colors?: string[];
   title: string;
   date: string;
 }
@@ -23,19 +22,17 @@ async function fetchWithTimeout(url: string, ms: number): Promise<Response> {
   }
 }
 
-async function fetchImageBuffer(url: string): Promise<{ dataUrl: string; buffer: Buffer } | null> {
+async function fetchImageDataUrl(url: string): Promise<{ dataUrl: string } | null> {
   try {
     const imgRes = await fetchWithTimeout(url, 8000);
     if (!imgRes.ok) {
       return null;
     }
 
-    const imgBuffer = await imgRes.arrayBuffer();
-    const buffer = Buffer.from(imgBuffer);
-    const base64 = buffer.toString("base64");
+    const buffer = Buffer.from(await imgRes.arrayBuffer());
     const mimeType = imgRes.headers.get("content-type") ?? "image/jpeg";
-    const dataUrl = `data:${mimeType};base64,${base64}`;
-    return { dataUrl, buffer };
+    const dataUrl = `data:${mimeType};base64,${buffer.toString("base64")}`;
+    return { dataUrl };
   } catch {
     return null;
   }
@@ -43,7 +40,7 @@ async function fetchImageBuffer(url: string): Promise<{ dataUrl: string; buffer:
 
 export async function fetchApodImage(date: string): Promise<ApodImageData | null> {
   try {
-    const { picture } = await getPicture(date);
+    const { picture, palette } = await getDailyRecord(date);
     if (!picture) {
       return null;
     }
@@ -51,39 +48,21 @@ export async function fetchApodImage(date: string): Promise<ApodImageData | null
     const metadata: ApodImageData = {
       title: picture.title,
       date: picture.date,
+      colors: palette?.map((color) => color.hex),
     };
 
     if (!picture.imageUrl) {
       return metadata;
     }
 
-    const img = await fetchImageBuffer(picture.imageUrl);
-    if (!img) {
+    const image = await fetchImageDataUrl(picture.imageUrl);
+    if (!image) {
       return metadata; // keep metadata, drop image
     }
 
-    return { ...metadata, ...img };
+    return { ...metadata, ...image };
   } catch {
     return null;
-  }
-}
-
-export async function extractPalette(buffer: Buffer): Promise<string[]> {
-  try {
-    const palette = await Vibrant.from(buffer).maxDimension(400).getPalette();
-    const swatches = [
-      palette.Vibrant,
-      palette.Muted,
-      palette.DarkVibrant,
-      palette.DarkMuted,
-      palette.LightVibrant,
-    ]
-      .filter((s) => s != null)
-      .map((s) => s!.hex)
-      .slice(0, 5);
-    return swatches;
-  } catch {
-    return [];
   }
 }
 
@@ -105,8 +84,8 @@ export async function buildImageResponse(apod: ApodImageData | null): Promise<Im
           day: "numeric",
         })
       : "";
-    if (apod.buffer) {
-      colors = await extractPalette(apod.buffer);
+    if (apod.colors?.length) {
+      colors = apod.colors;
     }
   }
 

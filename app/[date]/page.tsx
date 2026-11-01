@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import type { Picture } from "@/app/lib/getPicture";
+import type { Picture } from "@/app/lib/getDailyRecord";
 
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 
-import { getPicture } from "@/app/lib/getPicture";
+import { getDailyRecord } from "@/app/lib/getDailyRecord";
 import { toPlainText } from "@/app/lib/nasaHtml";
 import { isValidDate } from "@/app/utils/validateDate";
 import { SITE_NAME } from "@/app/lib/site";
@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: DatePageProps): Promise<Metad
 
   let picture: Picture | null = null;
   try {
-    picture = (await getPicture(date)).picture;
+    picture = (await getDailyRecord(date)).picture;
   } catch {
     return { title: "Date Not Found" };
   }
