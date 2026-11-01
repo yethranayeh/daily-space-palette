@@ -1,9 +1,9 @@
-import type { Apod, ApodErrorReason } from "@/app/lib/getPicture";
+import type { Picture, PictureErrorReason } from "@/app/lib/getPicture";
 import type { PlainPalette } from "./Palette/utils/convertPaletteToPlainObjectArray";
 import type { LucideIcon } from "lucide-react";
 
 import { Suspense } from "react";
-import { CalendarX2, Clapperboard, Droplets, SatelliteDish, TriangleAlert } from "lucide-react";
+import { CalendarX2, Droplets, SatelliteDish, TriangleAlert } from "lucide-react";
 
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { APODCard } from "./AstronomyPicture/APODCard";
@@ -12,8 +12,8 @@ import { Palette } from "./Palette/Palette";
 import { DatePagination } from "./Pagination/DatePagination";
 
 type SpacePaletteLayoutProps = {
-  apod: Apod | null;
-  apodError: ApodErrorReason | null;
+  picture: Picture | null;
+  pictureError: PictureErrorReason | null;
   palette: PlainPalette[] | null;
   date: string;
 };
@@ -25,14 +25,6 @@ type AlertContent = {
   description: string;
 };
 
-function isSelfHostedVideo(apod: Apod) {
-  if (apod.media_type !== "video") {
-    return false;
-  }
-  const isYouTube = apod.url.includes("youtube.com") || apod.url.includes("youtu.be");
-  return !isYouTube && !apod.thumbnail_url;
-}
-
 function formatDate(date: string) {
   const parsed = new Date(date + "T00:00:00");
   if (Number.isNaN(parsed.getTime())) {
@@ -42,7 +34,7 @@ function formatDate(date: string) {
   return parsed.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 }
 
-function pictureAlert(reason: ApodErrorReason | null, date: string): AlertContent {
+function pictureAlert(reason: PictureErrorReason | null, date: string): AlertContent {
   switch (reason) {
     case "unreachable":
       return {
@@ -77,23 +69,13 @@ function pictureAlert(reason: ApodErrorReason | null, date: string): AlertConten
 }
 
 function paletteAlert(
-  apod: Apod | null,
-  apodError: ApodErrorReason | null,
+  picture: Picture | null,
+  pictureError: PictureErrorReason | null,
   date: string,
 ): AlertContent {
-  if (!apod) {
+  if (!picture) {
     // ? When the picture itself failed, mirror that reason rather than blaming the palette.
-    return pictureAlert(apodError, date);
-  }
-
-  if (isSelfHostedVideo(apod)) {
-    return {
-      variant: "default",
-      icon: Clapperboard,
-      title: "Palette unavailable",
-      description:
-        "Palette generation works with images and YouTube video thumbnails. Videos hosted by NASA are not currently supported.",
-    };
+    return pictureAlert(pictureError, date);
   }
 
   return {
@@ -116,10 +98,15 @@ function StatusAlert({ variant, icon: Icon, title, description }: AlertContent) 
   );
 }
 
-export function SpacePaletteLayout({ apod, apodError, palette, date }: SpacePaletteLayoutProps) {
+export function SpacePaletteLayout({
+  picture,
+  pictureError,
+  palette,
+  date,
+}: SpacePaletteLayoutProps) {
   return (
     <main className="relative z-2 px-5 sm:px-8 lg:px-10 pt-5 pb-15 grid grid-cols-1 lg:grid-cols-[minmax(0,1.55fr)_minmax(340px,1fr)] gap-6 lg:gap-7 max-w-360 mx-auto">
-      {apod ? <APODCard data={apod} /> : <StatusAlert {...pictureAlert(apodError, date)} />}
+      {picture ? <APODCard picture={picture} /> : <StatusAlert {...pictureAlert(pictureError, date)} />}
       <div className="flex flex-col gap-4">
         <Suspense fallback={null}>
           <DatePagination date={date} />
@@ -128,7 +115,7 @@ export function SpacePaletteLayout({ apod, apodError, palette, date }: SpacePale
           {palette ? (
             <Palette colors={palette} />
           ) : (
-            <StatusAlert {...paletteAlert(apod, apodError, date)} />
+            <StatusAlert {...paletteAlert(picture, pictureError, date)} />
           )}
         </PaletteShell>
       </div>

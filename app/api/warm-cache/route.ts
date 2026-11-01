@@ -8,8 +8,8 @@ export const maxDuration = 60;
 export async function GET() {
   await connection();
   try {
-    const { apod } = await getPicture();
-    await generatePalette(apod);
+    const { picture } = await getPicture();
+    await generatePalette(picture);
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("::WARM_CACHE -", error);

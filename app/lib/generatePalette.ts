@@ -1,45 +1,31 @@
-import { Vibrant } from "node-vibrant/node";
-import { cacheLife } from "next/cache";
-import type { Apod } from "./getPicture";
-import { getFormattedDate } from "@/app/utils/getFormattedDate";
-import { convertPaletteToPlainObjectArray } from "@/app/components/Palette/utils/convertPaletteToPlainObjectArray";
+import type { Picture } from "./getPicture";
 
-export async function generatePalette(apod: Apod | null) {
+import { cacheLife } from "next/cache";
+import { Vibrant } from "node-vibrant/node";
+
+import { convertPaletteToPlainObjectArray } from "@/app/components/Palette/utils/convertPaletteToPlainObjectArray";
+import { getFormattedDate } from "@/app/utils/getFormattedDate";
+
+export async function generatePalette(picture: Picture | null) {
   "use cache";
-  if (apod != null && apod.date !== getFormattedDate()) {
+  if (picture != null && picture.date !== getFormattedDate()) {
     cacheLife("max");
   } else {
     cacheLife("hours");
   }
 
-  if (apod == null) {
-    throw new Error("::GENERATE_PALETTE - apod is null");
+  if (picture == null) {
+    throw new Error("::GENERATE_PALETTE - picture is null");
   }
 
-  if (apod.code) {
-    throw new Error(`::GENERATE_PALETTE - API error ${apod.code}: ${apod.msg}`);
-  }
-
-  const isYouTubeUrl = (url: string) => url.includes("youtube.com") || url.includes("youtu.be");
-
-  let src = "";
-
-  if (apod.media_type !== "video") {
-    src = apod.url;
-  }
-
-  if (apod.thumbnail_url) {
-    src = apod.thumbnail_url;
-  }
-
-  if (isYouTubeUrl(apod.url)) {
-    src = `https://i1.ytimg.com/vi/${apod.url.split("/").at(-1)}/maxresdefault.jpg`;
+  if (!picture.imageUrl) {
+    throw new Error("::GENERATE_PALETTE - picture has no image");
   }
 
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 9000);
   try {
-    const response = await fetch(src, { signal: controller.signal });
+    const response = await fetch(picture.imageUrl, { signal: controller.signal });
     const arrayBuffer = await response.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
     const palette = await Vibrant.from(buffer).maxDimension(400).getPalette();

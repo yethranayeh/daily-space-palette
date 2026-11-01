@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import type { Apod } from "@/app/lib/getPicture";
+import type { Picture } from "@/app/lib/getPicture";
 
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 
 import { getPicture } from "@/app/lib/getPicture";
+import { toPlainText } from "@/app/lib/nasaHtml";
 import { isValidDate } from "@/app/utils/validateDate";
 import { SITE_NAME } from "@/app/lib/site";
 
@@ -24,33 +25,34 @@ export async function generateMetadata({ params }: DatePageProps): Promise<Metad
     };
   }
 
-  let apod: Apod | null = null;
+  let picture: Picture | null = null;
   try {
-    apod = (await getPicture(date)).apod;
+    picture = (await getPicture(date)).picture;
   } catch {
     return { title: "Date Not Found" };
   }
 
-  const dateLabel = apod?.date
-    ? new Date(apod.date + "T00:00:00").toLocaleDateString("en-US", {
+  const dateLabel = picture?.date
+    ? new Date(picture.date + "T00:00:00").toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
         day: "numeric",
       })
     : date;
 
+  // ? Explanation arrives as HTML, so tags have to go before it reaches a meta tag
+  const description = picture?.explanation
+    ? toPlainText(picture.explanation).slice(0, 155) + "..."
+    : `Color palette from NASA's Astronomy Picture of the Day on ${dateLabel}.`;
+
   return {
     title: `${dateLabel} · ${SITE_NAME}`,
-    description: apod?.explanation
-      ? apod.explanation.slice(0, 155) + "..."
-      : `Color palette from NASA's Astronomy Picture of the Day on ${dateLabel}.`,
+    description,
     openGraph: {
       title: `${dateLabel} · ${SITE_NAME}`,
-      description: apod?.explanation
-        ? apod.explanation.slice(0, 155) + "..."
-        : `Color palette from NASA's Astronomy Picture of the Day on ${dateLabel}.`,
+      description,
       type: "article",
-      publishedTime: apod?.date,
+      publishedTime: picture?.date,
     },
     alternates: {
       canonical: `/${date}`,

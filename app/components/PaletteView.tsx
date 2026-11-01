@@ -6,22 +6,22 @@ import { getFormattedDate } from "@/app/utils/getFormattedDate";
 import { SpacePaletteLayout } from "@/app/components/SpacePaletteLayout";
 
 export async function PaletteView({ date }: { date?: string }) {
-  const { apod, error } = await getPicture(date);
+  const { picture, error } = await getPicture(date);
 
   let palette: PlainPalette[] | null = null;
-  if (apod) {
+  if (picture) {
     try {
-      palette = await generatePalette(apod);
+      palette = await generatePalette(picture);
     } catch {}
   }
 
   // ? Fall back to the requested date so navigation survives a failed fetch.
   return (
     <SpacePaletteLayout
-      apod={apod}
-      apodError={error}
+      picture={picture}
+      pictureError={error}
       palette={palette}
-      date={apod?.date ?? date ?? getFormattedDate()}
+      date={picture?.date ?? date ?? getFormattedDate()}
     />
   );
 }

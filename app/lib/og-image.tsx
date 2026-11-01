@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { APOD_URL } from "@/app/config";
+import { getPicture } from "@/app/lib/getPicture";
 import { SITE_NAME } from "@/app/lib/site";
 import { Vibrant } from "node-vibrant/node";
 
@@ -41,51 +41,25 @@ async function fetchImageBuffer(url: string): Promise<{ dataUrl: string; buffer:
   }
 }
 
-function resolveImageUrl(json: {
-  media_type: string;
-  url?: string;
-  thumbnail_url?: string;
-}): string | null {
-  if (json.media_type !== "video") return json.url ?? null;
-
-  // Prefer an explicit thumbnail from the API
-  if (json.thumbnail_url) return json.thumbnail_url;
-
-  // For YouTube, derive the thumbnail URL
-  const url = json.url ?? "";
-  if (url.includes("youtube.com") || url.includes("youtu.be")) {
-    return `https://i1.ytimg.com/vi/${url.split("/").at(-1)}/maxresdefault.jpg`;
-  }
-
-  // Self-hosted video with no thumbnail - nothing we can fetch
-  return null;
-}
-
 export async function fetchApodImage(date: string): Promise<ApodImageData | null> {
   try {
-    const res = await fetchWithTimeout(`${APOD_URL}?api_key=${process.env.NASA_API}&date=${date}`, 8000);
-    if (!res.ok) {
-      return null;
-    }
-
-    const json = await res.json();
-    if (json.code) {
+    const { picture } = await getPicture(date);
+    if (!picture) {
       return null;
     }
 
     const metadata: ApodImageData = {
-      title: json.title ?? "",
-      date: json.date ?? "",
+      title: picture.title,
+      date: picture.date,
     };
 
-    const imageUrl = resolveImageUrl(json);
-    if (!imageUrl) {
-      return metadata; // title/date intact, no image
+    if (!picture.imageUrl) {
+      return metadata;
     }
 
-    const img = await fetchImageBuffer(imageUrl);
+    const img = await fetchImageBuffer(picture.imageUrl);
     if (!img) {
-      return metadata; // same. keep metadata, drop image
+      return metadata; // keep metadata, drop image
     }
 
     return { ...metadata, ...img };
