@@ -7,6 +7,7 @@ import { SpacePaletteLayout } from "@/app/components/SpacePaletteLayout";
 
 export async function PaletteView({ date }: { date?: string }) {
   const { picture, error } = await getPicture(date);
+  const today = getFormattedDate();
 
   let palette: PlainPalette[] | null = null;
   if (picture) {
@@ -21,7 +22,8 @@ export async function PaletteView({ date }: { date?: string }) {
       picture={picture}
       pictureError={error}
       palette={palette}
-      date={picture?.date ?? date ?? getFormattedDate()}
+      date={picture?.date ?? date ?? today}
+      today={today}
     />
   );
 }

@@ -26,12 +26,3 @@ export function isValidDate(date: string): boolean {
 
   return true;
 }
-
-export function isFutureDate(date: string): boolean {
-  const today = new Date();
-  const todayPST = new Date(today.toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
-  todayPST.setHours(0, 0, 0, 0);
-  const parsed = new Date(date + "T00:00:00");
-
-  return parsed > todayPST;
-}

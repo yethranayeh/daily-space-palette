@@ -27,25 +27,24 @@ function addDays(date: Date, days: number): Date {
   return result;
 }
 
-function formatTodayLabel(date: Date): string {
+function formatDateLabel(date: Date): string {
   return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
-export function DatePagination({ date }: { date: string }) {
+export function DatePagination({ date, today }: { date: string; today: string }) {
   const currentDate = parseDate(date);
   if (isNaN(currentDate.getTime())) {
     return null;
   }
 
   const minDate = parseDate(MIN_DATE);
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const todayDate = parseDate(today);
 
   const prevDate = formatDate(addDays(currentDate, -1));
   const nextDate = formatDate(addDays(currentDate, 1));
 
   const isAtMinDate = currentDate <= minDate;
-  const isToday = currentDate >= today;
+  const isAtToday = currentDate >= todayDate;
 
   return (
     <Pagination>
@@ -58,11 +57,11 @@ export function DatePagination({ date }: { date: string }) {
 
         <PaginationItem>
           <PaginationLink isActive href={`/${date}`}>
-            {formatTodayLabel(currentDate)}
+            {formatDateLabel(currentDate)}
           </PaginationLink>
         </PaginationItem>
 
-        {!isToday && (
+        {!isAtToday && (
           <PaginationItem>
             <PaginationNext href={`/${nextDate}`} />
           </PaginationItem>
