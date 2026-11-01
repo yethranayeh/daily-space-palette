@@ -15,7 +15,7 @@ export function Navbar() {
         </Link>
 
         <a
-          href="https://apod.nasa.gov/apod/astropix.html"
+          href="https://science.nasa.gov/apod/"
           target="_blank"
           rel="noopener noreferrer"
           className="hidden sm:block font-mono text-xs tracking-widest uppercase text-ink-subtle pl-4 border-l border-line hover:text-ink transition-colors"
