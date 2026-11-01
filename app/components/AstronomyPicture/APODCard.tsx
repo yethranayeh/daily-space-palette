@@ -2,15 +2,19 @@ import type { Picture } from "@/app/lib/getDailyRecord";
 
 import { ExternalLink } from "lucide-react";
 
+import { addDays } from "@/app/utils/date";
+
 import { Media } from "./Media";
 import { Description } from "./Description";
+import { NextPictureStrip } from "./NextPictureStrip";
 
-export async function APODCard({ picture }: { picture: Picture }) {
+export async function APODCard({ picture, isLatest }: { picture: Picture; isLatest: boolean }) {
   const dateLabel = new Date(picture.date + "T00:00:00").toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
+  const nextDate = addDays(picture.date, 1);
 
   return (
     <section
@@ -34,6 +38,10 @@ export async function APODCard({ picture }: { picture: Picture }) {
       </div>
 
       <Description picture={picture} dateLabel={dateLabel} />
+
+      {picture.nextPicture && !isLatest && (
+        <NextPictureStrip nextPicture={picture.nextPicture} href={`/${nextDate}`} />
+      )}
     </section>
   );
 }

@@ -31,8 +31,8 @@ const LEADING_LINK = /^<a[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/i;
 
 export type NextPicture = { text: string; href: string | null };
 
-// ? Every entry ends with a "Tomorrow's picture" link. It is navigation, not
-//   part of the description, so it gets split out for a future affordance
+// ? Recent entries end with a "Tomorrow's picture" teaser. It is navigation,
+//   not part of the description, so it gets split out for the strip under the card
 export function splitExplanation(raw: string): { body: string; nextPicture: NextPicture | null } {
   const withoutPrefix = raw.replace(EXPLANATION_PREFIX, "");
   const match = withoutPrefix.match(NEXT_PICTURE);

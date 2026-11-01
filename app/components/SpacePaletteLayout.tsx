@@ -108,7 +108,11 @@ export function SpacePaletteLayout({
 }: SpacePaletteLayoutProps) {
   return (
     <main className="relative z-2 px-5 sm:px-8 lg:px-10 pt-5 pb-15 grid grid-cols-1 lg:grid-cols-[minmax(0,1.55fr)_minmax(340px,1fr)] gap-6 lg:gap-7 max-w-360 mx-auto">
-      {picture ? <APODCard picture={picture} /> : <StatusAlert {...pictureAlert(pictureError, date)} />}
+      {picture ? (
+        <APODCard picture={picture} isLatest={isLatest} />
+      ) : (
+        <StatusAlert {...pictureAlert(pictureError, date)} />
+      )}
       <div className="flex flex-col gap-4">
         <Suspense fallback={null}>
           <DatePagination date={date} isLatest={isLatest} />
