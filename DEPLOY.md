@@ -24,6 +24,9 @@ The site is a static Vite build served by Cloudflare Workers static assets. Ther
    - Zone → Workers Routes → Edit (only needed for the custom domain)
    - Zone → Zone → Read (only needed for the custom domain)
 4. Scope it to your account (and to `shadesof.space` if you use zone permissions).
+   **Set the Workers resource to All Workers, not a list of existing scripts.**
+   A token scoped to specific Workers can list scripts but returns
+   `401 Unauthorized` on the assets upload, which is the step this site needs.
 5. Create the token and copy it once. It is not shown again.
 
 ## 2. Find the account ID
@@ -77,6 +80,20 @@ The beacon is injected in `src/lib/analytics.ts` only when the token is present 
    - a garbage path renders the 404 view.
 
 If the build step fails, the previous deployment stays live because the deploy step never runs. Fix and push again.
+
+### If the deploy fails with 401 Unauthorized
+
+```
+POST /accounts/.../workers/assets/upload?base64=true -> 401 Unauthorized
+```
+
+The token is valid but cannot upload assets for this Worker. This happens when
+the token is scoped to specific existing Workers, or when it has read-only
+Workers access. Recreate the token with **Account → Workers Scripts → Edit** and
+**All Workers** as the resource, then replace the `CLOUDFLARE_API_TOKEN` secret.
+
+A token that can list scripts and read the account is not necessarily able to
+deploy. The assets upload is the check that matters.
 
 ## 6. Custom domain
 
