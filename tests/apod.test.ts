@@ -3,7 +3,7 @@ import { describe, it } from "node:test";
 
 // ? Node's native TypeScript support requires the extension; tsc allows it
 //   through allowImportingTsExtensions
-import { capImageWidth, toApiDate } from "../app/lib/apod.ts";
+import { buildImageSrcSet, capImageWidth, toApiDate } from "../src/lib/apod.ts";
 
 describe("toApiDate", () => {
   it("formats a dated URL segment as YYMMDD", () => {
@@ -63,5 +63,31 @@ describe("capImageWidth", () => {
   it("returns empty and invalid URLs as-is", () => {
     assert.equal(capImageWidth("", maxWidth), "");
     assert.equal(capImageWidth("not a url", maxWidth), "not a url");
+  });
+});
+
+describe("buildImageSrcSet", () => {
+  const prefix =
+    "https://assets.science.nasa.gov/dynamicimage/assets/science/cds/apod/apod/2026/october/";
+
+  it("builds one entry per width and drops the other size params", () => {
+    const url = `${prefix}CepheusFlare_Tondinelli.jpg?w=6000&h=4076&fit=clip`;
+
+    assert.equal(
+      buildImageSrcSet(url, [640, 1280]),
+      `${prefix}CepheusFlare_Tondinelli.jpg?w=640&fit=clip 640w, ${prefix}CepheusFlare_Tondinelli.jpg?w=1280&fit=clip 1280w`,
+    );
+  });
+
+  it("returns undefined for /content/dam/ images", () => {
+    const url =
+      "https://assets.science.nasa.gov/content/dam/science/cds/apod/apod/2026/image.jpg?w=6000";
+
+    assert.equal(buildImageSrcSet(url), undefined);
+  });
+
+  it("returns undefined for empty and invalid URLs", () => {
+    assert.equal(buildImageSrcSet(""), undefined);
+    assert.equal(buildImageSrcSet("not a url"), undefined);
   });
 });
