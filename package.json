@@ -9,7 +9,7 @@
 		"preview": "vite preview",
 		"lint": "eslint .",
 		"typecheck": "tsc --noEmit",
-		"test": "tsx --test tests/",
+		"test": "tsx --test tests/*.test.ts",
 		"deploy": "wrangler deploy"
 	},
 	"dependencies": {
