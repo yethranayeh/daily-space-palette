@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- META_START -->
+    <title>Shades of Space | Color Palettes from NASA's Astronomy Pictures</title>
+    <meta
+      name="description"
+      content="A daily color palette extracted from NASA's Astronomy Picture of the Day. Discover the hues the universe chose for today."
+    />
+    <link rel="canonical" href="https://shadesof.space/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Shades of Space" />
+    <meta
+      property="og:title"
+      content="Shades of Space | Color Palettes from NASA's Astronomy Pictures"
+    />
+    <meta
+      property="og:description"
+      content="A daily color palette extracted from NASA's Astronomy Picture of the Day. Discover the hues the universe chose for today."
+    />
+    <meta property="og:url" content="https://shadesof.space/" />
+    <meta property="og:image" content="https://shadesof.space/social/og.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Shades of Space | Color Palettes from NASA's Astronomy Pictures"
+    />
+    <meta
+      name="twitter:description"
+      content="A daily color palette extracted from NASA's Astronomy Picture of the Day. Discover the hues the universe chose for today."
+    />
+    <meta name="twitter:image" content="https://shadesof.space/social/twitter.jpg" />
+    <!-- META_END -->
+
+    <meta name="theme-color" content="#0d0f18" />
+    <meta name="apple-mobile-web-app-title" content="Shades of Space" />
+    <meta name="application-name" content="Shades of Space" />
+    <meta
+      name="keywords"
+      content="NASA, space, color palettes, astronomy, shades of space, daily space palette, color inspiration, design, art, cosmos"
+    />
+    <meta name="author" content="Alper Halil" />
+
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <link rel="preconnect" href="https://science.nasa.gov" />
+    <link rel="preconnect" href="https://assets.science.nasa.gov" />
+
+    <script>
+      try {
+        (function () {
+          var t = localStorage.getItem("theme");
+          if (t === "light" || t === "dark") {
+            window.__themeInit = t;
+          } else {
+            window.__themeInit = window.matchMedia("(prefers-color-scheme:dark)").matches
+              ? "dark"
+              : "light";
+          }
+          document.documentElement.classList.toggle("light", window.__themeInit === "light");
+          document.documentElement.classList.toggle("dark", window.__themeInit === "dark");
+        })();
+      } catch {
+        window.__themeInit = "dark";
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Shades of Space",
+        "url": "https://shadesof.space",
+        "description": "A daily color palette extracted from NASA's Astronomy Picture of the Day.",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "creator": {
+          "@type": "Person",
+          "name": "Alper Halil",
+          "url": "https://www.aktasalper.com"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

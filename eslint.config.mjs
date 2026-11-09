@@ -1,12 +1,25 @@
-import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
-import nextTypescript from "eslint-config-next/typescript";
+import js from "@eslint/js";
+import globals from "globals";
+import reactHooks from "eslint-plugin-react-hooks";
+import tseslint from "typescript-eslint";
 
-const eslintConfig = [
-	...nextCoreWebVitals,
-	...nextTypescript,
-	{
-		ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts"]
-	}
-];
-
-export default eslintConfig;
+export default tseslint.config(
+  {
+    ignores: ["dist/**", "node_modules/**", ".wrangler/**"],
+  },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  {
+    files: ["**/*.{ts,tsx}"],
+    languageOptions: {
+      ecmaVersion: 2022,
+      globals: globals.browser,
+    },
+    plugins: {
+      "react-hooks": reactHooks,
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+    },
+  },
+);

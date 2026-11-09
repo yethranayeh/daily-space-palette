@@ -3,7 +3,7 @@ import { describe, it } from "node:test";
 
 // ? Node's native TypeScript support requires the extension; tsc allows it
 //   through allowImportingTsExtensions
-import { splitExplanation } from "../app/lib/nasaHtml.ts";
+import { splitExplanation } from "../src/lib/nasaHtml.ts";
 
 const TEASER = "<br><br><strong>Tomorrow's picture: </strong>";
 
