@@ -7,11 +7,11 @@ The site is a static Vite build served by Cloudflare Workers static assets. Ther
 - `npm run build` runs `vite build` and then `scripts/prerender.ts`.
 - The prerender script fetches the latest 25 APOD entries, extracts their palettes, and writes:
   - `dist/index.html` (today's page),
-  - `dist/{YYYY-MM-DD}/index.html` (one per recent date, with its own title, description, OG tags, preloaded image and embedded record),
+  - `dist/{YYYY-MM-DD}.html` (one per recent date, with its own title, description, OG tags, preloaded image and embedded record),
   - `dist/og/{YYYY-MM-DD}.png` (the per-date social card),
   - `dist/data/latest.json` (the same records, for client-side navigation),
   - `dist/sitemap.xml`.
-- `wrangler deploy` uploads `dist/` to Cloudflare. `wrangler.jsonc` sets `not_found_handling: "single-page-application"`, so any unknown path gets the SPA shell and React Router decides what to render.
+- `wrangler deploy` uploads `dist/` to Cloudflare. `wrangler.jsonc` sets `html_handling: "drop-trailing-slash"` so `/2026-11-09` serves `2026-11-09.html` without a redirect, and `not_found_handling: "single-page-application"` so any unknown path gets the SPA shell and React Router decides what to render.
 - The GitHub Actions workflow runs on every push to `master`/`main`, daily at 05:30 UTC, and on manual dispatch.
 
 ## 1. Create the Cloudflare API token

@@ -196,9 +196,9 @@ function injectPage(shell: string, record: DailyRecord, canonical: string, ogIma
 }
 
 async function writePage(date: string, html: string) {
-  const dir = join(DIST, date);
-  await mkdir(dir, { recursive: true });
-  await writeFile(join(dir, "index.html"), html);
+  // ? Cloudflare's drop-trailing-slash handling serves /date from date.html,
+  //   which keeps the canonical and the shared URL identical
+  await writeFile(join(DIST, `${date}.html`), html);
 }
 
 function buildSitemap(records: DailyRecord[], newest: string) {

@@ -105,7 +105,7 @@ Then run `npm run lint` and `npm run typecheck`. Both must pass. If a failure is
 
 1. Fetches the latest 25 entries.
 2. Fetches each image, extracts a palette with `node-vibrant/node` at `maxDimension(400)`.
-3. Writes `dist/{date}/index.html` with per-date title, description, OG/Twitter tags, canonical, image preload and `window.__RECORD__`.
+3. Writes `dist/{date}.html` with per-date title, description, OG/Twitter tags, canonical, image preload and `window.__RECORD__`.
 4. Writes `dist/og/{date}.png` with Satori + `@resvg/resvg-js` (1200×630, fonts in `scripts/fonts/`).
 5. Writes `dist/data/latest.json`, `dist/sitemap.xml`, and `dist/index.html` for the newest record.
 
@@ -119,7 +119,7 @@ If the script fails, the workflow fails and the previous deployment stays live. 
 - `public/robots.txt` points at `https://shadesof.space/sitemap.xml`.
 - `src/lib/meta.ts` updates meta tags on the client; the prerender script writes the same tags for crawlers.
 - The SPA always returns HTTP 200 for HTML. Invalid dates render the 404 view (soft 404). A validation Worker is the deliberate next step if that matters.
-- `wrangler.jsonc` has no `main`; it is assets-only.
+- `wrangler.jsonc` has no `main`; it is assets-only. `html_handling: "drop-trailing-slash"` makes `/date` serve `date.html` without a redirect.
 
 ## Environment
 
